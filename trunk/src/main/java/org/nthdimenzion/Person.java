@@ -15,6 +15,15 @@ public class Person implements Serializable {
 	private Long id;
 	private static final long serialVersionUID = 1L;
 	private String firstName;
+    private String middleName;
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
     public String getLastName() {
         return lastName;
