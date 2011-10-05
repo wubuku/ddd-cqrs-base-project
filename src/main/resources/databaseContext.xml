@@ -44,7 +44,6 @@
 	</bean>
 	
 	<bean id="namingStrategy" class="org.nthdimenzion.infrastructure.hibernate.CustomNamingStrategy" />
-
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<tx:annotation-driven proxy-target-class="true" />
