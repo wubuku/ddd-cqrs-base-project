@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<!--
+		hibernate.connection.datasource datasource JNDI name
+		hibernate.jndi.url URL of the JNDI provider (optional)
+		hibernate.jndi.class class of the JNDI InitialContextFactory
+		(optional) hibernate.jndi.xxxx pass the propertyerty xxxx to the JNDI
+		InitialContextFactory (optional) hibernate.connection.username
+		database user (optional) hibernate.connection.password database user
+		password (optional) name="java:comp/env/hibernate/SessionFactory"
+		33181736
+	-->
+	<!--  This jndi name is used in Birt Reporting -->
+	<session-factory name="java:/BaseProject">
+		<property name="configurationClass">org.hibernate.cfg.AnnotationConfiguration</property>
+		<!--<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>-->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.transaction.flush_before_completion">true</property>
+		<property name="hibernate.connection.release_mode">after_transaction</property>
+		<property name="hibernate.query.jpaql_strict_compliance">false</property>
+		<!-- Secondary Cache Related Entries -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.jdbc.fetch_size">16</property>
+		<property name="hibernate.jdbc.batch_versioned_data">true</property>
+		<property name="hibernate.max_fetch_depth">1</property>
+		<property name="hibernate.bytecode.provider">org.hibernate.bytecode.javassist.BytecodeProviderImpl</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.transaction.factory">org.hibernate.transaction.JDBCTransactionFactory</property>
+	</session-factory>
+</hibernate-configuration>
