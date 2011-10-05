@@ -20,9 +20,9 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 		id="sessionFactory">
 		<property name="dataSource" ref="dataSourceRef"></property>
-		<!--<property name="entityInterceptor" ref="autoColumnsPopulator"/>-->
+		<property name="entityInterceptor" ref="autoColumnsPopulator"/>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<!--<property name="namingStrategy" ref="namingStrategy"></property>-->
+		<property name="namingStrategy" ref="namingStrategy"></property>
 				<property name="packagesToScan">
 			<list>
 				<value>org.nthdimenzion</value>
@@ -31,7 +31,7 @@
 		
 	</bean>
 
-	<!--<bean class="com.nthdimenzion.hibernate.ext.AutoColumnsPopulator" id="autoColumnsPopulator"/>-->
+	<bean class="org.nthdimenzion.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
 	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -43,7 +43,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<!--<bean id="namingStrategy" class="com.nthdimenzion.hibernate.ext.CustomNamingStrategy" />-->
+	<bean id="namingStrategy" class="org.nthdimenzion.infrastructure.hibernate.CustomNamingStrategy" />
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
