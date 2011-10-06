@@ -1,0 +1,17 @@
+#labels Phase-Requirements
+#Road Map of developments split into Phases.
+
+= Phase 1 Setup base project such that all embedded frameworks work out of the box =
+
+1) Verify Create operation is working via a Test Servlet
+
+2) Check Spring transactions are being applied
+
+3) Make maven build profiles such that Tests can be run on a InMemory Database
+
+4) Enable/Configure Spring Security
+
+5) Create Base Exception Handling classes and example code utilising JEHA
+
+6) Enable/Configure Unit/Integration Testing framework (Phase 2 will include utility classes for Testing)
+
