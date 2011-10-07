@@ -7,7 +7,7 @@
 
 2) Check Spring transactions are being applied
 
-3) Make maven build profiles such that Tests can be run on a InMemory Database
+3) Make maven build profiles such that Tests can be run on a In Memory Database
 
 4) Enable/Configure Spring Security
 
