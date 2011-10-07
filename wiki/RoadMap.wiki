@@ -1,6 +1,8 @@
 #labels Phase-Requirements
 = Phase 1 Setup base project such that all embedded frameworks work out of the box =
 
+#labels
+
 1) Verify Create operation is working via a Test Servlet (Ensures that Spring/Hibernate Setup is correct)
 
 2) Check Spring transactions are being applied
