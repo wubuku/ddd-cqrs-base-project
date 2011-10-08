@@ -238,12 +238,12 @@
             <version>1.4</version>
         </dependency>
 
-
-        <dependency>
+         <!-- Available in JBoss -->
+        <!--dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.2.4</version>
-        </dependency>
+        </dependency-->
 
         <!-- database dependencies end-->
 
