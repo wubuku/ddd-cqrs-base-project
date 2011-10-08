@@ -17,11 +17,13 @@
         <hibernate-core-version>3.6.7.Final</hibernate-core-version>
 
 
-        <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-        <jdbc.url>jdbc:hsqldb:hsql://localhost:9001/ciramidPms</jdbc.url>
-        <jdbc.username>sa</jdbc.username>
+        <jdbc.username>root</jdbc.username>
+        <jdbc.password>nthdimenzion</jdbc.password>
         <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
         <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
+        <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+        <hibernate.show_sql>true</hibernate.show_sql>
+        <hibernate.connection.autocommit>true</hibernate.connection.autocommit>
     </properties>
 
 
@@ -222,6 +224,8 @@
         </dependency>
         <!-- Joda  dependencies  end -->
 
+        <!-- database dependencies start-->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -229,10 +233,19 @@
         </dependency>
 
         <dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
+        <!-- database dependencies end-->
 
     </dependencies>
 
@@ -253,15 +266,15 @@
         <defaultGoal>package</defaultGoal>
         <finalName>BaseProject</finalName>
         <resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>src/test/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!--  Facilitates downloading source and javadoc in Eclipse -->
             <plugin>
@@ -311,23 +324,18 @@
             </activation>
             <properties>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
-                <jdbc.username>root</jdbc.username>
-                <jdbc.password>nthdimenzion</jdbc.password>
+                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProject;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-                <hibernate.dialect>com.nthdimenzion.hibernate.ext.MySQLUTF8InnoDBDialect</hibernate.dialect>
+                <!--<hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>-->
             </properties>
         </profile>
         <profile>
 
             <id>test</id>
             <properties>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectTest</jdbc.url>
-                <jdbc.username>root</jdbc.username>
-                <jdbc.password>nthdimenzion</jdbc.password>
+                <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
+                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProjectTest;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-                <hibernate.dialect>com.nthdimenzion.hibernate.ext.MySQLUTF8InnoDBDialect</hibernate.dialect>
             </properties>
         </profile>
         <profile>
@@ -335,10 +343,8 @@
             <properties>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectProd</jdbc.url>
-                <jdbc.username>root</jdbc.username>
-                <jdbc.password>nthdimenzion</jdbc.password>
                 <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
-                <hibernate.dialect>com.ecosmos.hibernate.ext.MySQLUTF8InnoDBDialect</hibernate.dialect>
+                <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
             </properties>
         </profile>
     </profiles>
