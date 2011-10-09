@@ -1,8 +1,11 @@
 #summary A guide from checkout to Deployment.
 
-= Introduction =
+= A guide to set up the project =
 
-Add your content here.
+===Software Requirements===
+
+1) SVN [http://tortoisesvn.net/downloads.html SVN Tortoise]
+2) Eclipse [http://www.springsource.com/landing/best-development-tool-enterprise-java Spring STS]
 
 
 = Details =
