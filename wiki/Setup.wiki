@@ -30,33 +30,35 @@ Unfortunately none of the above actually resolved my problem
 
 [http://czetsuya-tech.blogspot.com/2011/02/javalangnosuchmethodexception.html Problem I encountered]
 
+However strangely the solution recommended did not work with JBoss 6 so I came up with my version of the solution.
+
 I removed the below 3 jars from %JBOSS_HOME%/common/lib
 
-hibernate-commons-annotations
+_hibernate-commons-annotations_
 
-hibernate-core
+_hibernate-core_
 
-hibernate-validator-legacy
+_hibernate-validator-legacy_
 
 
 *JBoss also ships with its own version of BSH and HSQLDB which again causes class loading problems*
 
-Remove the below 2 Jars from %JBOSS_HOME%/common/lib
+So remove the below 2 Jars from %JBOSS_HOME%/common/lib
 
-bsh.jar
+_bsh.jar_
 
-hsqldb.jar
+_hsqldb.jar_
 
 
 Put the below jars into %JBOSS_HOME%/common/lib
 
-hsqldb-2.2.4.jar
+_hsqldb-2.2.4.jar_
 
-hibernate-entitymanager-3.6.7.Final
+_hibernate-entitymanager-3.6.7.Final_
 
-hibernate-jpa-2.0-api-1.0.1.Final
+_hibernate-jpa-2.0-api-1.0.1.Final_
 
-hibernate-validator-4.0.0.GA
+_hibernate-validator-4.0.0.GA_
 
 
 These Jars are the same jar versions included in the project.
