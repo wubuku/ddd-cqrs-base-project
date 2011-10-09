@@ -12,8 +12,22 @@
 
 4) Jboss AS 6.1.0.Final [http://www.jboss.org/jbossas/downloads/ Jboss AS 6.1.0.Final]
 
-= Details =
+===Issues I encountered during Setup===
 
+*JBoss ships with its own version of hibernate which causes class loading problems*
+
+Solution : This is one of the solutions :) not the most elegant one 
+
+[http://stackoverflow.com/questions/4410017/how-to-separate-ear-classloader-and-system-classloader-in-jboss-6 Similar issue reported]
+
+[http://community.jboss.org/wiki/ClassLoadingConfiguration Jboss Class loading explanation]
+
+[http://java.dzone.com/articles/jboss-microcontainer-classloading Jboss Class loading explanation]
+
+
+Unfortunately none of the above actually resolved my problem
+
+[http://czetsuya-tech.blogspot.com/2011/02/javalangnosuchmethodexception.html My Problem]
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
