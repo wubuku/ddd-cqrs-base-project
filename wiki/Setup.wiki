@@ -5,8 +5,12 @@
 ===Software Requirements===
 
 1) SVN [http://tortoisesvn.net/downloads.html SVN Tortoise]
+
 2) Eclipse [http://www.springsource.com/landing/best-development-tool-enterprise-java Spring STS]
 
+3) Maven 2.2.1 [http://maven.apache.org/download.html]
+
+4) Jboss AS 6.1.0.Final [http://www.jboss.org/jbossas/downloads/]
 
 = Details =
 
