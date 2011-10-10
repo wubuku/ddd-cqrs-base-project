@@ -1,7 +1,7 @@
 #summary Road Map for the Project
 #labels Phase-Requirements
 
-= Phase 1 Setup base project such that all embedded frameworks work out of the box =
+= Phase 1 Setup base project such that all embedded frameworks work out of the box (Current Phase) =
 
 
 1) Verify Create operation is working via a Test Servlet (Ensures that Spring/Hibernate Setup is correct)
