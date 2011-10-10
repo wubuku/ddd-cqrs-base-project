@@ -1,4 +1,4 @@
-package org.nthdimenzion.infrastructure.hibernate;
+package org.nthdimenzion.tests;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
