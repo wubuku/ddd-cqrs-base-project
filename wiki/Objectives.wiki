@@ -1,14 +1,41 @@
 #summary Project Vision and Objectives
 #labels Featured
 
-= Introduction =
+= Vision and Objectives of the project =
 
-Add your content here.
+1) Develop a project which has all the building blocks and can be used as a Base Project for other projects which need to be developed based on CQRS-DDD principles.
+
+2) Providing production ready code with high test coverage
+
+3) Providing things that most web projects need out of the box like Persistence,Transaction,Maven build profiles and the like will work out of the box
+
+  * Security
+
+  * Logging
+
+  * Exception Handling
+
+  * Utility Classes
+
+  * Unit Testing/Behaviour Driven Testing framework
+
+  * Integration Testing framework 
+
+  * Test Data Creation Utilities
+
+  * Event Publish Subscribe mechanism
+  
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+4) Leverage open source projects to address infrastructure concerns.
+
+
+  1 [http://eventbus.org/ Event Bus is a simple but powerful publish/subscribe API]
+
+  2 [http://sourceforge.net/projects/jeha/ Java Exception Handling Framework]
+
+  3 [http://code.google.com/p/modelmapper/ ModelMapper is an intelligent object mapping framework]
+
+  4 [http://code.google.com/p/mybatis/ MyBatis data mapper framework]
