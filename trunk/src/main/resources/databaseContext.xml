@@ -24,7 +24,7 @@
 		<property name="namingStrategy" ref="namingStrategy"></property>
 				<property name="packagesToScan">
 			<list>
-				<value>org.nthdimenzion</value>
+				<value>com.simplepersoncrud.domain</value>
 			</list>
 		</property>
         <property name="hibernateProperties">
@@ -39,7 +39,7 @@
 		
 	</bean>
 
-	<bean class="org.nthdimenzion.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
+	<bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
 	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -51,8 +51,9 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean id="namingStrategy" class="org.nthdimenzion.infrastructure.hibernate.CustomNamingStrategy" />
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="namingStrategy" class="org.nthdimenzion.ddd.infrastructure.hibernate.CustomNamingStrategy" />
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<tx:annotation-driven proxy-target-class="true" />
 

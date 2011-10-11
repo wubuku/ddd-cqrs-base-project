@@ -83,7 +83,7 @@
     <servlet>
         <display-name>PersonTestServlet</display-name>
         <servlet-name>PersonTestServlet</servlet-name>
-        <servlet-class>org.nthdimenzion.tests.PersonTestServlet</servlet-class>
+        <servlet-class>com.simplepersoncrud.presentation.PersonTestServlet</servlet-class>
     </servlet>
     <!-- Included only for temporary testing end -->
 
