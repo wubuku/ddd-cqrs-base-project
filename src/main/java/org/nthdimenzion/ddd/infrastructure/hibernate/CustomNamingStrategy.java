@@ -1,4 +1,4 @@
-package org.nthdimenzion.infrastructure.hibernate;
+package org.nthdimenzion.ddd.infrastructure.hibernate;
 
 import org.hibernate.cfg.ImprovedNamingStrategy;
 
