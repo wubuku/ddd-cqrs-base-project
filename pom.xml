@@ -21,7 +21,7 @@
         <jdbc.password>nthdimenzion</jdbc.password>
         <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
         <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-        <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+        <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
         <hibernate.show_sql>true</hibernate.show_sql>
         <hibernate.connection.autocommit>true</hibernate.connection.autocommit>
     </properties>
