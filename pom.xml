@@ -242,12 +242,6 @@
             <version>1.4</version>
         </dependency>
 
-        <!-- Available in JBoss -->
-        <!--dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.2.4</version>
-        </dependency-->
 
         <!-- database dependencies end-->
 
@@ -262,6 +256,36 @@
             <artifactId>guava</artifactId>
             <version>10.0</version>
         </dependency>
+
+        <!-- Testing dependencies start -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.2.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.4.GA</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Testing dependencies end -->
 
     </dependencies>
 
@@ -326,6 +350,22 @@
                     <serverName>${jboss.domain}</serverName>
                     <fileName>target/BaseProject.war</fileName>
                     <unpack>true</unpack>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.10</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit4</artifactId>
+                        <version>2.7.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <testSourceDirectory>/src/test/java</testSourceDirectory>
                 </configuration>
             </plugin>
 
