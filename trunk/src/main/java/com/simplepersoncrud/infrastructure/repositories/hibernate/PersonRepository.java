@@ -12,7 +12,7 @@ public class PersonRepository implements IPersonRepository {
 
     private SessionFactory sessionFactory;
 
-    PersonRepository(){}
+//    PersonRepository(){}
 
     @Autowired
     public PersonRepository(SessionFactory sessionFactory){
