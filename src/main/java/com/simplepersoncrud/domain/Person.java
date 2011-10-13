@@ -1,8 +1,6 @@
 package com.simplepersoncrud.domain;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @javax.persistence.Entity
 @Table
@@ -22,6 +20,7 @@ public class Person {
     }
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     public Long getId() {
         return id;
     }

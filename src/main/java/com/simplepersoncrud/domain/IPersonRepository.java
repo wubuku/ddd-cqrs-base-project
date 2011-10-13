@@ -2,6 +2,7 @@ package com.simplepersoncrud.domain;
 
 public interface IPersonRepository {
 
-      public Long savePerson(Person person);
+     Long savePerson(Person person);
 
+     Person getPersonWithId(Long id);
 }
