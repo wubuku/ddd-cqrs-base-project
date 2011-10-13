@@ -11,7 +11,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @Service
 public class PersonService implements IPersonService {
 
-private IPersonRepository personRepository = null;
+private IPersonRepository personRepository;
 
     // Required for CGLIB
     public PersonService(){}
@@ -26,6 +26,11 @@ private IPersonRepository personRepository = null;
     public Long savePerson(Person person) {
         Preconditions.checkArgument(TransactionSynchronizationManager.isActualTransactionActive());
         return personRepository.savePerson(person);
+    }
+
+    @Override
+    public Person getPersonWithId(Long id) {
+        return personRepository.getPersonWithId(id);
     }
 
 }

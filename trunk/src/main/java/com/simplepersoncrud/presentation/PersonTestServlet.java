@@ -22,13 +22,12 @@ public class PersonTestServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
-        System.out.println("**** DO GET *****");
+        System.out.println("**** DO GET111 *****");
         WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         IPersonService personService =(IPersonService)springContext.getBean("personService");
         Person person = new Person();
-        person.setId(2L);
-        person.setName("Sudarshan");
+        person.setName("Sudarshan12");
         Long personId = personService.savePerson(person);
-        System.out.println("person.getId--> " + personId);
+        System.out.println("person.getId--> " + personService.getPersonWithId(personId).getVersion());
     }
 }

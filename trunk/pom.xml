@@ -21,7 +21,7 @@
         <jdbc.password>nthdimenzion</jdbc.password>
         <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
         <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-        <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+        <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
         <hibernate.show_sql>true</hibernate.show_sql>
         <hibernate.connection.autocommit>true</hibernate.connection.autocommit>
     </properties>
@@ -285,6 +285,12 @@
             <version>3.4.GA</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.natpryce</groupId>
+            <artifactId>make-it-easy</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!-- Testing dependencies end -->
 
     </dependencies>
@@ -382,7 +388,7 @@
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:hsqldb:file:D:\\BaseProject;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-                <!--<hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>-->
+                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>
@@ -390,8 +396,9 @@
             <id>test</id>
             <properties>
                 <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProjectTest;shutdown=true</jdbc.url>
+                <jdbc.url>jdbc:hsqldb:mem:D:\\BaseProjectTest;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
+                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>

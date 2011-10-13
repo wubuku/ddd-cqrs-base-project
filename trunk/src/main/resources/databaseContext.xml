@@ -40,17 +40,17 @@
 	</bean>
 
 	<bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"></constructor-arg>
+        <constructor-arg name="allowCreate" value="true"></constructor-arg>
+    </bean>
 	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
-	<bean id="hibernateDaoSupport" abstract="true"
-		class="org.springframework.orm.hibernate3.support.HibernateDaoSupport">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
 	<bean id="namingStrategy" class="org.nthdimenzion.ddd.infrastructure.hibernate.CustomNamingStrategy" />
 
     <tx:annotation-driven transaction-manager="transactionManager" />
