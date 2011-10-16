@@ -4,14 +4,18 @@
 = Phase 1 Setup base project such that all embedded frameworks work out of the box (Current Phase) =
 
 
-1) Verify Create operation is working via a Test Servlet (Ensures that Spring/Hibernate Setup is correct)
+1) Verify Create operation is working via a Test Servlet (Ensures that Spring/Hibernate Setup is correct) -- Done
 
-2) Check Spring transactions are being applied
+2) Check Spring transactions are being applied -- Done
 
-3) Make maven build profiles such that Tests can be run on a In Memory Database
+3) Make maven build profiles such that Tests can be run on a In Memory Database -- Done
 
-4) Enable/Configure Spring Security
+4) Enable jetty maven plugin so that we get quicker server restarts and hence quicker development cycles -- Done
 
-5) Create Base Exception Handling classes and example code utilising JEHA
+5) Configure [http://logback.qos.ch/ Logback] -- Done
 
-6) Enable/Configure Unit/Integration Testing framework (Phase 2 will include utility classes for Testing)
+6) Enable/Configure Spring Security
+
+7) Create Base Exception Handling classes and example code
+
+8) Enable/Configure Unit/Integration Testing framework (Phase 2 will include utility classes for Testing)
