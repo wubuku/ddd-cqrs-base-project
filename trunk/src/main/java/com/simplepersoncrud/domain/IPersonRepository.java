@@ -2,7 +2,11 @@ package com.simplepersoncrud.domain;
 
 public interface IPersonRepository {
 
-     Long savePerson(Person person);
+    Long createPerson(Person person);
 
-     Person getPersonWithId(Long id);
+    Person getPersonWithId(Long id);
+
+    void deletePerson(Long id);
+
+
 }

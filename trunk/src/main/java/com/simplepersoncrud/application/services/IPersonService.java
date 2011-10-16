@@ -4,7 +4,9 @@ import com.simplepersoncrud.domain.Person;
 
 public interface IPersonService {
 
-    Long savePerson(Person person);
+    Long createPerson(Person person);
 
     Person getPersonWithId(Long id);
+
+    void deletePerson(Long id);
 }

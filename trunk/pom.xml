@@ -49,20 +49,32 @@
             <version>${zk.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-core</artifactId>
+            <version>3.0</version>
+        </dependency>
+
         <!-- Zkoss dependecies end -->
 
         <!-- Logging dependecies start -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.5</version>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>0.9.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>0.9.30</version>
         </dependency>
 
         <!-- Logging dependecies end -->
@@ -168,28 +180,19 @@
         </dependency>
         <!-- Spring dependecies end -->
 
-        <!-- Event Bus dependencies start -->
-        <dependency>
-            <groupId>org.bushe</groupId>
-            <artifactId>eventbus</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <!-- Event Bus dependencies end -->
-
-        <!-- Jeha dependencies start-->
-        <dependency>
-            <groupId>org.nthdimenzion</groupId>
-            <artifactId>jeha</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <!-- Jeha dependencies end -->
-
         <!-- bean Utilities dependencies  start-->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils-core</artifactId>
             <version>1.8.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.3</version>
+        </dependency>
+
         <!-- bean Utilities dependencies  end-->
 
         <!-- Mybatis dependencies  start -->
@@ -290,8 +293,10 @@
             <groupId>com.natpryce</groupId>
             <artifactId>make-it-easy</artifactId>
             <version>3.1.0</version>
+            <scope>test</scope>
         </dependency>
         <!-- Testing dependencies end -->
+
 
     </dependencies>
 
@@ -311,6 +316,7 @@
     <build>
         <defaultGoal>package</defaultGoal>
         <finalName>BaseProject</finalName>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -372,6 +378,46 @@
                 </dependencies>
                 <configuration>
                     <testSourceDirectory>/src/test/java</testSourceDirectory>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.8</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>2.2.4</version>
+                        <scope>test</scope>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>jta</artifactId>
+                        <version>1.1</version>
+                        <scope>test</scope>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>javassist</groupId>
+                        <artifactId>javassist</artifactId>
+                        <version>3.4.GA</version>
+                        <scope>test</scope>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>9966</stopPort>
+                    <stopKey>foo</stopKey>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>logback.configurationFile</name>
+                            <value>\WEB-INF\logback.xml</value>
+                        </systemProperty>
+                    </systemProperties>
                 </configuration>
             </plugin>
 
