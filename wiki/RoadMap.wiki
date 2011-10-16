@@ -10,7 +10,8 @@
 
 3) Make maven build profiles such that Tests can be run on a In Memory Database -- Done
 
-4) Enable jetty maven plugin so that we get quicker server restarts and hence quicker development cycles -- Done
+4) Enable [http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin 
+Jetty Maven Plugin]  so that we get quicker server restarts and hence quicker development cycles -- Done
 
 5) Configure [http://logback.qos.ch/ Logback] -- Done
 
