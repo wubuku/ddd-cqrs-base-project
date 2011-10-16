@@ -19,7 +19,12 @@ public class PersonRepository extends GenericHibernateRepository<Person,Long> im
     }
 
     @Override
-    public Long savePerson(Person person) {
+    public void deletePerson(Long id) {
+        delete(id);
+    }
+
+    @Override
+    public Long createPerson(Person person) {
         person = save(person);
         return person.getId();
     }
