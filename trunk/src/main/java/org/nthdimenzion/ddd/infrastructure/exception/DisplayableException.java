@@ -6,7 +6,7 @@ import javax.management.RuntimeErrorException;
 
 public final class DisplayableException extends RuntimeException implements IBaseException{
     private final ErrorDetails errorDetails;
-    private final static DisplayableException DEFAULT_UI_EXCEPTION = new DisplayableException();
+    public final static DisplayableException DEFAULT_UI_EXCEPTION = new DisplayableException();
 
     public DisplayableException() {
         this.errorDetails = ErrorDetails.UI_ERROR_DETAILS;
