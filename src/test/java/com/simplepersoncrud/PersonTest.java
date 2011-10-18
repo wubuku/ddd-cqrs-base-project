@@ -2,6 +2,7 @@ package com.simplepersoncrud;
 
 import com.simplepersoncrud.application.services.IPersonService;
 import com.simplepersoncrud.domain.Person;
+import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class PersonTest extends AbstractJUnit4SpringContextTests {
     private IPersonService personService;
 
     @Test
-    public void testSavePersonDetails(){
+    public void testSavePersonDetails() throws PersonCreationException {
         Person person = make(a(Person));
         Long personId = personService.createPerson(person);
         person = personService.getPersonWithId(personId);
@@ -32,7 +33,7 @@ public class PersonTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
-    public void testDeletePersonDetails(){
+    public void testDeletePersonDetails() throws PersonCreationException {
         Person person = make(a(Person));
         Long personId = personService.createPerson(person);
         Assert.notNull(personId);

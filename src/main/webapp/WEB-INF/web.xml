@@ -52,10 +52,10 @@
     </servlet-mapping>
 
     <!-- Included only for temporary testing start -->
-    <servlet-mapping>
+    <!--servlet-mapping>
         <servlet-name>PersonTestServlet</servlet-name>
         <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping-->
     <!-- Included only for temporary testing end -->
 
 
@@ -80,11 +80,11 @@
 
 
     <!-- Included only for temporary testing start -->
-    <servlet>
+    <!--servlet>
         <display-name>PersonTestServlet</display-name>
         <servlet-name>PersonTestServlet</servlet-name>
         <servlet-class>com.simplepersoncrud.presentation.PersonTestServlet</servlet-class>
-    </servlet>
+    </servlet-->
     <!-- Included only for temporary testing end -->
 
 
