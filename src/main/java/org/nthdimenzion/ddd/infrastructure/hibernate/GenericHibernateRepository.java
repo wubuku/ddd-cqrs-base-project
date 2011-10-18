@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class GenericHibernateRepository<E, K extends Serializable> {
+public abstract class GenericHibernateRepository<E extends Object, K extends Serializable> {
     protected HibernateTemplate hibernateTemplate;
     private Class<E> clazz;
 

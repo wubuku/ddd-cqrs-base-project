@@ -3,6 +3,7 @@ package com.simplepersoncrud.application.services;
 import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.Person;
 import com.google.common.base.Preconditions;
+import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ private IPersonRepository personRepository;
 
     @Override
     @Transactional
-    public Long createPerson(Person person) {
+    public Long createPerson(Person person) throws PersonCreationException {
         logger.debug("Entry into createPerson(Person person) " + TransactionSynchronizationManager.isActualTransactionActive());
         Preconditions.checkNotNull(person);
         return personRepository.createPerson(person);
