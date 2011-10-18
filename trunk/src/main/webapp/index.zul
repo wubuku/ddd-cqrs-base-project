@@ -1,6 +1,26 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<zscript><![CDATA[
+import org.zkoss.zk.ui.*;
+
+public void sendToPersonSample(){
+Executions.sendRedirect("/personsample/personPanel.zul");
+}
+
+public void sendToLibraryManagement(){
+Executions.sendRedirect("/librarymanagement/libraryPanel.zul");
+}
+
+
+]]></zscript>
 <?page title="HelloWorld" contentType="text/html;charset=UTF-8"?>
-<zk>
     <window title="My First Window" border="normal" width="200px">
-    Hello, World12!
+    <vbox>
+        Hello, World12!
+        <a id="personSample" label="Person Sample" onClick="sendToPersonSample();"/>
+        <a id="libraryManagement" label="Library Management" onClick="sendToLibraryManagement();"/>
+    </vbox>
     </window>
 </zk>
