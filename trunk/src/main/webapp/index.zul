@@ -4,15 +4,19 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 <zscript><![CDATA[
 import org.zkoss.zk.ui.*;
+import org.nthdimenzion.presentation.infrastructure.Navigation;
 
 public void sendToPersonSample(){
-Executions.sendRedirect("/personsample/personPanel.zul");
+Navigation.redirectToPopup("personPanel");
 }
 
 public void sendToLibraryManagement(){
-Executions.sendRedirect("/librarymanagement/libraryPanel.zul");
+Navigation.redirect("libraryPanel");
 }
 
+public void newOnEachClick(){
+Navigation.redirectToPopupOnEachClick("libraryPanel");
+}
 
 ]]></zscript>
 <?page title="HelloWorld" contentType="text/html;charset=UTF-8"?>
@@ -21,6 +25,7 @@ Executions.sendRedirect("/librarymanagement/libraryPanel.zul");
         Hello, World12!
         <a id="personSample" label="Person Sample" onClick="sendToPersonSample();"/>
         <a id="libraryManagement" label="Library Management" onClick="sendToLibraryManagement();"/>
+        <a id="newOnEachClick" label="New PopUp On Each Click" onClick="newOnEachClick();"/>
     </vbox>
     </window>
 </zk>
