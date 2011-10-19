@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="viewResolver" class="org.nthdimenzion.presentation.infrastructure.ResourceBundleViewResolver">
+		<property name="basenames">
+			<array>
+				<value>presentation/views.properties</value>
+			</array>
+		</property>
+	</bean>
+    
+    <bean id="navigation" class="org.nthdimenzion.presentation.infrastructure.Navigation">
+        <property name="viewResolver"  ref="viewResolver"></property>
+    </bean>
+
+</beans>

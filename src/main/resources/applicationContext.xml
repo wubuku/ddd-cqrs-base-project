@@ -11,4 +11,5 @@
 
     <context:annotation-config/>
 <import resource="databaseContext.xml"/>
+<import resource="presentation/presentationBeanContext.xml"/>
 </beans>
