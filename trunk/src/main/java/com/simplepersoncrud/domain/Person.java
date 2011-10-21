@@ -1,5 +1,8 @@
 package com.simplepersoncrud.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.springframework.util.ObjectUtils;
+
 import javax.persistence.*;
 
 @javax.persistence.Entity
@@ -36,5 +39,22 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+         if(o instanceof Person){
+            Person obj = (Person)o;
+            return new EqualsBuilder().append(id,obj.id).isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtils.nullSafeHashCode(id);
     }
 }
