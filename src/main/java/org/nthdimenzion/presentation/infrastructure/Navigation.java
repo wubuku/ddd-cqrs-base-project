@@ -4,49 +4,54 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
+@Component
 public class Navigation {
 
-    static final Logger logger = LoggerFactory.getLogger(Navigation.class);
+    private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
 
-    public static AbstractCachingViewResolver viewResolver = new ResourceBundleViewResolver();
+    public final AbstractCachingViewResolver viewResolver;
 
-    public void setViewResolver(AbstractCachingViewResolver viewResolver) {
-        this.viewResolver = viewResolver;
+    @Autowired
+    public Navigation(AbstractCachingViewResolver viewResolver) {
+    this.viewResolver = viewResolver;
+    logger.debug("Inject dependencies");
     }
 
-    public static void redirect(String viewName) {
+    public void redirect(String viewName) {
 	Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName));
 	}
 
-     public static void redirectToPopupOnEachClick(String viewName) {
+     public void redirectToPopupOnEachClick(String viewName) {
 	Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName),"_blank");
 	}
 
-    public static void redirectToPopup(String viewName) {
+    public void redirectToPopup(String viewName) {
 	Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName),"_home");
 	}
 
-    public static void navigateToDefaultContainer(String viewName, Map<?, ?> arguments) {
+    public void navigateToDefaultContainer(String viewName, Map<?, ?> arguments) {
 	navigate(viewName,arguments,(String)null);
 	}
 
-	public static void  navigateTo(String viewName, Map<?, ?> arguments, org.zkoss.zk.ui.Component container) {
+	public void  navigateTo(String viewName, Map<?, ?> arguments, org.zkoss.zk.ui.Component container) {
 	viewResolver.navigate(viewName, arguments,container);
 	}
 
 
-	public static boolean viewExists(String viewName){
+	public boolean viewExists(String viewName){
 	return viewResolver.viewExists(viewName);
 	}
 
-	public static void navigate(String viewName, Map<?, ?> arguments,String componentName) {
+	public void navigate(String viewName, Map<?, ?> arguments,String componentName) {
 	viewResolver.navigate(viewName, arguments,componentName);
 	}
 
-	public static Window openModalWindow(String viewName, Map<?, ?> arguments){
+	public Window openModalWindow(String viewName, Map<?, ?> arguments){
 	Window window = viewResolver.getWindowForViewName(viewName,arguments);
 	try {
 		window.doModal();

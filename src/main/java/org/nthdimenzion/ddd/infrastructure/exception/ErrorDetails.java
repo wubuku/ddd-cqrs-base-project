@@ -60,7 +60,15 @@ public class ErrorDetails {
 
     @Override
     public boolean equals(Object o) {
-        return new EqualsBuilder().append(errorCode,errorCode).isEquals();
+        if (this == o) {
+            return true;
+        }
+        if(o instanceof ErrorDetails){
+            ErrorDetails obj = (ErrorDetails)o;
+            return new EqualsBuilder().append(errorCode,obj.errorCode).isEquals();
+        }
+        return false;
+
     }
 
     @Override

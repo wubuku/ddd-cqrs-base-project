@@ -11,8 +11,5 @@
 		</property>
 	</bean>
     
-    <bean id="navigation" class="org.nthdimenzion.presentation.infrastructure.Navigation">
-        <property name="viewResolver"  ref="viewResolver"></property>
-    </bean>
 
 </beans>

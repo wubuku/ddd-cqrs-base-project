@@ -5,17 +5,19 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
 <zscript><![CDATA[
 import org.zkoss.zk.ui.*;
 import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.zkoss.spring.SpringUtil;
+Navigation navigation = (Navigation)SpringUtil.getBean("navigation");
 
 public void sendToPersonSample(){
-Navigation.redirectToPopup("personPanel");
+navigation.redirectToPopup("personPanel");
 }
 
 public void sendToLibraryManagement(){
-Navigation.redirect("libraryPanel");
+navigation.redirect("libraryPanel");
 }
 
 public void newOnEachClick(){
-Navigation.redirectToPopupOnEachClick("libraryPanel");
+navigation.redirectToPopupOnEachClick("libraryPanel");
 }
 
 ]]></zscript>
