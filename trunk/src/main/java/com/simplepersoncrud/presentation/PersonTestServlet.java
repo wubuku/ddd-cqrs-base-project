@@ -29,8 +29,7 @@ static final Logger logger = LoggerFactory.getLogger(PersonTestServlet.class);
         logger.debug("**** DO GET *****");
         WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         IPersonService personService =(IPersonService)springContext.getBean("personService");
-        Person person = new Person();
-        person.setName("Sudarshan12");
+        Person person = new Person("Sudarshan12");
         Long personId = null;
         try {
             personId = personService.createPerson(person);

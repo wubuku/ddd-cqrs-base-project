@@ -24,6 +24,7 @@
 		<property name="namingStrategy" ref="namingStrategy"></property>
 				<property name="packagesToScan">
 			<list>
+                <value>org.nthdimenzion.ddd.domain</value>
 				<value>com.simplepersoncrud.domain</value>
 			</list>
 		</property>

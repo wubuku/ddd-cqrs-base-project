@@ -1,37 +1,20 @@
 package com.simplepersoncrud.domain;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.springframework.util.ObjectUtils;
-
-import javax.persistence.*;
+import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
+import org.nthdimenzion.ddd.domain.annotations.DomainAggregateRoot;
 
 @javax.persistence.Entity
-@Table
-public class Person {
+@DomainAggregateRoot
+public class Person extends BaseAggregateRoot {
 
-    private Long id;
     private String name;
-    private Long version;
 
-    @Version
-    public Long getVersion() {
-        return version;
+    Person() {
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
+    public Person(String name) {
+        this.name = name;
     }
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
     public String getName() {
         return name;
@@ -39,22 +22,5 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-         if(o instanceof Person){
-            Person obj = (Person)o;
-            return new EqualsBuilder().append(id,obj.id).isEquals();
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return ObjectUtils.nullSafeHashCode(id);
     }
 }
