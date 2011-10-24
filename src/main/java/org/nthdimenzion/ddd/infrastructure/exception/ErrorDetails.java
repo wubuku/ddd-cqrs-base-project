@@ -1,7 +1,7 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
-import com.google.common.base.Objects;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 public class ErrorDetails {
@@ -60,15 +60,11 @@ public class ErrorDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if(o instanceof ErrorDetails){
+        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
             ErrorDetails obj = (ErrorDetails)o;
             return new EqualsBuilder().append(errorCode,obj.errorCode).isEquals();
         }
-        return false;
-
+        return EqualsFacilitator.initialChecks(o, this);
     }
 
     @Override

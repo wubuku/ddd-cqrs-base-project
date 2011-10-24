@@ -14,8 +14,7 @@ public class PersonMaker {
 
     public static final Instantiator<Person> Person = new Instantiator<Person>() {
         public Person instantiate(PropertyLookup<Person> lookup) {
-            Person person = new Person();
-            person.setName(lookup.valueOf(name, "Sudarshan"));
+            Person person = new Person(lookup.valueOf(name, "Sudarshan"));
             return person;
         }
     };

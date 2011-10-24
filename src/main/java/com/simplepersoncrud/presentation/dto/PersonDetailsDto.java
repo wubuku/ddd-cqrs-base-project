@@ -1,6 +1,7 @@
 package com.simplepersoncrud.presentation.dto;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
@@ -36,14 +37,10 @@ public class PersonDetailsDto implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+            return EqualsBuilder.reflectionEquals(o,this) ;
         }
-        if (o instanceof PersonDetailsDto) {
-            PersonDetailsDto obj = (PersonDetailsDto) o;
-            return EqualsBuilder.reflectionEquals(obj,this);
-        }
-        return false;
+        return EqualsFacilitator.initialChecks(o, this);
     }
 
     @Override

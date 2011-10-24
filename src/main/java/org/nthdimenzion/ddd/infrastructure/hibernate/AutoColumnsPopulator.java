@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import org.joda.time.DateTime;
 
 public class AutoColumnsPopulator extends EmptyInterceptor implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -14,9 +15,9 @@ public class AutoColumnsPopulator extends EmptyInterceptor implements Serializab
 	@Override
 	public boolean onSave(Object entity, Serializable id, Object[] currentState, String[] propertyNames, Type[] types) {
 	setValue(currentState, propertyNames, "createdBy", "Template User");
-	setValue(currentState, propertyNames, "createdTxTimestamp", new Timestamp(new Date().getTime()));
+	setValue(currentState, propertyNames, "createdTxTimestamp", DateTime.now());
 	setValue(currentState, propertyNames, "updatedBy", "Template User");
-	setValue(currentState, propertyNames, "updatedTxTimestamp", new Timestamp(new Date().getTime()));
+	setValue(currentState, propertyNames, "updatedTxTimestamp", DateTime.now());
 	return true;
 	}
 
@@ -31,7 +32,7 @@ public class AutoColumnsPopulator extends EmptyInterceptor implements Serializab
 	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
 			String[] propertyNames, Type[] types) {
 	setValue(currentState, propertyNames, "updatedBy", "Template User");
-	setValue(currentState, propertyNames, "updatedTxTimestamp", new Timestamp(new Date().getTime()));
+	setValue(currentState, propertyNames, "updatedTxTimestamp", DateTime.now());
 	return true;
 	}
 
