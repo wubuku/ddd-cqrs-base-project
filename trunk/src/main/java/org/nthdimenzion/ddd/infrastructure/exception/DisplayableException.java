@@ -1,9 +1,5 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
-import sun.awt.DisplayChangedListener;
-
-import javax.management.RuntimeErrorException;
-
 public final class DisplayableException extends RuntimeException implements IBaseException{
     private final ErrorDetails errorDetails;
     public final static DisplayableException DEFAULT_UI_EXCEPTION = new DisplayableException();
@@ -18,6 +14,11 @@ public final class DisplayableException extends RuntimeException implements IBas
 
     public DisplayableException(ErrorDetails errorDetails) {
         this.errorDetails = errorDetails;
+    }
+
+    public DisplayableException havingCause(Throwable cause){
+        this.errorDetails.setException(cause);
+        return this;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.simplepersoncrud.presentation;
 
 import com.simplepersoncrud.application.services.IPersonService;
 import com.simplepersoncrud.domain.Person;
+import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
 import org.slf4j.Logger;
@@ -29,9 +30,10 @@ static final Logger logger = LoggerFactory.getLogger(PersonTestServlet.class);
         logger.debug("**** DO GET *****");
         WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         IPersonService personService =(IPersonService)springContext.getBean("personService");
-        Person person = new Person("Sudarshan12");
+        PersonFactory personFactory = (PersonFactory)springContext.getBean("personFactory");
         Long personId = null;
         try {
+            Person person = personFactory.createPerson("Sudarshan12");
             personId = personService.createPerson(person);
         } catch (PersonCreationException e) {
             throw DisplayableException.DEFAULT_UI_EXCEPTION;

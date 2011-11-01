@@ -2,6 +2,7 @@ package org.nthdimenzion.ddd;
 
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
+import com.simplepersoncrud.application.commands.CreatePersonCommand;
 import com.simplepersoncrud.application.services.IPersonService;
 import com.simplepersoncrud.domain.Person;
 import com.simplepersoncrud.domain.PersonFactory;
@@ -11,6 +12,7 @@ import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nthdimenzion.cqrs.command.ICommandHandlerRegistry;
 import org.nthdimenzion.object.utils.IIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +31,7 @@ import static com.simplepersoncrud.testdata.PersonMaker.Person;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class InjectionTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -56,6 +58,7 @@ public class InjectionTest extends AbstractTransactionalJUnit4SpringContextTests
     @Autowired
     private PersonFactory personFactory;
 
+
     @Test
     public void testInjections() throws PersonCreationException {
         Assert.notNull(personService);
@@ -64,7 +67,6 @@ public class InjectionTest extends AbstractTransactionalJUnit4SpringContextTests
         Assert.notNull(applicationEventBus);
         Assert.notNull(personRepository);
         Assert.notNull(personFactory);
-
     }
 
      @Test
