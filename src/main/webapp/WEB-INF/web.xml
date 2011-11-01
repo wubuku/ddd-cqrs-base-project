@@ -29,7 +29,12 @@
 		<display-name>Spring Context Loader</display-name>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+    <listener>
+        <!-- The Spring RequestContextLister uses thread bound variables so to
+        use this Spring freatures requires that we apply <disable-event-thread />
+        within zk.xml -->
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
     <listener>
         <description>ZK listener for session cleanup</description>
         <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
@@ -50,14 +55,6 @@
         <servlet-name>auEngine</servlet-name>
         <url-pattern>/zkau/*</url-pattern>
     </servlet-mapping>
-
-    <!-- Included only for temporary testing start -->
-    <!--servlet-mapping>
-        <servlet-name>PersonTestServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping-->
-    <!-- Included only for temporary testing end -->
-
 
     <servlet>
         <description>ZK loader for ZUML pages</description>

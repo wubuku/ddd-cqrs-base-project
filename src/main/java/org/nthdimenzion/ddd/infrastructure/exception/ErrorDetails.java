@@ -10,7 +10,8 @@ public class ErrorDetails {
     private String errorMessage = "Operation Failed.Please contact administrator";
     private Throwable exception;
     private Object otherDetails;
-    public static ErrorDetails UI_ERROR_DETAILS = new ErrorDetails("001","Operation Failed.Please contact administrator",null,null);
+    public static ErrorDetails UI_ERROR_DETAILS = new ErrorDetails("001", "Operation Failed.Please contact administrator", null, null);
+    public Boolean isSuppresException = Boolean.TRUE;
 
     public ErrorDetails(ErrorDetails errorDetails) {
         this.errorCode = errorDetails.errorCode;
@@ -19,9 +20,13 @@ public class ErrorDetails {
         this.otherDetails = errorDetails.otherDetails;
     }
 
-    public ErrorDetails(String errorCode, String errorMessage, Throwable exception, Object otherDetails) {
+    public ErrorDetails(String errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
+    }
+
+    public ErrorDetails(String errorCode, String errorMessage, Throwable exception, Object otherDetails) {
+        this(errorCode,errorMessage);
         this.exception = exception;
         this.otherDetails = otherDetails;
     }
@@ -61,8 +66,8 @@ public class ErrorDetails {
     @Override
     public boolean equals(Object o) {
         if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
-            ErrorDetails obj = (ErrorDetails)o;
-            return new EqualsBuilder().append(errorCode,obj.errorCode).isEquals();
+            ErrorDetails obj = (ErrorDetails) o;
+            return new EqualsBuilder().append(errorCode, obj.errorCode).isEquals();
         }
         return EqualsFacilitator.initialChecks(o, this);
     }

@@ -1,40 +1,37 @@
 package com.simplepersoncrud;
 
 import com.google.common.collect.Lists;
-import com.simplepersoncrud.application.services.IPersonService;
+import com.google.common.collect.Sets;
+import com.simplepersoncrud.application.commands.CreatePersonCommand;
+import com.simplepersoncrud.application.commands.DeletePersonCommand;
 import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.Person;
 import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
-import org.hibernate.SessionFactory;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nthdimenzion.object.utils.IIdGenerator;
+import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.UUID;
-
-import static com.simplepersoncrud.testdata.PersonMaker.*;
-import static com.natpryce.makeiteasy.MakeItEasy.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml","classpath:/queryContext.xml"})
+@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/queryContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
-    private IPersonService personService;
+    @Qualifier("simpleCommandBus")
+    private ICommandBus commandBus;
 
     @Autowired
     private IPersonFinder iPersonFinder;
@@ -46,39 +43,52 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     private PersonFactory personFactory;
 
     @Test
-    @Rollback()
     public void testSavePersonDetails() throws PersonCreationException {
-        Person person = personFactory.createPerson("Sudarshan");
+        Assert.notNull(commandBus);
 
-        Long personId = personService.createPerson(person);
-        person = personRepository.getPersonWithId(personId);
+        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sudarshan"));
+        Person person = personRepository.getPersonWithId(actualId);
 
-        Assert.notNull(personId);
+        Assert.isTrue(1L == actualId);
+        Assert.isTrue("Sudarshan".equals(person.getName()));
         Assert.notNull(person.getVersion());
         Assert.notNull(person.getDomainEventBus());
     }
 
-    @Test
-    public void testDeletePersonDetails() throws PersonCreationException {
-        Person person = personFactory.createPerson("Sudarshan");
-        Long personId = personService.createPerson(person);
 
-        personService.deletePerson(personId);
+    @Test(expected = DisplayableException.class)
+    public void testCreatePersonWithLongLengthName() {
 
-        Assert.isNull(personRepository.getPersonWithId(personId));
+        Long actualId = (Long) commandBus.send(new CreatePersonCommand("SudarshanSreenivasan"));
     }
 
     @Test
+    public void testCreatePersonHavingNameWithSpaces() {
+        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sud Sr"));
+
+        Assert.isNull(actualId);
+    }
+
+
+    @Test
+    public void testDeletePersonDetails() throws PersonCreationException {
+        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sudarshan"));
+
+        commandBus.send(new DeletePersonCommand(Sets.newHashSet(actualId)));
+
+        Assert.isNull(personRepository.getPersonWithId(actualId));
+    }
+
+
+    @Test
     public void testFindPeopleDetails() throws PersonCreationException {
-        List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan",1L),new PersonDetailsDto("Sudarshan",2L));
-        Long personId = personService.createPerson(make(a(Person)));
-        personId = personService.createPerson(make(a(Person)));
+        List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan1", 1L), new PersonDetailsDto("Sudarshan2", 2L));
+        commandBus.send(new CreatePersonCommand("Sudarshan1"));
+        commandBus.send(new CreatePersonCommand("Sudarshan2"));
 
         List<PersonDetailsDto> actualPeopleDetails = iPersonFinder.findAllPeople();
 
         Assert.notEmpty(actualPeopleDetails);
         Assert.isTrue(expectedPeople.equals(actualPeopleDetails));
     }
-
-
 }

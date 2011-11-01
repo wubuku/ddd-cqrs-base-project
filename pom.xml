@@ -212,6 +212,13 @@
         <!-- MyModel dependencies  end -->
 
         <!-- Joda  dependencies  start -->
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-money</artifactId>
@@ -295,6 +302,8 @@
             <version>3.1.0</version>
             <scope>test</scope>
         </dependency>
+
+
         <!-- Testing dependencies end -->
 
 
@@ -327,6 +336,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+
         <plugins>
             <!--  Facilitates downloading source and javadoc in Eclipse -->
             <plugin>
@@ -421,6 +431,11 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>emma-maven-plugin</artifactId>
+                <version>1.0-alpha-3</version>
+            </plugin>
         </plugins>
     </build>
 
@@ -442,7 +457,7 @@
             <id>test</id>
             <properties>
                 <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-                <jdbc.url>jdbc:hsqldb:mem:D:\\BaseProjectTest;shutdown=true</jdbc.url>
+                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProjectTest;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
                 <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
@@ -457,5 +472,17 @@
             </properties>
         </profile>
     </profiles>
+
+    <!-- To use the report goals in your POM or parent POM -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>emma-maven-plugin</artifactId>
+                <version>1.0-alpha-3</version>
+                <inherited>true</inherited>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

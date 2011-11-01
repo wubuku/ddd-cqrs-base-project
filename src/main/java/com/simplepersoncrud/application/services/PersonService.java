@@ -19,7 +19,7 @@ public class PersonService implements IPersonService {
 
 private IPersonRepository personRepository;
 
-    static final Logger logger = LoggerFactory.getLogger(PersonService.class);
+    private final Logger logger = LoggerFactory.getLogger(PersonService.class);
 
     // Required for CGLIB
     protected PersonService(){}
@@ -31,7 +31,7 @@ private IPersonRepository personRepository;
 
     @Override
     @Transactional
-    public Long createPerson(Person person) throws PersonCreationException {
+    public Long createPerson(Person person) {
         logger.debug("Entry into createPerson(Person person) " + TransactionSynchronizationManager.isActualTransactionActive());
         Preconditions.checkNotNull(person);
         return personRepository.createPerson(person);
