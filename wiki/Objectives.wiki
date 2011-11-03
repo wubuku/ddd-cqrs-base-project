@@ -34,8 +34,6 @@
 
   1 [http://eventbus.org/ Event Bus is a simple but powerful publish/subscribe API]
 
-  2 [http://sourceforge.net/projects/jeha/ Java Exception Handling Framework]
+  2 [http://code.google.com/p/modelmapper/ ModelMapper is an intelligent object mapping framework]
 
-  3 [http://code.google.com/p/modelmapper/ ModelMapper is an intelligent object mapping framework]
-
-  4 [http://code.google.com/p/mybatis/ MyBatis data mapper framework]
+  3 [http://code.google.com/p/mybatis/ MyBatis data mapper framework]
