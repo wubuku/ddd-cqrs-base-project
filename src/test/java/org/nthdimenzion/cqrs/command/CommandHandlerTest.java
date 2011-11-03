@@ -1,7 +1,7 @@
 package org.nthdimenzion.cqrs.command;
 
 import com.simplepersoncrud.application.commands.CreatePersonCommand;
-import com.simplepersoncrud.testdata.InvalidCommand;
+import org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.internal.util.Assert;
