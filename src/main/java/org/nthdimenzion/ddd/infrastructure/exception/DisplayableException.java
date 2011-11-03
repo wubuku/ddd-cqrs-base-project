@@ -22,6 +22,11 @@ public final class DisplayableException extends RuntimeException implements IBas
     }
 
     @Override
+    public Throwable getCause(){
+        return errorDetails.getException();
+    }
+
+    @Override
     public ErrorDetails getErrorDetails() {
         return new ErrorDetails(errorDetails);
     }
