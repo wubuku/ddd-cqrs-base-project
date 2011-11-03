@@ -16,6 +16,6 @@
 
 6) Enable/Configure Spring Security
 
-7) Create Base Exception Handling classes and example code
+7) [http://noobjuggler.blogspot.com/2011/11/simplified-exception-handling.html Exception Handling Framework]
 
 8) Enable/Configure Unit/Integration Testing framework (Phase 2 will include utility classes for Testing)
