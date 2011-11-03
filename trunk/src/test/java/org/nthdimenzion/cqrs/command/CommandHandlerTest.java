@@ -1,8 +1,7 @@
 package org.nthdimenzion.cqrs.command;
 
 import com.simplepersoncrud.application.commands.CreatePersonCommand;
-import com.simplepersoncrud.domain.Person;
-import com.simplepersoncrud.infrastructure.repositories.hibernate.PersonRepository;
+import com.simplepersoncrud.testdata.InvalidCommand;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.internal.util.Assert;
@@ -24,10 +23,6 @@ public class CommandHandlerTest {
     @Qualifier("simpleCommandBus")
     private ICommandBus commandBus;
 
-    @Autowired
-    private PersonRepository personRepository;
-
-
     @Test
     public void testCommandHandlerFinder(){
         Assert.notNull(commandHandlerRegistry);
@@ -36,5 +31,10 @@ public class CommandHandlerTest {
         Assert.isTrue(expectedCommandHandlerName.equalsIgnoreCase(actualCommandHandlerName));
     }
 
+    @Test(expected = NoCommandHandlerFoundException.class)
+    public void testCommandHandlerFinderForInvalidCommand(){
+        Assert.notNull(commandHandlerRegistry);
+        String actualCommandHandlerName = commandHandlerRegistry.findCommandHanlerFor(InvalidCommand.class).getClass().getSimpleName();
+    }
 
 }

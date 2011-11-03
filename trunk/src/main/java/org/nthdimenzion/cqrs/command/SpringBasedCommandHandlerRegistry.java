@@ -1,5 +1,7 @@
 package org.nthdimenzion.cqrs.command;
 
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -20,13 +22,18 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
     private static final Logger logger = LoggerFactory.getLogger(SpringBasedCommandHandlerRegistry.class);
 
     protected ApplicationContext applicationContext;
-    private Map<Class<? extends ICommand>, String> commandTypeToCommandHandler = newConcurrentMap();
+    private Map<Class<? extends ICommand>, String> commandTypeToCommandHandlerName = newConcurrentMap();
 
 
 
     @Override
     public ICommandHandler findCommandHanlerFor(Class<? extends ICommand> commandType) {
-        String commandHandlerName = commandTypeToCommandHandler.get(commandType);
+        Preconditions.checkNotNull(commandType);
+        String commandHandlerName = commandTypeToCommandHandlerName.get(commandType);
+        if(StringUtils.isEmpty(commandHandlerName)){
+            logger.error("No valid command Handler found for " + commandType.getClass().getName());
+            throw new NoCommandHandlerFoundException(commandType.getClass().getName());
+        }
         return applicationContext.getBean(commandHandlerName,ICommandHandler.class);
     }
 
@@ -37,7 +44,7 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
 
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
-    commandTypeToCommandHandler.clear();
+    commandTypeToCommandHandlerName.clear();
     }
 
     @Override
@@ -52,7 +59,10 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
             logger.debug("Entry postProcessAfterInitialization " + beanName);
             logger.debug("Command name is " + getHandledCommandType(clazz).getSimpleName());
             Class<? extends ICommand> commandType = (Class<? extends ICommand>) getHandledCommandType(clazz);
-            commandTypeToCommandHandler.put(commandType,beanName);
+            if(commandTypeToCommandHandlerName.containsKey(commandType)){
+            logger.warn("Value for " + commandType + " is currently " + commandTypeToCommandHandlerName.get(commandType) + " and will be overwritten by " + beanName);
+            }
+            commandTypeToCommandHandlerName.put(commandType,beanName);
         }
         return bean;
     }
