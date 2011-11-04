@@ -1,4 +1,4 @@
-package org.nthdimenzion.ddd;
+package integration.org.nthdimenzion.ddd;
 
 import com.google.common.eventbus.EventBus;
 import com.simplepersoncrud.application.services.IPersonService;

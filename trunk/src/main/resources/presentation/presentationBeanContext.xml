@@ -15,7 +15,15 @@
 		</property>
 	</bean>
 
-    <!--<bean id="personComposer" class="com.simplepersoncrud.presentation.composer.PersonComposer" scope="prototype" />-->
+    <bean id="multiLineMessageBox" class ="org.nthdimenzion.presentation.infrastructure.ZkMultiLineMessageBox" >
+        <constructor-arg name="messageBoxTemplatePath" value="/WEB-INF/messages/multiLineMessageBox.zul"/>
+    </bean>
+
+    <bean id="displayMessages" class ="org.nthdimenzion.presentation.infrastructure.ZkDisplayMessages">
+        <qualifier value="zkDisplayMessages"/>
+        <constructor-arg name="title" value="NthDimenzion Solutions Pvt Ltd"/>
+        <constructor-arg name="multiLineMessageBox" ref="multiLineMessageBox"/>
+    </bean>
 
 
 </beans>
