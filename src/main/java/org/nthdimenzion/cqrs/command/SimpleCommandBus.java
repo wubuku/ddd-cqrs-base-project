@@ -30,7 +30,7 @@ public class SimpleCommandBus implements ICommandBus {
             return commandHandler.handle(command);
         } catch (Throwable throwable) {
             boolean isExceptionHandled = handleException(throwable);
-            logger.debug("Is the exception handler " + isExceptionHandled);
+            logger.debug("Is exception handled " + isExceptionHandled);
             if (!isExceptionHandled) {
                 throw new DisplayableException().havingCause(throwable);
             }
@@ -39,7 +39,7 @@ public class SimpleCommandBus implements ICommandBus {
     }
 
     private boolean handleException(Throwable throwable) {
-        logger.error("Error bubbled up till CommandBus ",throwable);
+        logger.debug("Error bubbled up till CommandBus ",throwable);
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();
             if (errorDetails.isSuppresException) {
@@ -52,11 +52,11 @@ public class SimpleCommandBus implements ICommandBus {
 
     @Override
     public <C> void subscribe(Class<C> commandType, ICommandHandler handler) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Will be available in future realeses, Method Signature may change");
     }
 
     @Override
     public <C> void unsubscribe(Class<C> commandType, ICommandHandler handler) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Will be available in future realeses, Method Signature may change");
     }
 }

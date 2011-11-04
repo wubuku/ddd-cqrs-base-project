@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
+import org.nthdimenzion.presentation.exception.IExceptionHandler;
+import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
@@ -42,6 +44,10 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private PersonFactory personFactory;
 
+    @Autowired
+    @Qualifier("presentationDecoratedExceptionHandler")
+    private IExceptionHandler presentationDecoratedExceptionHandler;
+
     @Test
     public void testSavePersonDetails() throws PersonCreationException {
         Assert.notNull(commandBus);
@@ -60,6 +66,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     public void testCreatePersonWithLongLengthName() {
 
         Long actualId = (Long) commandBus.send(new CreatePersonCommand("SudarshanSreenivasan"));
+        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled() == false);
     }
 
     @Test
@@ -67,6 +74,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sud Sr"));
 
         Assert.isNull(actualId);
+        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
     }
 
 
