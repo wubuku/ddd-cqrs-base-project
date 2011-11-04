@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public @interface CommandHandlerAnnotation {
+public @interface CommandHandler {
 }

@@ -3,12 +3,12 @@ package com.simplepersoncrud.application.commands.handlers;
 import com.simplepersoncrud.application.commands.DeletePersonCommand;
 import com.simplepersoncrud.infrastructure.repositories.hibernate.PersonRepository;
 import org.nthdimenzion.cqrs.command.ICommandHandler;
-import org.nthdimenzion.cqrs.command.annotations.CommandHandlerAnnotation;
+import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@CommandHandlerAnnotation
+@CommandHandler
 public class DeletePeopleCommandHandler implements ICommandHandler<DeletePersonCommand, Void> {
 
     private final Logger logger = LoggerFactory.getLogger(DeletePeopleCommandHandler.class);
