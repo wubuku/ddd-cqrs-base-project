@@ -1,4 +1,4 @@
-package com.simplepersoncrud.testdata;
+package integration.com.simplepersoncrud.testdata;
 
 import com.natpryce.makeiteasy.Instantiator;
 import com.natpryce.makeiteasy.Property;

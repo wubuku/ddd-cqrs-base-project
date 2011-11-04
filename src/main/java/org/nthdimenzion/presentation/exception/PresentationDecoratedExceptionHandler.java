@@ -3,6 +3,7 @@ package org.nthdimenzion.presentation.exception;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
+import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,13 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
 
     private boolean isExceptionHandled = false;
 
+    private IDisplayMessages displayMessages;
+
+    @Autowired
+    public void setDisplayMessages(IDisplayMessages displayMessages) {
+        this.displayMessages = displayMessages;
+    }
+
     @Autowired
     @Qualifier("exceptionEventBus")
     public void PresentationDecoratedExceptionHandler(EventBus exceptionEventBus) {
@@ -28,6 +36,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
 
     @Subscribe
     public void exceptionHandler(ErrorDetails errorDetails){
+        displayMessages.displayError(errorDetails.toString());
         logger.debug("Entered into exception handler " + errorDetails);
         isExceptionHandled = true;
     }

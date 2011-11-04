@@ -1,4 +1,4 @@
-package com.simplepersoncrud;
+package integration.com.simplepersoncrud;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -10,12 +10,14 @@ import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
+import integration.com.simplepersoncrud.testdata.DummyDisplayMessages;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
 import org.nthdimenzion.presentation.exception.IExceptionHandler;
 import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
+import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
@@ -46,7 +48,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     @Qualifier("presentationDecoratedExceptionHandler")
-    private IExceptionHandler presentationDecoratedExceptionHandler;
+    private PresentationDecoratedExceptionHandler presentationDecoratedExceptionHandler;
 
     @Test
     public void testSavePersonDetails() throws PersonCreationException {
@@ -64,13 +66,16 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Test(expected = DisplayableException.class)
     public void testCreatePersonWithLongLengthName() {
-
         Long actualId = (Long) commandBus.send(new CreatePersonCommand("SudarshanSreenivasan"));
+
         Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled() == false);
     }
 
     @Test
     public void testCreatePersonHavingNameWithSpaces() {
+        IDisplayMessages displayMessages = new DummyDisplayMessages();
+        presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
+
         Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sud Sr"));
 
         Assert.isNull(actualId);

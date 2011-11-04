@@ -1,7 +1,10 @@
-package org.nthdimenzion.cqrs.command;
+package integration.org.nthdimenzion.cqrs.command;
 
 import com.simplepersoncrud.application.commands.CreatePersonCommand;
-import org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
+import integration.org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
+import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.cqrs.command.ICommandHandlerRegistry;
+import org.nthdimenzion.cqrs.command.NoCommandHandlerFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.internal.util.Assert;
