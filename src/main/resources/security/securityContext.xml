@@ -37,7 +37,7 @@
 			and sgsp.SECURITYPERMISSIONS = sp.id"/>
     </bean>
 
-    <bean id="authenticationSuccessHandler" class  = "org.nthdimenzion.security.application.services.AuthenticationSuccessHandler">
+    <bean id="authenticationSuccessHandler" class  = "org.nthdimenzion.security.presentation.AuthenticationSuccessHandler">
         <property name="alwaysUseDefaultTargetUrl"  value="true"/>
         <property name="defaultTargetUrl" value="/personSample/personPanel.zul"/>
     </bean>
