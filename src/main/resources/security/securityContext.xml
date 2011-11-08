@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <security:global-method-security pre-post-annotations="enabled"/>
+
+    <security:http auto-config="true">
+        <security:form-login login-page="/nthdimenzion/security/login.zul"
+                             default-target-url="/personsample/personPanel.zul" authentication-failure-url="/nthdimenzion/security/login.zul?login_error=1"/>
+        <security:logout logout-url="/logout" invalidate-session="true" />
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userDetailsService"/>
+    </security:authentication-manager>
+
+    <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSourceRef"/>
+        <property name="enableGroups" value="true"/>
+        <property name="enableAuthorities" value="false"/>
+        <property name="usersByUsernameQuery"
+                  value="select ul.username,ul.password,ul.enabled from USER_LOGIN ul where ul.username = ?"/>
+        <property name="groupAuthoritiesByUsernameQuery" value="select sg.id group_id,sg.name group_name,sp.PERMISSION_ID permission
+			from USER_LOGIN ul,SECURITY_GROUP sg,SECURITY_PERMISSION sp,
+			USERLOGIN_SECURITY_GROUPS ulsg,
+			SECURITYGROUP_SECURITY_PERMISSIONS sgsp
+			where ul.username = ?
+			and ul.id = ulsg.USERLOGIN
+			and ulsg.SECURITYGROUPS = sg.id
+			and sgsp.SECURITYGROUP = sg.id
+			and sgsp.SECURITYPERMISSIONS = sp.id"/>
+    </bean>
+
+
+</beans>

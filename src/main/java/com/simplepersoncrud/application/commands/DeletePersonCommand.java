@@ -1,7 +1,6 @@
 package com.simplepersoncrud.application.commands;
 
 import com.google.common.collect.Sets;
-import com.simplepersoncrud.domain.PersonId;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
 

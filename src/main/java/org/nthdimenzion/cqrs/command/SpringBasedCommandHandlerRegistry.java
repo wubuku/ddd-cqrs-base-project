@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newConcurrentMap;
 
 @Component
 public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistry, ApplicationContextAware, DestructionAwareBeanPostProcessor {
@@ -25,16 +26,16 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
     private Map<Class<? extends ICommand>, String> commandTypeToCommandHandlerName = newConcurrentMap();
 
 
-
     @Override
     public ICommandHandler findCommandHanlerFor(Class<? extends ICommand> commandType) {
         Preconditions.checkNotNull(commandType);
         String commandHandlerName = commandTypeToCommandHandlerName.get(commandType);
-        if(StringUtils.isEmpty(commandHandlerName)){
+        if (StringUtils.isEmpty(commandHandlerName)) {
             logger.error("No valid command Handler found for " + commandType.getClass().getName());
             throw new NoCommandHandlerFoundException(commandType.getClass().getName());
         }
-        return applicationContext.getBean(commandHandlerName,ICommandHandler.class);
+        logger.debug("Finding command Handler " + commandHandlerName + " in bean context " + applicationContext.getBean(commandHandlerName));
+        return (ICommandHandler) applicationContext.getBean(commandHandlerName);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
 
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
-    commandTypeToCommandHandlerName.clear();
+        commandTypeToCommandHandlerName.clear();
     }
 
     @Override
@@ -55,14 +56,14 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class clazz = bean.getClass();
-        if (isCommandHandlerSubclass(clazz)){
+        if (isCommandHandlerSubclass(clazz)) {
             logger.debug("Entry postProcessAfterInitialization " + beanName);
-            logger.debug("Command name is " + getHandledCommandType(clazz).getSimpleName());
-            Class<? extends ICommand> commandType = (Class<? extends ICommand>) getHandledCommandType(clazz);
-            if(commandTypeToCommandHandlerName.containsKey(commandType)){
-            logger.warn("Value for " + commandType + " is currently " + commandTypeToCommandHandlerName.get(commandType) + " and will be overwritten by " + beanName);
+            logger.debug("Command name is " + getHandledCommandType(bean).getSimpleName());
+            Class<? extends ICommand> commandType = (Class<? extends ICommand>) getHandledCommandType(bean);
+            if (commandTypeToCommandHandlerName.containsKey(commandType)) {
+                logger.warn("Value for " + commandType + " is currently " + commandTypeToCommandHandlerName.get(commandType) + " and will be overwritten by " + beanName);
             }
-            commandTypeToCommandHandlerName.put(commandType,beanName);
+            commandTypeToCommandHandlerName.put(commandType, beanName);
         }
         return bean;
     }
@@ -72,15 +73,42 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
     }
 
 
-
-    private Class<?> getHandledCommandType(Class<?> clazz) {
+    private Class<?> getHandledCommandType(Object object) {
+        Class<?> clazz = object.getClass();
         Type[] genericInterfaces = clazz.getGenericInterfaces();
-        ParameterizedType type = findByRawType(genericInterfaces, ICommandHandler.class);
+        ParameterizedType type = findRawType(ICommandHandler.class, object);
         return (Class<?>) type.getActualTypeArguments()[0];
     }
 
-    private ParameterizedType findByRawType(Type[] genericInterfaces, Class<?> expectedRawType) {
+    private ParameterizedType findRawType(Class<?> expectedRawType, Object bean) {
+        ParameterizedType parameterizedType = null;
+        Type[] beanInterfaces = bean.getClass().getGenericInterfaces();
+        for (Type beanInterface : beanInterfaces) {
+            if (isBeanAdvised(beanInterface)) {
+                parameterizedType = findByRawTypeForNonAdvised(getTargetClassForAdvisedInstance(bean).getGenericInterfaces(), expectedRawType);
+            }
+        }
+        if (isNonAdvisedBean(parameterizedType))
+            parameterizedType = findByRawTypeForNonAdvised(beanInterfaces, expectedRawType);
+        return parameterizedType;
+    }
+
+    private boolean isNonAdvisedBean(ParameterizedType parameterizedType) {
+        return parameterizedType==null;
+    }
+
+    private boolean isBeanAdvised(Type beanInterface) {
+        return beanInterface.equals(Advised.class);
+    }
+
+    private Class<?> getTargetClassForAdvisedInstance(Object object) {
+        return ((Advised) object).getTargetClass();
+    }
+
+
+    private ParameterizedType findByRawTypeForNonAdvised(Type[] genericInterfaces, Class<?> expectedRawType) {
         for (Type type : genericInterfaces) {
+            System.out.println(type);
             if (type instanceof ParameterizedType) {
                 ParameterizedType parametrized = (ParameterizedType) type;
                 if (expectedRawType.equals(parametrized.getRawType())) {

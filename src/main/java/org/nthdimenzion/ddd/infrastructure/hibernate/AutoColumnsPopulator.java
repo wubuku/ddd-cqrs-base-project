@@ -1,13 +1,11 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 import org.joda.time.DateTime;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 public class AutoColumnsPopulator extends EmptyInterceptor implements Serializable {
 	private static final long serialVersionUID = 1L;

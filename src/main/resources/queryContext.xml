@@ -7,7 +7,7 @@
         <property name="dataSource" ref="dataSourceRef"/>
     </bean>
 
-    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean id="finderComponentScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.simplepersoncrud.presentation"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>

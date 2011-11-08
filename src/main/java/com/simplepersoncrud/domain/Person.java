@@ -3,14 +3,14 @@ package com.simplepersoncrud.domain;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
-import org.nthdimenzion.ddd.domain.annotations.DomainAggregateRoot;
+import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Embedded;
 
 @javax.persistence.Entity
-@DomainAggregateRoot
+@AggregateRoot
 public class Person extends BaseAggregateRoot {
 
     private String name;
@@ -26,7 +26,7 @@ public class Person extends BaseAggregateRoot {
         this.personId = personId;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 

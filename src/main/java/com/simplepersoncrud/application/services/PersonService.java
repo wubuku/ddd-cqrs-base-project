@@ -1,18 +1,14 @@
 package com.simplepersoncrud.application.services;
 
+import com.google.common.base.Preconditions;
 import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.Person;
-import com.google.common.base.Preconditions;
-import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.nthdimenzion.ddd.application.annotation.ApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.zkoss.zhtml.Pre;
 
 @ApplicationService
 public class PersonService implements IPersonService {
