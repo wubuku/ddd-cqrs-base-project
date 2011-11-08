@@ -38,6 +38,6 @@ static final Logger logger = LoggerFactory.getLogger(PersonTestServlet.class);
         } catch (PersonCreationException e) {
             throw DisplayableException.DEFAULT_UI_EXCEPTION;
         }
-        logger.debug("person.getId--> " + personService.getPersonWithId(personId).getVersion());
+        logger.debug("person.getId--> " + personService.getPersonWithId(personId));
     }
 }

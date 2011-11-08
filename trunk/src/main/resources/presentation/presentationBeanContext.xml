@@ -11,6 +11,7 @@
 		<property name="basenames">
 			<array>
 				<value>presentation/simplepersoncrudviews.properties</value>
+                <value>presentation/commonviews.properties</value>
 			</array>
 		</property>
 	</bean>

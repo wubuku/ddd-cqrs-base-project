@@ -38,17 +38,17 @@ public class SecurityGroup extends BaseAggregateRoot {
         return securityPermissions;
     }
 
-     void setSecurityPermissions(Set<SecurityPermission> securityPermissions) {
+    void setSecurityPermissions(Set<SecurityPermission> securityPermissions) {
         this.securityPermissions = securityPermissions;
     }
 
-    public void add(SecurityPermission securityPermission){
-    this.securityPermissions.add(securityPermission);
+    public void add(SecurityPermission securityPermission) {
+        this.securityPermissions.add(securityPermission);
     }
 
-    public void addAll(Set<SecurityPermission> securityPermissions){
-        if(UtilValidator.isNotEmpty(securityPermissions)){
-            for(SecurityPermission securityPermission : securityPermissions){
+    public void addAll(Set<SecurityPermission> securityPermissions) {
+        if (UtilValidator.isNotEmpty(securityPermissions)) {
+            for (SecurityPermission securityPermission : securityPermissions) {
                 add(securityPermission);
             }
         }
@@ -61,5 +61,10 @@ public class SecurityGroup extends BaseAggregateRoot {
 
     public void setSecurityGroupId(SecurityGroupId securityGroupId) {
         this.securityGroupId = securityGroupId;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

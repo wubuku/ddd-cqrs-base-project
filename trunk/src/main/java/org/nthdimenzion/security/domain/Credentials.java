@@ -51,5 +51,10 @@ public class Credentials {
     public int hashCode() {
         return ObjectUtils.nullSafeHashCode(new Object[]{username,password});
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }
 

@@ -13,20 +13,20 @@ public abstract class BaseEntity {
     private LifeCycle lifeCycle;
 
     @Embedded
-    public LifeCycle getLifeCycle() {
+    protected LifeCycle getLifeCycle() {
         return lifeCycle;
     }
 
-    public void setLifeCycle(LifeCycle lifeCycle) {
+    protected void setLifeCycle(LifeCycle lifeCycle) {
         this.lifeCycle = lifeCycle;
     }
 
     @Version
-	public Long getVersion() {
+	protected Long getVersion() {
 	return version;
     }
 
-    public void setVersion(Long version) {
+    protected void setVersion(Long version) {
         this.version = version;
     }
 
