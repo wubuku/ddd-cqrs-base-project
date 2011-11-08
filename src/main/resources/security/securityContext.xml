@@ -11,13 +11,13 @@
     <security:global-method-security pre-post-annotations="enabled"/>
 
     <security:http auto-config="true">
-        <security:form-login login-page="/nthdimenzion/security/login.zul"
-                             default-target-url="/personsample/personPanel.zul" authentication-failure-url="/nthdimenzion/security/login.zul?login_error=1"/>
+        <security:form-login login-page="/nthdimenzion/security/login.zul" always-use-default-target="true"
+                             default-target-url="/personsample/personPanel.zul" authentication-failure-url="/nthdimenzion/security/login.zul?login_error=1" authentication-success-handler-ref="authenticationSuccessHandler"/>
         <security:logout logout-url="/logout" invalidate-session="true" />
     </security:http>
 
     <security:authentication-manager>
-        <security:authentication-provider user-service-ref="userDetailsService"/>
+        <security:authentication-provider user-service-ref="userService"/>
     </security:authentication-manager>
 
     <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
@@ -35,6 +35,11 @@
 			and ulsg.SECURITYGROUPS = sg.id
 			and sgsp.SECURITYGROUP = sg.id
 			and sgsp.SECURITYPERMISSIONS = sp.id"/>
+    </bean>
+
+    <bean id="authenticationSuccessHandler" class  = "org.nthdimenzion.security.application.services.AuthenticationSuccessHandler">
+        <property name="alwaysUseDefaultTargetUrl"  value="true"/>
+        <property name="defaultTargetUrl" value="/personSample/personPanel.zul"/>
     </bean>
 
 

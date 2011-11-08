@@ -19,7 +19,7 @@ public abstract class BaseAggregateRoot extends IdGeneratingBaseEntity {
     }
 
     @Transient
-    public EventBus getDomainEventBus() {
+    protected EventBus getDomainEventBus() {
         return domainEventBus;
     }
 }

@@ -9,4 +9,15 @@
     <context:component-scan base-package="integration.org.nthdimenzion.cqrs.command.testdata"></context:component-scan>
 
 
+<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+    <property name="scopes">
+        <map>
+            <entry key="session">
+                <bean class="org.springframework.context.support.SimpleThreadScope"/>
+            </entry>
+        </map>
+    </property>
+</bean>
+
+
 </beans>

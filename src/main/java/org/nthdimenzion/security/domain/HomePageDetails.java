@@ -10,17 +10,17 @@ import javax.persistence.Entity;
 
 @ValueObject
 @Entity
-public class SecurityPermission extends IdGeneratingBaseEntity {
+public class HomePageDetails extends IdGeneratingBaseEntity {
 
-    private String permissionId;
+    private String homepageViewId;
     private String description;
 
-    SecurityPermission() {
+    HomePageDetails() {
 
     }
 
-    public SecurityPermission(String permissionId,String description) {
-        this.permissionId = permissionId;
+    public HomePageDetails(String permissionId, String description) {
+        this.homepageViewId = permissionId;
         this.description = description;
     }
 
@@ -32,23 +32,23 @@ public class SecurityPermission extends IdGeneratingBaseEntity {
         this.description = description;
     }
 
-    public String getPermissionId() {
-        return new String(permissionId);
+    public String getHomepageViewId() {
+        return new String(homepageViewId);
     }
 
-    void setPermissionId(String permissionId) {
-        this.permissionId = permissionId;
+    void setHomepageViewId(String homepageViewId) {
+        this.homepageViewId = homepageViewId;
     }
 
     @Override
     public String toString() {
-        return new String(permissionId);
+        return new String(homepageViewId);
     }
 
     @Override
     public boolean equals(Object o) {
         if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
-            SecurityPermission obj = (SecurityPermission) o;
+            HomePageDetails obj = (HomePageDetails) o;
             return new EqualsBuilder().reflectionEquals(obj, this);
         }
         return EqualsFacilitator.initialChecks(o, this);
@@ -56,7 +56,7 @@ public class SecurityPermission extends IdGeneratingBaseEntity {
 
     @Override
     public int hashCode() {
-        return ObjectUtils.nullSafeHashCode(permissionId);
+        return ObjectUtils.nullSafeHashCode(homepageViewId);
     }
 
 }
