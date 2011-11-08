@@ -32,7 +32,7 @@
 4) Leverage open source projects to address infrastructure concerns.
 
 
-  1 [http://eventbus.org/ Event Bus is a simple but powerful publish/subscribe API]
+  1 [http://guava-libraries.googlecode.com/svn/trunk/javadoc/com/google/common/eventbus/package-summary.html The EventBus allows publish-subscribe-style communication between components]
 
   2 [http://code.google.com/p/modelmapper/ ModelMapper is an intelligent object mapping framework]
 
