@@ -25,7 +25,7 @@
 		<param-value>baseproject</param-value>
 	</context-param>
 
-	<listener>
+    <listener>
 		<display-name>Spring Context Loader</display-name>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -75,6 +75,17 @@
         <servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
     </servlet>
 
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- Included only for temporary testing start -->
     <!--servlet>
@@ -84,10 +95,15 @@
     </servlet-->
     <!-- Included only for temporary testing end -->
 
+    <session-config>
+		<session-timeout>-1</session-timeout>
+	</session-config>
+
 
     <welcome-file-list>
-		<welcome-file>index.zul</welcome-file>
+		<welcome-file>/nthdimenzion/security/login.zul</welcome-file>
 	</welcome-file-list>
+
 
 
 

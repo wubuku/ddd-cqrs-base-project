@@ -4,7 +4,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class IdGeneratingBaseEntity extends BaseEntity{

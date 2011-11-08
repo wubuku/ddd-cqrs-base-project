@@ -1,12 +1,8 @@
 package org.nthdimenzion.ddd.domain;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.nthdimenzion.object.utils.EqualsFacilitator;
-import org.springframework.util.ObjectUtils;
-
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 @MappedSuperclass
 public abstract class BaseEntity {

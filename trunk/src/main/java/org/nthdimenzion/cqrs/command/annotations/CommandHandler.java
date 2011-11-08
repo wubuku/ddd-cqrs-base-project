@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.nthdimenzion.cqrs.command.annotations;
 
 import org.springframework.stereotype.Component;

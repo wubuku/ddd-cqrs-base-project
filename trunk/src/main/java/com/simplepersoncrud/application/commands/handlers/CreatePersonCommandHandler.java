@@ -10,6 +10,7 @@ import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @CommandHandler
 public class CreatePersonCommandHandler implements ICommandHandler<CreatePersonCommand,Long>{
@@ -23,6 +24,7 @@ public class CreatePersonCommandHandler implements ICommandHandler<CreatePersonC
     private IPersonService personService;
 
     @Override
+    @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     public Long handle(CreatePersonCommand createPersonCommand) throws PersonCreationException {
         logger.debug("handle(CreatePersonCommand) createPersonCommand.getName() " + createPersonCommand.getName());
         Person person = personFactory.createPerson(createPersonCommand.getName());

@@ -1,4 +1,4 @@
-package com.simplepersoncrud.domain;
+package org.nthdimenzion.security.domain;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -10,17 +10,16 @@ import javax.persistence.Embeddable;
 
 @ValueObject
 @Embeddable
-public class PersonId {
+public class UserLoginId {
 
     private String uid;
 
-    public PersonId(final String uid){
+    public UserLoginId(final String uid) {
         Preconditions.checkNotNull(uid);
         this.uid = uid;
     }
 
-    PersonId(){
-
+    UserLoginId() {
     }
 
     public String getUid() {
@@ -38,9 +37,9 @@ public class PersonId {
 
     @Override
     public boolean equals(Object o) {
-    if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
-            PersonId obj = (PersonId)o;
-            return new EqualsBuilder().append(uid,obj.uid).isEquals();
+        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+            UserLoginId obj = (UserLoginId) o;
+            return new EqualsBuilder().reflectionEquals(this, obj);
         }
         return EqualsFacilitator.initialChecks(o, this);
     }
@@ -49,4 +48,5 @@ public class PersonId {
     public int hashCode() {
         return ObjectUtils.nullSafeHashCode(uid);
     }
+
 }

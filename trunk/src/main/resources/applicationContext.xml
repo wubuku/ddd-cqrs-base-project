@@ -13,6 +13,7 @@
     <import resource="databaseContext.xml"/>
     <import resource="queryContext.xml"/>
     <import resource="presentation/presentationBeanContext.xml"/>
+    <import resource="security/securityContext.xml"/>
 
     <bean id="exceptionEventBus" class="com.google.common.eventbus.EventBus">
         <constructor-arg name="identifier" value="exceptionEventBus"/>

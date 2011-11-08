@@ -35,6 +35,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
     }
 
     @Subscribe
+    @Override
     public void exceptionHandler(ErrorDetails errorDetails){
         displayMessages.displayError(errorDetails.toString());
         logger.debug("Entered into exception handler " + errorDetails);
@@ -48,6 +49,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
         exceptionEventBus.unregister(this);
     }
 
+    @Override
     public Boolean isExceptionHandled() {
         return new Boolean(isExceptionHandled);
     }

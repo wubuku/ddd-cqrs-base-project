@@ -25,6 +25,7 @@
 				<property name="packagesToScan">
 			<list>
                 <value>org.nthdimenzion.ddd.domain</value>
+                <value>org.nthdimenzion.security.domain</value>
 				<value>com.simplepersoncrud.domain</value>
 			</list>
 		</property>

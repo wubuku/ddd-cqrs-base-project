@@ -9,9 +9,14 @@ import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @DomainRepositoryImpl
 public class PersonRepository extends GenericHibernateRepository<Person, java.lang.Long> implements IPersonRepository {
+
+    PersonRepository(){
+
+    }
 
     @Autowired
     public PersonRepository(HibernateTemplate hibernateTemplate) {
@@ -24,6 +29,7 @@ public class PersonRepository extends GenericHibernateRepository<Person, java.la
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     public java.lang.Long createPerson(Person person) {
         person = save(person);
         return person.getId();

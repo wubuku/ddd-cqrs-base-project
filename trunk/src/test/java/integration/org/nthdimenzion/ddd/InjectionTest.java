@@ -1,10 +1,7 @@
 package integration.org.nthdimenzion.ddd;
 
 import com.google.common.eventbus.EventBus;
-import com.simplepersoncrud.application.services.IPersonService;
-import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.error.PersonCreationException;
-import com.simplepersoncrud.infrastructure.repositories.hibernate.PersonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.object.utils.IIdGenerator;
@@ -46,7 +43,7 @@ public class InjectionTest extends AbstractTransactionalJUnit4SpringContextTests
     }
 
      @Test
-    public void testIdGenerator() throws PersonCreationException {
+    public void testIdGenerator()  {
         Assert.notNull(idGenerator);
         Assert.notNull(idGenerator.nextId());
     }
