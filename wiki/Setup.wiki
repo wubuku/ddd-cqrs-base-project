@@ -31,7 +31,7 @@ Then you will get a BUILD SUCCESSFUL message, and the application has been deplo
 5) Open your favorite browser and goto http://localhost:8080/BaseProject
 
 
-A more detailed explanation of the above along with screen shots is available here 
+A more detailed explanation of the above along with screen shots is available [http://noobjuggler.blogspot.com/2011/11/how-to-deploy-dddcqrs-base-project.html here] 
 
 
 
