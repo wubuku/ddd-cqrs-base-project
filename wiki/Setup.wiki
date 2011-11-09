@@ -13,6 +13,31 @@
 
 4) Jboss AS 6.1.0.Final [http://www.jboss.org/jbossas/downloads/ Jboss AS 6.1.0.Final]
 
+
+===Steps to deploy the application===
+
+We will first run the application using [http://en.wikipedia.org/wiki/Jetty_(Web_server) Jetty]
+
+1) [http://code.google.com/p/ddd-cqrs-base-project/source/checkout Checkout] the project
+
+2) open command prompt and traverse to  %your checkout path%/ddd-cqrs-base-project\trunk\
+
+3) type in mvn clean compile install
+Then you will get a BUILD SUCCESSFUL message
+
+4) type in mvn jetty:run
+Then you will get a BUILD SUCCESSFUL message, and the application has been deployed
+
+5) Open your favorite browser and goto http://localhost:8080/BaseProject
+
+
+A more detailed explanation of the above along with screen shots is available here 
+
+
+
+Using Jboss --- This section will be updated soon
+
+
 ===Issues I encountered during Setup===
 
 *JBoss ships with its own version of hibernate which causes class loading problems*
