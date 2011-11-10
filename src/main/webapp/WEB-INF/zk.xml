@@ -11,6 +11,11 @@
         <disable-event-thread/>
     </system-config>
 
+    <language-config>
+		<addon-uri>/WEB-INF/layout/zk-addon.xml</addon-uri>
+	</language-config>
+
+
     <session-config>
         <!--  seconds -->
         <session-timeout>-1</session-timeout>
