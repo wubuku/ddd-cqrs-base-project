@@ -1,0 +1,34 @@
+<?page title="DDD/CQRS Base Project" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./wrapper"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+  <!-- <panel width="100%" border="normal" title="Product Introduction" sclass="complex">
+
+        <panelchildren>
+            <borderlayout width="100%" height="330px">
+                <west width="200px" collapsible="true" title="Quick Link">
+                    <div self="@{insert(right)}" sclass="logo"></div>
+                </west>
+                <center>
+                    <div self="@{insert(left)}" sclass="content"></div>
+                </center>
+            </borderlayout>
+            <div sclass="footer">
+                Copyright © 2011 NthDimenzion Solutions Private Ltd. All rights reserved.
+            </div>
+        </panelchildren>
+    </panel>-->
+    <div sclass="wrapper" id="wrapper">
+        <div sclass="top">
+            <!--<div self="@{insert(header)}"></div>-->
+            <include src="/nthdimenzion/layout/header.zul"/>
+        </div>
+        <div>
+            <include src="/nthdimenzion/layout/menu.zul"/>
+        </div>
+        <div sclass="mid">
+		    <div self="@{insert(content)}" id="center" />
+	    </div>
+	</div>
+</zk>

@@ -1,5 +1,4 @@
-delete from
-USERLOGIN_SECURITY_GROUPS;
+delete from USERLOGIN_SECURITY_GROUPS;
 
 delete from securityGROUP_security_permissions;
 
