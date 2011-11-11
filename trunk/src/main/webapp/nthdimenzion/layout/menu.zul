@@ -2,10 +2,16 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zscript><![CDATA[
    System.out.println ("Getting into menu")
 ]]></zscript>
- <div self="@{define(menuContent)}">
-        <a href = "#" id="hello" label="Hello Menu Content"> </a>
+    <div>
+    <tabbox id="mainTabBox" onSelect='sessionScope.put("bookmark",self.selectedTab.id)'>
+		<tabs zclass="e-tabs">
+			<tab label="Home" onClick='navigation.redirect("personPanel")' zclass="e-tab" id="dashBoadrdTab"/>
+		</tabs>
+	</tabbox>
+
     </div>
  </zk>

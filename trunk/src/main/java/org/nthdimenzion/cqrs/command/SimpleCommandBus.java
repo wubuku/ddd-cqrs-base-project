@@ -25,7 +25,7 @@ public class SimpleCommandBus implements ICommandBus {
 
     @Override
     public Object send(ICommand command) {
-        ICommandHandler commandHandler = commandHandlerRegistry.findCommandHanlerFor(command.getClass());
+        ICommandHandler commandHandler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
         try {
             return commandHandler.handle(command);
         } catch (Throwable throwable) {

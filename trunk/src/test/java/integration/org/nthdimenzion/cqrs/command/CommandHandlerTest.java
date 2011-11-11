@@ -32,8 +32,8 @@ public class CommandHandlerTest {
     public void testCommandHandlerFinder(){
         Assert.assertNotNull(commandHandlerRegistry);
 
-        ICommandHandler actualNonAdvisedCommandHandler = commandHandlerRegistry.findCommandHanlerFor(TestCommand.class);
-        ICommandHandler actualAdvisedCommandHandler = commandHandlerRegistry.findCommandHanlerFor(TestCommandForAdvised.class);
+        ICommandHandler actualNonAdvisedCommandHandler = commandHandlerRegistry.findCommandHandlerFor(TestCommand.class);
+        ICommandHandler actualAdvisedCommandHandler = commandHandlerRegistry.findCommandHandlerFor(TestCommandForAdvised.class);
 
         Assert.assertTrue(actualAdvisedCommandHandler instanceof AdvisedTestCommandHandler);
         Assert.assertTrue(actualNonAdvisedCommandHandler instanceof TestCommandHandler);

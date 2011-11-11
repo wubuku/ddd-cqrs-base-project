@@ -2,6 +2,7 @@
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./wrapper"?>
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:n="http://www.zkoss.org/2005/zk/native"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
   <!-- <panel width="100%" border="normal" title="Product Introduction" sclass="complex">
 
@@ -21,14 +22,30 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
     </panel>-->
     <div sclass="wrapper" id="wrapper">
         <div sclass="top">
-            <!--<div self="@{insert(header)}"></div>-->
             <include src="/nthdimenzion/layout/header.zul"/>
         </div>
-        <div>
+        <div sclass="tabs clr">
             <include src="/nthdimenzion/layout/menu.zul"/>
         </div>
+        <div sclass="pgTtl">
+		<n:h2 class="practices fl">
+			<span>
+				<label id="pagetitle" style="font-size:14px;color:#008872;line-height:30px;font-weight:bold" />
+				<label id="subpagetitle" style="font-size:12px;" />
+			</span>
+		</n:h2>
+		<n:h1 style="width:100%;text-align:center">
+			<label value="${requestScope.message}" id="successMsg" style="font-size:14px;color:#00AA00;line-height:40px;font-weight:bold" />
+		</n:h1>
+	    </div>
         <div sclass="mid">
 		    <div self="@{insert(content)}" id="center" />
 	    </div>
+	        <div sclass="footer">
+        		<div sclass="cBox">
+        			<div sclass="copyrights">Copyrights NthDimenzion Solutions Pvt Ltd. All rights reserved.</div>
+        			<div sclass="fr" />
+        		</div>
+        	</div>
 	</div>
 </zk>

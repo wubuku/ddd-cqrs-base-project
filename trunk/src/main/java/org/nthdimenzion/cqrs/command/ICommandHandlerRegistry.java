@@ -2,5 +2,5 @@ package org.nthdimenzion.cqrs.command;
 
 public interface ICommandHandlerRegistry {
 
-    ICommandHandler findCommandHanlerFor(Class<? extends ICommand> clazz);
+    ICommandHandler findCommandHandlerFor(Class<? extends ICommand> clazz);
 }

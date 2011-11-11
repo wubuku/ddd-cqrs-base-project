@@ -4,8 +4,8 @@ xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./personPanel"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
     <window id="personPanel"  apply="${personComposer}" title="Person Management" border="normal" width="200px" self="@{define(content)}">
-
     <vbox>
         <hbox>
             <a id="PersonCreate" label="Person Create" onClick="personComposer.createANewPerson();"/>
