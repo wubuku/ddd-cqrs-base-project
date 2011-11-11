@@ -1,0 +1,12 @@
+<!--<?init class="org.zkoss.zk.ui.util.Composition" arg0="/nthdimenzion/layout/layout.zul"?>-->
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+   <zscript><![CDATA[
+      System.out.println ("Getting into Header")
+   ]]></zscript>
+
+   <div self="@{define(header)}">
+        <a href = "#" id="hello" label="Hello Header"> </a>
+    </div>
+</zk>
