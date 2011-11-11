@@ -13,11 +13,12 @@ a:focus{-moz-outline-style: none;}
 .logo{background:url(../images/login_logo.png) no-repeat;display:block;height:68px;position:absolute;width:82px}
 
 
+
+
 .wrapper {
-	padding-bottom: 40px
+	padding-bottom: 20px
 }
 
-.wrapper{padding-bottom:40px;}
 
 .loginCont form{background:url(../images/login_form_bg.png) no-repeat;margin:auto;padding:95px 60px 0;width:245px ; height: 500px}
 .loginCont form input{background:#f2f2f2;border:solid 1px #ccc;margin:5px 0;padding:3px 2px;width:100%;}
@@ -85,7 +86,7 @@ a:focus{-moz-outline-style: none;}
 .top .tabs ul li{line-height:24px}
 .panelHead,.panelHeadTop,.panelTop,.panelFoot,.pgTtl,.grid table thead,.wrapper .footer,.btnCont{background:#e2eff4 url(../images/bg_sprite.gif) repeat-x left top;}
 
-.mid,.pgTtl{padding:0 20px;}
+.mid,.pgTtl{padding:0 1px;height: 100%}
 
 
 .pgTtl{background-position:0 -110px;height:30px;margin-bottom:8px;}

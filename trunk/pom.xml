@@ -481,7 +481,7 @@
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:hsqldb:file:D:\\BaseProject;shutdown=true</jdbc.url>
                 <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>
