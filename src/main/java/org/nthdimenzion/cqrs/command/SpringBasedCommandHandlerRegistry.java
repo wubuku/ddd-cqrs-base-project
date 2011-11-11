@@ -23,15 +23,18 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
     private static final Logger logger = LoggerFactory.getLogger(SpringBasedCommandHandlerRegistry.class);
 
     protected ApplicationContext applicationContext;
-    private Map<Class<? extends ICommand>, String> commandTypeToCommandHandlerName = newConcurrentMap();
+    public Map<Class<? extends ICommand>, String> commandTypeToCommandHandlerName = newConcurrentMap();
 
+    protected SpringBasedCommandHandlerRegistry(){
+    logger.debug("Constructor");
+    }
 
     @Override
-    public ICommandHandler findCommandHanlerFor(Class<? extends ICommand> commandType) {
+    public ICommandHandler findCommandHandlerFor(Class<? extends ICommand> commandType) {
         Preconditions.checkNotNull(commandType);
         String commandHandlerName = commandTypeToCommandHandlerName.get(commandType);
         if (StringUtils.isEmpty(commandHandlerName)) {
-            logger.error("No valid command Handler found for " + commandType.getClass().getName());
+            logger.error("No valid command Handler found for " + commandType.getClass().getName() + " commandTypeToCommandHandlerName " + commandTypeToCommandHandlerName);
             throw new NoCommandHandlerFoundException(commandType.getClass().getName());
         }
         logger.debug("Finding command Handler " + commandHandlerName + " in bean context " + applicationContext.getBean(commandHandlerName));
@@ -45,7 +48,8 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
 
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
-        commandTypeToCommandHandlerName.clear();
+        logger.debug("Destruction");
+        commandTypeToCommandHandlerName.remove(bean.getClass());
     }
 
     @Override
@@ -64,6 +68,7 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
                 logger.warn("Value for " + commandType + " is currently " + commandTypeToCommandHandlerName.get(commandType) + " and will be overwritten by " + beanName);
             }
             commandTypeToCommandHandlerName.put(commandType, beanName);
+            logger.debug(commandTypeToCommandHandlerName.toString());
         }
         return bean;
     }

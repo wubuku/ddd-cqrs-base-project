@@ -10,7 +10,7 @@ a:focus{-moz-outline-style: none;}
 .login{background-color:#bfccd2}
 .login a:link,.login a:visited{color:#666}
 .loginCont{margin:50px auto;width:940px;}
-.logo{background:url(../images/login_logo.png) no-repeat;display:block;height:168px;position:absolute;width:182px}
+.logo{background:url(../images/login_logo.png) no-repeat;display:block;height:68px;position:absolute;width:82px}
 
 
 .wrapper {
@@ -83,8 +83,6 @@ a:focus{-moz-outline-style: none;}
 .top .tabs ul li.current,.top .tabs ul li.current a{background-image:url(../images/menu_bg.gif);}
 .top .tabs ul{border:none;height:24px;margin-left:140px}
 .top .tabs ul li{line-height:24px}
-/*.top{background:url(../images/header_bg.png) repeat-x left bottom;padding-bottom:7px}
-.bdr{border-top:solid 5px #10a5e4;}*/
 .panelHead,.panelHeadTop,.panelTop,.panelFoot,.pgTtl,.grid table thead,.wrapper .footer,.btnCont{background:#e2eff4 url(../images/bg_sprite.gif) repeat-x left top;}
 
 .mid,.pgTtl{padding:0 20px;}
@@ -1518,8 +1516,8 @@ i.z-combobox-rounded-btn,i.z-datebox-rounded-btn,i.z-bandbox-rounded-btn,i.z-tim
 .e-tabs{
 	background-color: #FFFFFF;
 	background-image: url("");
-	padding-left: 0 px;
-	padding-top: 1 px;
+	padding-left: 0px;
+	padding-top: 1px;
 	list-style-image: none;
 	list-style-position: outside;
 	list-style-type: none;
