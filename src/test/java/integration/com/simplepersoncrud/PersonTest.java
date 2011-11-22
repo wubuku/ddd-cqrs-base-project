@@ -2,8 +2,8 @@ package integration.com.simplepersoncrud;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.simplepersoncrud.application.commands.CreatePersonCommand;
-import com.simplepersoncrud.application.commands.DeletePersonCommand;
+import com.simplepersoncrud.application.commands.UnRegisterCommand;
+import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
 import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.Person;
 import com.simplepersoncrud.domain.PersonFactory;
@@ -68,10 +68,10 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     }
 
     @Test
-    public void testSavePersonDetails() throws PersonCreationException {
+    public void testPersonRegistration() throws PersonCreationException {
         Assert.notNull(commandBus);
 
-        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sudarshan"));
+        Long actualId = (Long) commandBus.send(new PersonRegistrationCommand("Sudarshan"));
         Person person = personRepository.getPersonWithId(actualId);
 
         Assert.isTrue(1L == actualId);
@@ -83,7 +83,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Test(expected = DisplayableException.class)
     public void testCreatePersonWithLongLengthName() {
-        Long actualId = (Long) commandBus.send(new CreatePersonCommand("SudarshanSreenivasan"));
+        Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("SudarshanSreenivasan")));
 
         Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled() == false);
     }
@@ -93,7 +93,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         IDisplayMessages displayMessages = new DummyDisplayMessages();
         presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
 
-        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sud Sr"));
+        Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("Sud Sr")));
 
         Assert.isNull(actualId);
         Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
@@ -102,9 +102,9 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Test
     public void testDeletePersonDetails() throws PersonCreationException {
-        Long actualId = (Long) commandBus.send(new CreatePersonCommand("Sudarshan"));
+        Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("Sudarshan")));
 
-        commandBus.send(new DeletePersonCommand(Sets.newHashSet(actualId)));
+        commandBus.send(new UnRegisterCommand(Sets.newHashSet(actualId)));
 
         Assert.isNull(personRepository.getPersonWithId(actualId));
     }
@@ -112,9 +112,9 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Test
     public void testFindPeopleDetails() throws PersonCreationException {
-        List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan1", 1L), new PersonDetailsDto("Sudarshan2", 2L));
-        commandBus.send(new CreatePersonCommand("Sudarshan1"));
-        commandBus.send(new CreatePersonCommand("Sudarshan2"));
+        List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan2", 2L),new PersonDetailsDto("Sudarshan1", 1L));
+        commandBus.send(new PersonRegistrationCommand(("Sudarshan1")));
+        commandBus.send(new PersonRegistrationCommand(("Sudarshan2")));
 
         List<PersonDetailsDto> actualPeopleDetails = iPersonFinder.findAllPeople();
 

@@ -10,7 +10,7 @@ public abstract class BaseEntity {
 
     private Long version = 1L;
 
-    private LifeCycle lifeCycle;
+    private LifeCycle lifeCycle = new LifeCycle();
 
     @Embedded
     protected LifeCycle getLifeCycle() {
@@ -28,6 +28,14 @@ public abstract class BaseEntity {
 
     protected void setVersion(Long version) {
         this.version = version;
+    }
+
+    public void markAsArchived() {
+        lifeCycle.markAsArchived();
+    }
+
+    public void markAsActive(){
+        lifeCycle.markAsActive();
     }
 
 }

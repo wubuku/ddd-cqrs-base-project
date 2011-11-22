@@ -24,4 +24,8 @@ public interface IDisplayMessages<T> {
 	void confirm(String message, String title, int buttons, String icon, T eventListener);
 
     void clearMessage();
+
+    void showSuccessInPopUp(String message);
+
+    void showSuccessInPopUp();
 }

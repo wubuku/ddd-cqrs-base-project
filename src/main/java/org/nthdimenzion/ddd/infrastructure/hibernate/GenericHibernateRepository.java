@@ -1,6 +1,7 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
 import com.google.common.eventbus.EventBus;
+import org.nthdimenzion.ddd.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -8,7 +9,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class GenericHibernateRepository<E extends Object, K extends Serializable> {
+public abstract class GenericHibernateRepository<E extends BaseEntity, K extends Serializable> {
     protected HibernateTemplate hibernateTemplate;
     private Class<E> clazz;
 
@@ -40,5 +41,21 @@ public abstract class GenericHibernateRepository<E extends Object, K extends Ser
         hibernateTemplate.saveOrUpdate(entity);
         return entity;
     }
+
+    protected E deactivate(K id) {
+        E entity = get(id);
+        entity.markAsArchived();
+        entity = save(entity);
+        return entity;
+    }
+
+    protected E reactivate(K id) {
+        E entity = get(id);
+        entity.markAsActive();
+        entity = save(entity);
+        return entity;
+    }
+
+
 
 }
