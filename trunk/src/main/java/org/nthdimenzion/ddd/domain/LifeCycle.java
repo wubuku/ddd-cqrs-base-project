@@ -23,9 +23,14 @@ public final class LifeCycle {
 
     private EntityStatus entityStatus = EntityStatus.ACTIVE;
 
-    public void markAsRemoved() {
+    public void markAsArchived() {
         entityStatus = EntityStatus.ARCHIVE;
     }
+
+    public void markAsActive() {
+        entityStatus = EntityStatus.ACTIVE;
+    }
+
 
     public String getCreatedBy() {
         return createdBy;

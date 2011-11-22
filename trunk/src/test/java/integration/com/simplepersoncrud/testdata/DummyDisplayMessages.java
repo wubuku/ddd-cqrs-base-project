@@ -4,6 +4,16 @@ import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 
 public class DummyDisplayMessages implements IDisplayMessages<Object> {
     @Override
+    public void showSuccessInPopUp(String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void showSuccessInPopUp() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public void showConfirmation(Object eventListener) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

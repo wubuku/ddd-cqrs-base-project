@@ -46,6 +46,17 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
     }
 
     @Override
+    public void showSuccessInPopUp(String message) {
+        display(message, Messagebox.OK, Messagebox.INFORMATION,true);
+    }
+
+    @Override
+    public void showSuccessInPopUp() {
+        showSuccess(sucessfulOperationMessage);
+    }
+
+
+    @Override
     public void showMessage(String message) {
         display(message, Messagebox.OK, Messagebox.EXCLAMATION);
     }
@@ -85,8 +96,8 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
         l.setValue(null);
     }
 
-    private int display(String message, int buttons, String icon) {
-        if (isErrorMessage(icon) || isSuccessMessageLabelNotAvailable()) {
+    private int display(String message, int buttons, String icon,boolean isPopup){
+        if (isErrorMessage(icon) || isSuccessMessageLabelNotAvailable() || isPopup) {
             try {
                 return multiLineMessageBox.show(message, title, buttons, icon, true);
             } catch (InterruptedException e) {
@@ -97,6 +108,10 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
             l.setValue(message);
             return 0;
         }
+    }
+
+    private int display(String message, int buttons, String icon) {
+        return display(message,buttons,icon,false);
     }
 
     private boolean isSuccessMessageLabelNotAvailable() {
