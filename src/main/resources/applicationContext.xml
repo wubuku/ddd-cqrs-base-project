@@ -29,5 +29,4 @@
         <constructor-arg name="identifier" value="applicationEventBus"/>
         <qualifier value="applicationEventBus"/>
     </bean>
-
 </beans>

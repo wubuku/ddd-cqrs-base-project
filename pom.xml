@@ -334,8 +334,6 @@
             <version>1.8.5</version>
             <scope>test</scope>
         </dependency>
-
-
         <!-- Testing dependencies end -->
 
 
@@ -467,6 +465,22 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>emma-maven-plugin</artifactId>
                 <version>1.0-alpha-3</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            -*Composer*
+                        </filter>
+                        <filter>
+                            -*Dto*
+                        </filter>
+                        <filter>
+                            -*Util*
+                        </filter>
+                        <filter>
+                            -org.nthdimenzion.*presentation*
+                        </filter>
+                    </filters>
+                </configuration>
             </plugin>
         </plugins>
     </build>
