@@ -24,19 +24,19 @@ public class PersonRepository extends GenericHibernateRepository<Person, java.la
     }
 
     @Override
-    public void deletePerson(java.lang.Long id) {
+    public void unRegisterPerson(java.lang.Long id) {
         delete(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-    public java.lang.Long createPerson(Person person) {
+    public java.lang.Long registerPerson(Person person) {
         person = save(person);
         return person.getId();
     }
 
     @Override
-    public Person updatePerson(Person person) {
+    public Person changeNameFor(Person person) {
         return save(person);
     }
 

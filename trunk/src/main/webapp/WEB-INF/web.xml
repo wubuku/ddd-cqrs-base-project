@@ -86,15 +86,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
-    <!-- Included only for temporary testing start -->
-    <!--servlet>
-        <display-name>PersonTestServlet</display-name>
-        <servlet-name>PersonTestServlet</servlet-name>
-        <servlet-class>com.simplepersoncrud.presentation.PersonTestServlet</servlet-class>
-    </servlet-->
-    <!-- Included only for temporary testing end -->
-
     <session-config>
 		<session-timeout>-1</session-timeout>
 	</session-config>

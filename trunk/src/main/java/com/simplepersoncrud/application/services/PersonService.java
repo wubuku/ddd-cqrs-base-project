@@ -30,7 +30,7 @@ private IPersonRepository personRepository;
     public Long createPerson(Person person) {
         logger.debug("Entry into createPerson(Person person) " + TransactionSynchronizationManager.isActualTransactionActive());
         Preconditions.checkNotNull(person);
-        return personRepository.createPerson(person);
+        return personRepository.registerPerson(person);
     }
 
     @Override
@@ -42,7 +42,7 @@ private IPersonRepository personRepository;
     @Transactional
     public void deletePerson(Long id){
         Preconditions.checkNotNull(id);
-        personRepository.deletePerson(id);
+        personRepository.unRegisterPerson(id);
     }
 
 }
