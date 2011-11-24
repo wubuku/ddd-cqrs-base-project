@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import static org.fest.reflect.core.Reflection.method;
 @Component
 @Qualifier("simpleCommandBus")
 public class SimpleCommandBus implements ICommandBus {
@@ -17,7 +21,7 @@ public class SimpleCommandBus implements ICommandBus {
     private final Logger logger = LoggerFactory.getLogger(SimpleCommandBus.class);
 
     @Autowired
-    private ICommandHandlerRegistry commandHandlerRegistry;
+    private IMultiCommandHandlerRegistry commandHandlerRegistry;
 
     @Autowired
     @Qualifier("exceptionEventBus")
@@ -25,13 +29,14 @@ public class SimpleCommandBus implements ICommandBus {
 
     @Override
     public Object send(ICommand command) {
-        ICommandHandler commandHandler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
+        Handler handler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
         try {
-            return commandHandler.handle(command);
+            return handler.invokeMethod(command);
         } catch (Throwable throwable) {
             boolean isExceptionHandled = handleException(throwable);
             logger.debug("Is exception handled " + isExceptionHandled);
             if (!isExceptionHandled) {
+                logger.error(handler.toString(),throwable);
                 throw new DisplayableException().havingCause(throwable);
             }
         }
@@ -40,6 +45,9 @@ public class SimpleCommandBus implements ICommandBus {
 
     private boolean handleException(Throwable throwable) {
         logger.debug("Error bubbled up till CommandBus ",throwable);
+        if(throwable instanceof InvocationTargetException){
+            throwable = ((InvocationTargetException)throwable).getTargetException();
+        }
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();
             if (errorDetails.isSuppresException) {

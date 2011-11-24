@@ -1,15 +1,10 @@
 package integration.org.nthdimenzion.cqrs.command;
 
-import integration.org.nthdimenzion.cqrs.command.testdata.AdvisedTestCommandHandler;
-import integration.org.nthdimenzion.cqrs.command.testdata.TestCommand;
-import integration.org.nthdimenzion.cqrs.command.testdata.TestCommandForAdvised;
-import integration.org.nthdimenzion.cqrs.command.testdata.TestCommandHandler;
+import integration.org.nthdimenzion.cqrs.command.testdata.*;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nthdimenzion.cqrs.command.ICommandBus;
-import org.nthdimenzion.cqrs.command.ICommandHandler;
-import org.nthdimenzion.cqrs.command.ICommandHandlerRegistry;
+import org.nthdimenzion.cqrs.command.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
@@ -22,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class CommandHandlerTest {
 
     @Autowired
-    private ICommandHandlerRegistry commandHandlerRegistry;
+    private IMultiCommandHandlerRegistry commandHandlerRegistry;
 
     @Autowired
     @Qualifier("simpleCommandBus")
@@ -31,18 +26,16 @@ public class CommandHandlerTest {
     @Test
     public void testCommandHandlerFinder(){
         Assert.assertNotNull(commandHandlerRegistry);
+        Handler handlerForTestCommand = commandHandlerRegistry.findCommandHandlerFor(TestCommand.class);
+        Handler handlerForTestCommand1 = commandHandlerRegistry.findCommandHandlerFor(TestCommand1.class);
 
-        ICommandHandler actualNonAdvisedCommandHandler = commandHandlerRegistry.findCommandHandlerFor(TestCommand.class);
-        ICommandHandler actualAdvisedCommandHandler = commandHandlerRegistry.findCommandHandlerFor(TestCommandForAdvised.class);
-
-        Assert.assertTrue(actualAdvisedCommandHandler instanceof AdvisedTestCommandHandler);
-        Assert.assertTrue(actualNonAdvisedCommandHandler instanceof TestCommandHandler);
+        Assert.assertTrue("anyName".equals(handlerForTestCommand.getMethod().getName()));
+        Assert.assertTrue("anyNameWithoutSecurity".equals(handlerForTestCommand1.getMethod().getName()));
     }
 
-    /*@Test(expected = NoCommandHandlerFoundException.class)
+    @Test(expected = NoCommandHandlerFoundException.class)
     public void testCommandHandlerFinderForInvalidCommand(){
         Assert.assertNotNull(commandHandlerRegistry);
-        String actualCommandHandlerName = commandHandlerRegistry.findCommandHanlerFor(InvalidCommand.class).getClass().getSimpleName();
+        Handler handler = commandHandlerRegistry.findCommandHandlerFor(InvalidCommand.class);
     }
-*/
 }

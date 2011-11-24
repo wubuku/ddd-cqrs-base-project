@@ -6,6 +6,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Inherited
 public @interface Command {
     /**
      * Suggestion for a Server that this command should checked if the same command is sent again.<br>
