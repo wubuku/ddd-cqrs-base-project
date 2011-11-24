@@ -17,7 +17,8 @@ import java.util.Map;
 
 import static com.google.common.collect.Maps.newConcurrentMap;
 
-@Component
+//@Component
+@Deprecated
 public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistry, ApplicationContextAware, DestructionAwareBeanPostProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringBasedCommandHandlerRegistry.class);
@@ -113,7 +114,6 @@ public class SpringBasedCommandHandlerRegistry implements ICommandHandlerRegistr
 
     private ParameterizedType findByRawTypeForNonAdvised(Type[] genericInterfaces, Class<?> expectedRawType) {
         for (Type type : genericInterfaces) {
-            System.out.println(type);
             if (type instanceof ParameterizedType) {
                 ParameterizedType parametrized = (ParameterizedType) type;
                 if (expectedRawType.equals(parametrized.getRawType())) {
