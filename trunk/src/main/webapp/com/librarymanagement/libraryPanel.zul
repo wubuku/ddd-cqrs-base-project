@@ -1,0 +1,30 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./libraryPanel"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+
+pagetitle.setValue("Library Management Control Panel");
+subpagetitle.setValue("From here you can goto either the Book Control Panel or the Member Control Panel");
+
+
+]]></zscript>
+    <window id="libraryPanel"  title="Library Management Home" border="normal" width="100%" self="@{define(content)}" height="100%">
+
+    </window>
+
+        <vbox self="@{define(left)}">
+            <a id="Home" label="Home" onClick='navigation.redirect("libraryPanel")'/>
+            <a id="bookControlPanel" label="Book Control Panel" />
+            <a id="memberControlPanel" label="Member Control Panel" />
+        </vbox>
+
+
+</zk>
