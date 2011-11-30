@@ -1,0 +1,27 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./personRegister"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+pagetitle.setValue("Person Details");
+subpagetitle.setValue("You can update the person details, you can also un register the person if required");
+]]></zscript>
+    <window id="personRegister" apply="${personRegistrationComposer}" title="Person Registration Details" border="normal" width="100%" self="@{define(content)}" height="100%">
+     <vbox>
+        <hbox>
+            <label id = "lblPersonId" value="Person Id" visible="@{personRegistrationComposer.isUpdateView}"/>
+            <label id = "personId" value="@{dto.id}" visible="@{personRegistrationComposer.isUpdateView}"/>
+        </hbox>
+        <hbox>
+            <label id = "lblPersonName" value="Enter Person Name"/>
+            <textbox id = "txtPersonName" value = "@{dto.name}" />
+        </hbox>
+        <hbox>
+            <button id = "registerPerson" label="@{personRegistrationComposer.personRegistrationBtnLbl}" onClick="personRegistrationComposer.registerPerson()"/>
+            <button id = "unregisterPerson" label="Un Register Person" onClick="personRegistrationComposer.unRegisterPerson(Long.valueOf(personId.value))"      visible="@{personRegistrationComposer.isUpdateView}"/>
+        </hbox>
+     </vbox>
+    </window>
+</zk>
