@@ -1,4 +1,4 @@
-<configuration scan="true" scanPeriod="60 seconds">
+<configuration scan="true" scanPeriod="10 seconds">
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <!-- encoders are assigned the type
@@ -10,8 +10,6 @@
 
   <logger name="com.simplepersoncrud" level="DEBUG" />
   <logger name="org.nthdimenzion" level="DEBUG" />
-  <logger name=" org.springframework.security.web.authentication" level="DEBUG"/>
-
 
   <root level="ERROR">
     <appender-ref ref="STDOUT" />

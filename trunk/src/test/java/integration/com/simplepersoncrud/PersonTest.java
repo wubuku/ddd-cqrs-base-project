@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import com.simplepersoncrud.application.commands.UnRegisterCommand;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
 import com.simplepersoncrud.domain.IPersonRepository;
-import com.simplepersoncrud.domain.Person;
+import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import com.simplepersoncrud.presentation.IPersonFinder;
@@ -72,7 +72,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         Assert.notNull(commandBus);
 
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand("Sudarshan"));
-        Person person = personRepository.getPersonWithId(actualId);
+        SimplePerson person = personRepository.getPersonWithId(actualId);
 
         Assert.isTrue(1L == actualId);
 //        Assert.isTrue("Sudarshan".equals(person.getName()));

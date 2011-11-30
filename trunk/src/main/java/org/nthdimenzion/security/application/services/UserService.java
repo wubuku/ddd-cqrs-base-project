@@ -1,9 +1,8 @@
 package org.nthdimenzion.security.application.services;
 
 import org.nthdimenzion.ddd.domain.annotations.DomainService;
-import org.nthdimenzion.security.domain.UserDetailsDto;
+import org.nthdimenzion.security.domain.SystemUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,11 +13,11 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 public class UserService implements UserDetailsService{
 
     private JdbcDaoImpl jdbcDao;
-    private UserDetailsDto userDetailsDto;
+    private SystemUser systemUser;
 
     @Autowired
-    public void setUserDetailsDto(UserDetailsDto userDetailsDto) {
-        this.userDetailsDto = userDetailsDto;
+    public void setSystemUser(SystemUser systemUser) {
+        this.systemUser = systemUser;
     }
 
     @Autowired
@@ -28,7 +27,6 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        System.out.println(jdbcDao.getUsersByUsernameQuery());
-        return userDetailsDto.uses(jdbcDao.loadUserByUsername(username));
+        return systemUser.uses(jdbcDao.loadUserByUsername(username));
     }
 }

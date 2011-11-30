@@ -14,7 +14,7 @@ public class PersonFactory {
     @Autowired
     private IIdGenerator idGenerator;
 
-    public Person createPerson(String name) throws PersonCreationException {
+    public SimplePerson createPerson(String name) throws PersonCreationException {
         Preconditions.checkNotNull(name);
         if(name.length() > 10){
             ErrorDetails errorDetails = new ErrorDetails(ErrorDetails.UI_ERROR_DETAILS);
@@ -25,7 +25,7 @@ public class PersonFactory {
             throw new PersonCreationException(ErrorDetails.UI_ERROR_DETAILS);
         }
         PersonId personId = new PersonId(idGenerator.nextId());
-        return new Person(personId,name);
+        return new SimplePerson(personId,name);
     }
 
     public void setIdGenerator(IIdGenerator idGenerator) {

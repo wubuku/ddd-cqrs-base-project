@@ -17,6 +17,7 @@ public abstract class GenericHibernateRepository<E extends BaseEntity, K extends
     @Qualifier("domainEventBus")
     protected EventBus domainEventBus;
 
+    @Autowired
     public GenericHibernateRepository(HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
         this.clazz = ((Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);

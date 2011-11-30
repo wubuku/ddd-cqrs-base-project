@@ -2,7 +2,7 @@ package org.nthdimenzion.security.presentation;
 
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.infrastructure.Navigation;
-import org.nthdimenzion.security.domain.UserDetailsDto;
+import org.nthdimenzion.security.domain.SystemUser;
 import org.nthdimenzion.security.domain.UserLogin;
 import org.nthdimenzion.security.infrastructure.repositories.hibernate.UserLoginRepository;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     private Navigation navigation;
 
     @Autowired
-    private UserDetailsDto userDetailsDto;
+    private SystemUser systemUser;
 
     @Autowired
     private UserLoginRepository userLoginRepository;
@@ -58,12 +58,14 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-        UserLogin userLogin = userLoginRepository.findUserLoginWithUserName(userDetailsDto.getUsername());
+        UserLogin userLogin = userLoginRepository.findUserLoginWithUserName(systemUser.getUsername());
         logger.debug("Entry onAuthenticationSuccess " +  " getDefaultTargetUrl() " + getDefaultTargetUrl() + " isAlwaysUseDefaultTargetUrl() " + isAlwaysUseDefaultTargetUrl() + " navigation " + navigation
-        + "userDetails " + userDetailsDto + " userLogin.getHomepageViewId()  " + userLogin.getHomepageViewId());
+        + "userDetails " + systemUser + " userLogin.getHomepageViewId()  " + userLogin.getHomepageViewId());
         String homepageViewId = userLogin.getHomepageViewId();
         if(UtilValidator.isNotEmpty(homepageViewId)){
-            super.setTargetUrlParameter(navigation.findViewUrl(homepageViewId));
+            String viewUrl = navigation.findViewUrl(homepageViewId);
+            super.setTargetUrlParameter(viewUrl);
+            super.setDefaultTargetUrl(viewUrl);
         }
         super.onAuthenticationSuccess(request, response, authentication);
 
