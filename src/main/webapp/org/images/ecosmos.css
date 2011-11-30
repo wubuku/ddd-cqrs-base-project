@@ -1,0 +1,12 @@
+.labelReq {
+	color: red;
+	font-weight: bold;
+}
+
+.ecosmosLabel {
+	height: 1.2em; /* Same as <input> height */
+	padding-right: 1.1em;
+	text-align: right;
+	white-space: nowrap;
+	width: 1%;
+}
