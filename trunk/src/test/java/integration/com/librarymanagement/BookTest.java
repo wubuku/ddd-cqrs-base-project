@@ -7,6 +7,8 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nthdimenzion.security.domain.SystemUser;
+import org.nthdimenzion.testinfrastructure.testdata.TestUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.annotation.DirtiesContext;
@@ -21,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:/applicationContext.xml","classpath:/testContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -34,8 +36,13 @@ public class BookTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private IBookRepository bookRepository;
 
+    @Autowired
+    private SystemUser systemUser;
+
     @Test
     public void testPurchaseBook() {
+        systemUser.uses(new TestUserDetails());
+        System.out.println(systemUser);
         Book book = bookFactory.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD,1000));
 
         Long id = bookRepository.purchaseBook(book);
