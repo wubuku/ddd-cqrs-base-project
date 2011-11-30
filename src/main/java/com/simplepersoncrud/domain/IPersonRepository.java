@@ -5,14 +5,14 @@ import org.nthdimenzion.ddd.domain.annotations.DomainRepository;
 @DomainRepository
 public interface IPersonRepository {
 
-    java.lang.Long registerPerson(Person person);
+    java.lang.Long registerPerson(SimplePerson person);
 
-    Person getPersonWithId(java.lang.Long id);
+    SimplePerson getPersonWithId(java.lang.Long id);
 
     void unRegisterPerson(java.lang.Long id);
 
-    Person changeNameFor(Person person);
+    SimplePerson changeNameFor(SimplePerson person);
 
-    Person getPersonWithUid(PersonId personId);
+    SimplePerson getPersonWithUid(PersonId personId);
 
 }

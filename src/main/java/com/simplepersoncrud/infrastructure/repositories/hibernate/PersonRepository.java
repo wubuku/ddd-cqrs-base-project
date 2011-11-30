@@ -1,7 +1,7 @@
 package com.simplepersoncrud.infrastructure.repositories.hibernate;
 
 import com.simplepersoncrud.domain.IPersonRepository;
-import com.simplepersoncrud.domain.Person;
+import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.PersonId;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +12,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @DomainRepositoryImpl
-public class PersonRepository extends GenericHibernateRepository<Person, java.lang.Long> implements IPersonRepository {
+public class PersonRepository extends GenericHibernateRepository<SimplePerson, java.lang.Long> implements IPersonRepository {
 
     PersonRepository(){
 
@@ -30,30 +30,30 @@ public class PersonRepository extends GenericHibernateRepository<Person, java.la
 
     @Override
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-    public java.lang.Long registerPerson(Person person) {
+    public java.lang.Long registerPerson(SimplePerson person) {
         person = save(person);
         return person.getId();
     }
 
     @Override
-    public Person changeNameFor(Person person) {
+    public SimplePerson changeNameFor(SimplePerson person) {
         return save(person);
     }
 
-    public Person getPersonWithUid(PersonId personId) {
-        DetachedCriteria personFromUid = DetachedCriteria.forClass(Person.class);
+    public SimplePerson getPersonWithUid(PersonId personId) {
+        DetachedCriteria personFromUid = DetachedCriteria.forClass(SimplePerson.class);
         personFromUid.add(Restrictions.eq("personId", personId));
-        Person person = (Person) hibernateTemplate.findByCriteria(personFromUid).get(0);
+        SimplePerson person = (SimplePerson) hibernateTemplate.findByCriteria(personFromUid).get(0);
         return updatePersonWithDependencies(person);
     }
 
     @Override
-    public Person getPersonWithId(java.lang.Long id) {
-        Person person = get(id);
+    public SimplePerson getPersonWithId(java.lang.Long id) {
+        SimplePerson person = get(id);
         return updatePersonWithDependencies(person);
     }
 
-    private Person updatePersonWithDependencies(Person person) {
+    private SimplePerson updatePersonWithDependencies(SimplePerson person) {
         if (person != null)
             person.setDomainEventBus(domainEventBus);
         return person;

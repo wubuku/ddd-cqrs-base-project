@@ -12,7 +12,7 @@
     </system-config>
 
     <language-config>
-		<addon-uri>/WEB-INF/layout/zk-addon.xml</addon-uri>
+		<addon-uri>/WEB-INF/zkoss/zk-addon.xml</addon-uri>
 	</language-config>
 
 
@@ -29,7 +29,7 @@
     <session-config>
         <device-type>ajax</device-type>
         <automatic-timeout/>
-        <timeout-uri>/nthdimenzion/security/login.zul</timeout-uri>
+        <timeout-uri>/org/security/login.zul</timeout-uri>
     </session-config>
 
 </zk>

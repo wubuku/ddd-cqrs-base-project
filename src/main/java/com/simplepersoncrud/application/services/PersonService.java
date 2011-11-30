@@ -2,7 +2,7 @@ package com.simplepersoncrud.application.services;
 
 import com.google.common.base.Preconditions;
 import com.simplepersoncrud.domain.IPersonRepository;
-import com.simplepersoncrud.domain.Person;
+import com.simplepersoncrud.domain.SimplePerson;
 import org.nthdimenzion.ddd.application.annotation.ApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +27,14 @@ private IPersonRepository personRepository;
 
     @Override
     @Transactional
-    public Long createPerson(Person person) {
+    public Long createPerson(SimplePerson person) {
         logger.debug("Entry into createPerson(Person person) " + TransactionSynchronizationManager.isActualTransactionActive());
         Preconditions.checkNotNull(person);
         return personRepository.registerPerson(person);
     }
 
     @Override
-    public Person getPersonWithId(Long id) {
+    public SimplePerson getPersonWithId(Long id) {
         return personRepository.getPersonWithId(id);
     }
 

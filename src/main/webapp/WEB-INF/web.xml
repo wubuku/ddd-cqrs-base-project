@@ -92,7 +92,7 @@
 
 
     <welcome-file-list>
-		<welcome-file>/nthdimenzion/security/login.zul</welcome-file>
+		<welcome-file>/org/security/login.zul</welcome-file>
 	</welcome-file-list>
 
 

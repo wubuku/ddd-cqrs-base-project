@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static org.fest.reflect.core.Reflection.method;
 @Component
 @Qualifier("simpleCommandBus")
 public class SimpleCommandBus implements ICommandBus {

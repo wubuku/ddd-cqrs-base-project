@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.internal.util.Assert;
 import org.nthdimenzion.security.application.services.UserService;
-import org.nthdimenzion.security.domain.UserDetailsDto;
+import org.nthdimenzion.security.domain.SystemUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -41,7 +41,7 @@ public class SecurityTest extends AbstractTransactionalJUnit4SpringContextTests 
     @Test
     public void testFindUserDetailsFromUserName(){
         // Setup from import.sql
-        userService.setUserDetailsDto(new UserDetailsDto(null));
+        userService.setSystemUser(new SystemUser(null));
 
         UserDetails userDetails = userService.loadUserByUsername("sa");
 
@@ -52,7 +52,7 @@ public class SecurityTest extends AbstractTransactionalJUnit4SpringContextTests 
     @Test
     public void testLoadSecurityPermissionsForUserName(){
         // Setup from import.sql
-        userService.setUserDetailsDto(new UserDetailsDto(null));
+        userService.setSystemUser(new SystemUser(null));
 
         UserDetails userDetails = userService.loadUserByUsername("sa");
 
