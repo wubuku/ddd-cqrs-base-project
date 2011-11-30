@@ -348,6 +348,12 @@
             <artifactId>velocity</artifactId>
             <version>1.6.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.5</version>
+        </dependency>
         <!-- Utiltity end -->
 
     </dependencies>
