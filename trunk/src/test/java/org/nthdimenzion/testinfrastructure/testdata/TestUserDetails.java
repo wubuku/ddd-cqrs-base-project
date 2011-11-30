@@ -9,9 +9,15 @@ import java.util.Collection;
 
 public class TestUserDetails implements UserDetails {
 
+    Collection<GrantedAuthority> grantedAuthorities = Lists.newArrayList();
+
+    public TestUserDetails() {
+        grantedAuthorities.add(new GrantedAuthorityImpl("ROLE_SUPERADMIN"));
+    }
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return (Collection)Lists.newArrayList(new GrantedAuthorityImpl("ROLE_SUPERADMIN"));
+        return grantedAuthorities;
     }
 
     @Override
@@ -31,16 +37,36 @@ public class TestUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
+    }
+
+    public void grantAuthority(String authority) {
+        grantAuthorities(Lists.newArrayList(authority));
+    }
+
+    public void grantAuthorities(Collection<String> authorities) {
+        for (String authority : authorities) {
+            grantedAuthorities.add(new GrantedAuthorityImpl(authority));
+        }
+    }
+
+    public void revokeAuthority(String authority){
+        revokeAuthorities(Lists.newArrayList(authority));
+    }
+
+    public void revokeAuthorities(Collection<String> authorities){
+         for (String authority : authorities) {
+            grantedAuthorities.remove(new GrantedAuthorityImpl(authority));
+        }
     }
 }
