@@ -1,6 +1,6 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
-import com.google.common.eventbus.EventBus;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,12 +10,12 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
 public abstract class GenericHibernateRepository<E extends BaseEntity, K extends Serializable> {
-    protected HibernateTemplate hibernateTemplate;
+    protected final HibernateTemplate hibernateTemplate;
     private Class<E> clazz;
 
     @Autowired
     @Qualifier("domainEventBus")
-    protected EventBus domainEventBus;
+    protected IEventBus domainEventBus;
 
     @Autowired
     public GenericHibernateRepository(HibernateTemplate hibernateTemplate) {
@@ -24,6 +24,7 @@ public abstract class GenericHibernateRepository<E extends BaseEntity, K extends
     }
 
     protected GenericHibernateRepository() {
+    hibernateTemplate = null;
     }
 
     protected E get(K id) {

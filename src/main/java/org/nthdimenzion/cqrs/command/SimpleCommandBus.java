@@ -1,9 +1,10 @@
 package org.nthdimenzion.cqrs.command;
 
-import com.google.common.eventbus.EventBus;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.ddd.infrastructure.exception.IBaseException;
+import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 @Component
 @Qualifier("simpleCommandBus")
@@ -24,7 +24,7 @@ public class SimpleCommandBus implements ICommandBus {
 
     @Autowired
     @Qualifier("exceptionEventBus")
-    private EventBus exceptionEventBus;
+    private IEventBus exceptionEventBus;
 
     @Override
     public Object send(ICommand command) {
@@ -50,7 +50,7 @@ public class SimpleCommandBus implements ICommandBus {
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();
             if (errorDetails.isSuppresException) {
-                exceptionEventBus.post(errorDetails);
+                exceptionEventBus.raise(new OperationFailed(errorDetails));
                 return true;
             }
         }

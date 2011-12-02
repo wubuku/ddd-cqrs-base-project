@@ -103,7 +103,7 @@ public class Book extends BaseAggregateRoot{
     }
 
     @Columns(columns = { @Column(name = "AMOUNT"),@Column(name = "CURRENCY_CODE")})
-    @Type(type="org.nthdimenzion.ddd.domain.MoneyType")
+    @Type(type= "org.nthdimenzion.ddd.domain.sharedkernel.MoneyType")
     @NotNull
     public Money getCost() {
         return cost;
