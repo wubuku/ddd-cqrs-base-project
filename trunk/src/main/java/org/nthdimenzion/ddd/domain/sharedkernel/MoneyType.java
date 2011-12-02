@@ -1,4 +1,4 @@
-package org.nthdimenzion.ddd.domain;
+package org.nthdimenzion.ddd.domain.sharedkernel;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.HibernateException;

@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.object.utils.IIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,15 +24,15 @@ public class InjectionTest extends AbstractTransactionalJUnit4SpringContextTests
 
     @Autowired
     @Qualifier("exceptionEventBus")
-    private EventBus exceptionEventBus;
+    private IEventBus exceptionEventBus;
 
     @Autowired
     @Qualifier("domainEventBus")
-    private EventBus domainEventBus;
+    private IEventBus domainEventBus;
 
     @Autowired
     @Qualifier("applicationEventBus")
-    private EventBus applicationEventBus;
+    private IEventBus applicationEventBus;
 
 
 

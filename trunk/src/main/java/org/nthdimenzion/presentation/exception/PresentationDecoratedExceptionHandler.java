@@ -1,8 +1,9 @@
 package org.nthdimenzion.presentation.exception;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
+import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,29 +17,30 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
 
     private final Logger logger = LoggerFactory.getLogger(PresentationDecoratedExceptionHandler.class);
 
-    private final EventBus exceptionEventBus = null;
+    private final IEventBus exceptionEventBus;
 
     private boolean isExceptionHandled = false;
 
+    @Autowired
+    @Qualifier("zkDisplayMessages")
     private IDisplayMessages displayMessages;
 
-    @Autowired
     public void setDisplayMessages(IDisplayMessages displayMessages) {
         this.displayMessages = displayMessages;
     }
 
     @Autowired
-    @Qualifier("exceptionEventBus")
-    public void PresentationDecoratedExceptionHandler(EventBus exceptionEventBus) {
+    public PresentationDecoratedExceptionHandler(@Qualifier("exceptionEventBus")IEventBus exceptionEventBus) {
+        this.exceptionEventBus = exceptionEventBus;
         logger.debug("exceptionEventBus Injected into constructor " + exceptionEventBus);
         exceptionEventBus.register(this);
     }
 
     @Subscribe
     @Override
-    public void exceptionHandler(ErrorDetails errorDetails){
-        displayMessages.displayError(errorDetails.toString());
-        logger.debug("Entered into exception handler " + errorDetails);
+    public void failedOperationHandler(OperationFailed operationFailed){
+        displayMessages.displayError(operationFailed.errorDetails.toString());
+        logger.debug("Entered into exception handler " + operationFailed.errorDetails);
         isExceptionHandled = true;
     }
 
@@ -46,7 +48,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
     protected void finalize() throws Throwable {
         super.finalize();
         logger.debug("Un register from exceptionEventBus on finalize of PresentationDecoratedExceptionHandler");
-        exceptionEventBus.unregister(this);
+        exceptionEventBus.unRegister(this);
     }
 
     @Override
