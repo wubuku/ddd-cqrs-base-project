@@ -1,5 +1,6 @@
 package com.librarymanagement.domain;
 
+import com.google.common.collect.Lists;
 import com.librarymanagement.domain.error.NotEnoughCopiesInLibrary;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
@@ -73,7 +74,7 @@ public class Book extends BaseAggregateRoot{
         Integer copies = new Integer(this.copies.intValue());
         copies = copies - noOfCopiesSold;
         if(copies < 0){
-            throw new NotEnoughCopiesInLibrary(new ErrorDetails("005","You have only " + this.copies + " copies of " + name + "in the library"));
+            throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(copies.toString(),name)).build());
         }
         this.copies = copies;
     }
@@ -84,7 +85,7 @@ public class Book extends BaseAggregateRoot{
 
     public void borrowBook() throws NotEnoughCopiesInLibrary {
     if(copies <=0){
-        throw new NotEnoughCopiesInLibrary(new ErrorDetails("005","You have only " + this.copies + " copies of " + name + "in the library"));
+        throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(copies.toString(),name)).build());
     }
     copies--;
     }

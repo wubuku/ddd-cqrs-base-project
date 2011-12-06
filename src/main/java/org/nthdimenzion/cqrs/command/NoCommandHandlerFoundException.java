@@ -7,7 +7,7 @@ public class NoCommandHandlerFoundException extends RuntimeException implements 
     private ErrorDetails errorDetails;
 
     public NoCommandHandlerFoundException(String commandName){
-        errorDetails = new ErrorDetails("002","No CommandHandler Found for Command of Type " + commandName);
+        errorDetails = new ErrorDetails.Builder("002").build();
     }
 
 

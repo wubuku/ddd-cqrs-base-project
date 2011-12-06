@@ -12,7 +12,7 @@ public class NotEnoughCopiesInLibrary extends Exception implements IBaseExceptio
 
     @Override
     public ErrorDetails getErrorDetails() {
-        return errorDetails;  //To change body of implemented methods use File | Settings | File Templates.
+        return errorDetails;
     }
 
     @Override

@@ -3,6 +3,8 @@ package org.nthdimenzion.cqrs.command;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
+import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
+import org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +86,6 @@ public class SpringBasedMultiCommandHandlerRegistry implements IMultiCommandHand
 
     private Class<?> getCommandParamFrom(Method commandHandlingMethod) {
         Class<?> methodParams[] = commandHandlingMethod.getParameterTypes();
-        System.out.println(methodParams);
         return methodParams[0];
     }
 

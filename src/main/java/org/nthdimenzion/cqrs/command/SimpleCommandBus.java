@@ -35,7 +35,7 @@ public class SimpleCommandBus implements ICommandBus {
             boolean isExceptionHandled = handleException(throwable);
             logger.debug("Is exception handled " + isExceptionHandled);
             if (!isExceptionHandled) {
-                logger.error(handler.toString(),throwable);
+                logger.error("Unhandled exception ",throwable);
                 throw new DisplayableException().havingCause(throwable);
             }
         }
@@ -49,7 +49,7 @@ public class SimpleCommandBus implements ICommandBus {
         }
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();
-            if (errorDetails.isSuppresException) {
+            if (errorDetails.getShowErrorInView()) {
                 exceptionEventBus.raise(new OperationFailed(errorDetails));
                 return true;
             }

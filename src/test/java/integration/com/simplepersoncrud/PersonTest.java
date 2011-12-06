@@ -91,8 +91,8 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
 
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("Sud Sr")));
-
         Assert.isNull(actualId);
+        Assert.isTrue("Sud Sr is a invalid Person name".equals(displayMessages.toString()));
     }
 
 
