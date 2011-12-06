@@ -487,16 +487,28 @@
                 <configuration>
                     <filters>
                         <filter>
-                            -*Composer*
+                            *commands*
                         </filter>
                         <filter>
-                            -*Dto*
+                            *services*
                         </filter>
                         <filter>
-                            -*Util*
+                            -*domain*
                         </filter>
                         <filter>
-                            -org.nthdimenzion.*presentation*
+                            *repositories.hibernate*
+                        </filter>
+                        <filter>
+                            *org.nthdimenzion.cqrs.command*
+                        </filter>
+                        <filter>
+                            *ddd*
+                        </filter>
+                        <filter>
+                            *security*
+                        </filter>
+                        <filter>
+                            -*presentation*
                         </filter>
                     </filters>
                 </configuration>
