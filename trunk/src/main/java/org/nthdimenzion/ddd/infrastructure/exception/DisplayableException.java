@@ -5,15 +5,11 @@ public final class DisplayableException extends RuntimeException implements IBas
     public final static DisplayableException DEFAULT_UI_EXCEPTION = new DisplayableException();
 
     public DisplayableException() {
-        this.errorDetails = ErrorDetails.UI_ERROR_DETAILS;
+        this.errorDetails = new ErrorDetails.Builder("001").build();
     }
 
     public DisplayableException(IBaseException exception) {
         this.errorDetails = exception.getErrorDetails();
-    }
-
-    public DisplayableException(ErrorDetails errorDetails) {
-        this.errorDetails = errorDetails;
     }
 
     public DisplayableException havingCause(Throwable cause){
@@ -28,7 +24,7 @@ public final class DisplayableException extends RuntimeException implements IBas
 
     @Override
     public ErrorDetails getErrorDetails() {
-        return new ErrorDetails(errorDetails);
+        return (ErrorDetails)errorDetails.clone();
     }
 
     @Override

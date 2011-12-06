@@ -2,7 +2,6 @@ package org.nthdimenzion.presentation.exception;
 
 import com.google.common.eventbus.Subscribe;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
-import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Qualifier("presentationDecoratedExceptionHandler")
-public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
+public class PresentationDecoratedExceptionHandler implements IExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(PresentationDecoratedExceptionHandler.class);
 
@@ -30,7 +29,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
     }
 
     @Autowired
-    public PresentationDecoratedExceptionHandler(@Qualifier("exceptionEventBus")IEventBus exceptionEventBus) {
+    public PresentationDecoratedExceptionHandler(@Qualifier("exceptionEventBus") IEventBus exceptionEventBus) {
         this.exceptionEventBus = exceptionEventBus;
         logger.debug("exceptionEventBus Injected into constructor " + exceptionEventBus);
         exceptionEventBus.register(this);
@@ -38,10 +37,11 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler{
 
     @Subscribe
     @Override
-    public void failedOperationHandler(OperationFailed operationFailed){
-        displayMessages.displayError(operationFailed.errorDetails.toString());
-        logger.debug("Entered into exception handler " + operationFailed.errorDetails);
-        isExceptionHandled = true;
+    public void failedOperationHandler(OperationFailed operationFailed) {
+        if (operationFailed.errorDetails.getShowErrorInView()) {
+            displayMessages.displayError(operationFailed.errorDetails.toString());
+            isExceptionHandled = true;
+        }
     }
 
     @Override

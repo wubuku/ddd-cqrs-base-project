@@ -58,7 +58,7 @@ public class UserLogin extends BaseAggregateRoot {
 
     public void assignHomePage(HomePageDetails homepageViewId, boolean override) throws HomePageAlreadyExistsForUser {
         if (UtilValidator.isNotEmpty(this.homepageViewId) && !override) {
-            throw new HomePageAlreadyExistsForUser(new ErrorDetails("003", this.userLoginId + "Already has a home page set"));
+            throw new HomePageAlreadyExistsForUser(new ErrorDetails.Builder("003").build());
         } else {
             this.homepageViewId = homepageViewId.getHomepageViewId();
         }

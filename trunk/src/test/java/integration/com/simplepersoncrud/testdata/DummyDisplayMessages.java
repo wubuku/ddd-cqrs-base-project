@@ -3,9 +3,12 @@ package integration.com.simplepersoncrud.testdata;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 
 public class DummyDisplayMessages implements IDisplayMessages<Object> {
+
+    public String message;
+
     @Override
     public void showSuccessInPopUp(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    this.message = message;
     }
 
     @Override
@@ -30,22 +33,22 @@ public class DummyDisplayMessages implements IDisplayMessages<Object> {
 
     @Override
     public void showSuccess(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.message = message;
     }
 
     @Override
     public void showMessage(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.message = message;
     }
 
     @Override
     public void showError(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.message = message;
     }
 
     @Override
     public void displayError(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.message = message;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class DummyDisplayMessages implements IDisplayMessages<Object> {
 
     @Override
     public void displaySuccess(String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.message = message;
     }
 
     @Override
@@ -66,5 +69,10 @@ public class DummyDisplayMessages implements IDisplayMessages<Object> {
     @Override
     public void clearMessage() {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String toString() {
+        return message;
     }
 }
