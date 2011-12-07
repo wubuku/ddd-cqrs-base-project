@@ -3,6 +3,8 @@ package integration.org.nthdimenzion.util;
 import com.google.common.collect.ImmutableMap;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.util.IMailService;
@@ -28,11 +30,21 @@ public class MailSenderTest {
     @Qualifier("testMailService")
     private IMailService<Map> defaultMailService;
 
+    private static GreenMail greenMail = null;
+
+    @BeforeClass
+    public static void setup() {
+        greenMail = new GreenMail(); //uses test ports by default
+        greenMail.start();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        greenMail.stop();
+    }
+
     @Test
     public void testMailSending() throws Exception {
-        GreenMail greenMail = new GreenMail(); //uses test ports by default
-        greenMail.start();
-
         defaultMailService.sendMail(ImmutableMap.of("userName", "Sudarshan"));
         Message[] messages = greenMail.getReceivedMessages();
 
@@ -40,6 +52,5 @@ public class MailSenderTest {
         assertNotNull(GreenMailUtil.getBody(messages[0]));
         assertEquals("Default Test Mail", messages[0].getSubject());
         assertTrue(GreenMailUtil.getBody(messages[0]).contains("Sudarshan"));
-        greenMail.stop();
     }
 }
