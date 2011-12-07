@@ -22,6 +22,7 @@ public class ApplicationSetup implements ApplicationContextAware{
 
         ErrorMessageLocator errorMessageLocator = applicationContext.getBean("errorMessageLocator", ErrorMessageLocator.class);
         ErrorDetails.errorMessageLocator = errorMessageLocator;
+/*
         SqlSessionFactory mybatisSessionFactory = applicationContext.getBean("sqlSessionFactory",SqlSessionFactory.class);
         EncryptedBigDecimalType encryptedBigDecimalType = applicationContext.getBean("encryptedBigDecimalType",EncryptedBigDecimalType.class);
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(BigDecimal.class, encryptedBigDecimalType);
@@ -30,6 +31,7 @@ public class ApplicationSetup implements ApplicationContextAware{
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(JdbcType.NUMERIC, encryptedBigDecimalType);
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(JdbcType.REAL, encryptedBigDecimalType);
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(BigDecimal.class,null, encryptedBigDecimalType);
+*/
 
     }
 }
