@@ -25,4 +25,6 @@
       FROM Simple_Person
       where ENTITY_STATUS = 0;
     </select>
+
+
 </mapper>
