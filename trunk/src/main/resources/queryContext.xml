@@ -12,5 +12,5 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
-    <bean id="encryptedBigDecimalType" class="org.nthdimenzion.ddd.domain.sharedkernel.EncryptedBigDecimalType"/>
+    <!--<bean id="encryptedBigDecimalType" class="org.nthdimenzion.ddd.domain.sharedkernel.EncryptedBigDecimalType"/>-->
 </beans>
