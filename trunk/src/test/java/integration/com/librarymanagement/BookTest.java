@@ -3,6 +3,8 @@ package integration.com.librarymanagement;
 import com.librarymanagement.domain.Book;
 import com.librarymanagement.domain.BookFactory;
 import com.librarymanagement.domain.IBookRepository;
+import com.librarymanagement.presentation.IBookFinder;
+import com.librarymanagement.presentation.dto.BookDetailsDto;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.Test;
@@ -23,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml","classpath:/testContext.xml"})
+@ContextConfiguration(locations = {"classpath:/applicationContext.xml","classpath:/testContext.xml", "classpath:/queryContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -39,6 +41,9 @@ public class BookTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private SystemUser systemUser;
 
+    @Autowired
+    private IBookFinder bookFinder;
+
     @Test
     public void testPurchaseBook() {
         systemUser.uses(new TestUserDetails());
@@ -50,11 +55,12 @@ public class BookTest extends AbstractTransactionalJUnit4SpringContextTests {
         hibernateTemplate.evict(book);
 
         book = bookRepository.getBookFromId(id);
+        BookDetailsDto bookDetailsDto = bookFinder.findAllBooks().get(0);
+
         assertNotNull(book);
         assertNotNull(book.getId());
-        assertNotNull(book.getCost());
-        assertTrue(book.getCost().getCurrencyUnit().equals(CurrencyUnit.USD));
-        assertTrue(book.getCost().getAmount().compareTo(BigDecimal.valueOf(1000))==0);
+        assertNotNull(bookDetailsDto.getAmount());
+        assertTrue(bookDetailsDto.getAmount().compareTo(BigDecimal.valueOf(1000))==0);
     }
 
 }
