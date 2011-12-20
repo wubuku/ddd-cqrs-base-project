@@ -103,7 +103,7 @@ public class Book extends BaseAggregateRoot{
         this.bookId = bookId;
     }
 
-    @Columns(columns = { @Column(name = "AMOUNT",precision = 70,scale = 2),@Column(name = "CURRENCY_CODE")})
+    @Columns(columns = { @Column(name = "AMOUNT",precision = 64,scale = 2),@Column(name = "CURRENCY_CODE")})
     @Type(type= "org.nthdimenzion.ddd.domain.sharedkernel.MoneyType")
     @NotNull
     Money getCost() {

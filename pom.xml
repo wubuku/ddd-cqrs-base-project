@@ -16,11 +16,11 @@
         <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
         <hibernate-core-version>3.6.7.Final</hibernate-core-version>
 
-
+        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.username>root</jdbc.username>
         <jdbc.password>nthdimenzion</jdbc.password>
-        <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
-        <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
+        <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
+        <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
         <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
         <hibernate.show_sql>true</hibernate.show_sql>
         <hibernate.connection.autocommit>true</hibernate.connection.autocommit>
@@ -475,7 +475,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>1000000000</scanIntervalSeconds>
                     <stopPort>9966</stopPort>
                     <stopKey>foo</stopKey>
                     <systemProperties>
@@ -530,29 +530,22 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProject;shutdown=true</jdbc.url>
-                <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
+                <!--<hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>-->
             </properties>
         </profile>
         <profile>
 
             <id>test</id>
             <properties>
-                <jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-                <jdbc.url>jdbc:hsqldb:file:D:\\BaseProjectTest;shutdown=true</jdbc.url>
-                <jdbc.datasource>org.apache.commons.dbcp.BasicDataSource</jdbc.datasource>
+                <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectTest</jdbc.url>
                 <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>
             <id>production</id>
             <properties>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
                 <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectProd</jdbc.url>
-                <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
-                <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
                 <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>

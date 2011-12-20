@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.librarymanagement.presentation.queries.ILibraryFinder">
+
+
+    <select id="findAllBooks" resultType="com.librarymanagement.presentation.dto.BookDetailsDto">
+    SELECT id,
+          name,
+          AMOUNT,
+          CURRENCY_CODE
+    FROM book
+    where ENTITY_STATUS = 0
+    order by id desc;
+  </select>
+
+
+    <select id="findBookCountInLibrary" resultType="java.lang.Integer">
+      SELECT IFNULL(count(*),0)
+      FROM book
+      where ENTITY_STATUS = 0
+  </select>
+
+    <select id="findMostBorrowedBook" resultType="java.lang.String">
+    SELECT name
+    FROM   book
+    WHERE  id IN (SELECT book
+                  FROM   book_lending
+                  GROUP  BY book
+                  HAVING COUNT(*) >= ALL (SELECT COUNT(*)
+                                          FROM   book_lending
+                                          GROUP  BY book))
+  </select>
+
+    <select id="findLeastBorrowedBook" resultType="java.lang.String">
+        SELECT name
+        FROM   book
+        WHERE  id IN (SELECT book
+                      FROM   book_lending
+                      GROUP  BY book
+                      HAVING COUNT(*) &lt;= ALL (SELECT COUNT(*)
+                                              FROM   book_lending
+                                              GROUP  BY book))
+      </select>
+
+    <select id="findCountOfMembersWhoHaveBorrowedBooks" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(DISTINCT member),0)
+        FROM   book_lending
+     </select>
+
+    <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
+    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.id as id
+    FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
+    WHERE member.ENTITY_STATUS = 0
+    and month(person.DATE_OF_BIRTH)= month(now())
+    </select>
+
+</mapper>
