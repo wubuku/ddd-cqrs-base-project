@@ -1,6 +1,7 @@
 package org.nthdimenzion.presentation.infrastructure;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.presentation.annotations.Composer;
@@ -22,6 +23,11 @@ public class AbstractZkComposer extends GenericForwardComposer{
     protected Navigation navigation;
 
     protected ModelMapper modelMapper = new ModelMapper();
+
+
+    protected AbstractZkComposer(){
+        modelMapper.getConfiguration().setMethodAccessLevel(Configuration.AccessLevel.PACKAGE_PRIVATE);
+    }
 
     protected Object sendCommand(ICommand command){
         return commandBus.send(command);

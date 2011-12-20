@@ -16,14 +16,55 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
 
 
 ]]></zscript>
-    <window id="libraryPanel"  title="Library Management Home" border="normal" width="100%" self="@{define(content)}" height="100%">
+    <window id="libraryPanel"  title="Library Management Home" border="normal" self="@{define(content)}" apply="${libraryHomeComposer}">
+        <div style="width:49%;float:left">
+            <panel id="libraryDetails" title="Library Quick View" closable="true" collapsible="true">
+                <panelchildren>
+                    <grid id="libraryDetailsGrid">
+                        <columns>
+                            <column></column>
+                            <column></column>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Number of books"/>
+                                <label value="@{dto.numberOfBooks}"/>
+                            </row>
 
+                            <row>
+                                <label value="Total Number of Members With Borrowed Books"/>
+                                <label value="@{dto.countOfMembersWhoHaveBorrowedBooks}"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </panelchildren>
+            </panel>
+        </div>
+         <div style="width:49%;float:right">
+            <panel id="memberBirthDayDetails" title="Upcoming BirthDays" closable="true" collapsible="true">
+                <panelchildren>
+                    <grid id="memberBirthDayDetailsGrid" model="@{dto.memberDtos}">
+                        <columns>
+                            <column>Member Id</column>
+                            <column>Name</column>
+                            <column>Date of Birth</column>
+                        </columns>
+                        <rows>
+                            <row self="@{each=member}" value="@{member}">
+                                <label value="@{member.id}"/>
+                                <label value="@{member.fullName}"/>
+                                <datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </panelchildren>
+            </panel>
+        </div>
     </window>
 
         <vbox self="@{define(left)}">
-            <a id="Home" label="Home" onClick='navigation.redirect("libraryPanel")'/>
             <a id="bookControlPanel" label="Book Control Panel" />
-            <a id="memberControlPanel" label="Member Control Panel" />
+            <a id="memberControlPanel" label="Member Control Panel" onClick='navigation.redirect("member")'/>
         </vbox>
 
 

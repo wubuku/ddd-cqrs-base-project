@@ -4,7 +4,8 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
     <div>
     <tabbox id="mainTabBox" onSelect='sessionScope.put("bookmark",self.selectedTab.id)'>
 		<tabs zclass="e-tabs">
-			<tab label="Home" onClick='navigation.redirect("personPanel")' zclass="e-tab" id="dashBoadrdTab"/>
+			<tab label="Person Home" onClick='navigation.redirect("personPanel")' zclass="e-tab"/>
+			<tab label="Library Home" onClick='navigation.redirect("libraryPanel")' zclass="e-tab"/>
 		</tabs>
 	</tabbox>
     </div>

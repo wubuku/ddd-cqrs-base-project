@@ -1,0 +1,60 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./memberDetails"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.nthdimenzion.presentation.util.ViewUtil;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+import com.librarymanagement.presentation.MemberManagementComposer;
+pagetitle.setValue("Member Details Management");
+subpagetitle.setValue("Double on member to view details");
+
+
+MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberManagementComposer",MemberManagementComposer.class) ;
+
+]]></zscript>
+    <window id="memberDetails"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
+        <vlayout>
+            <panel title="List of Registered Members" closable="true" collapsible="true">
+                <panelchildren>
+                    <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
+                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}">
+                        <listhead>
+                            <listheader>Id</listheader>
+                            <listheader>Name</listheader>
+                            <listheader>Date Of Birth</listheader>
+                        </listhead>
+                        <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
+                            <attribute name="onDoubleClick">
+                                memberManagementComposer.selectMember(self.value.id);
+                             </attribute>
+                            <listcell>
+								<label value="@{member.id}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{member.fullName}"></label>
+							</listcell>
+							<listcell>
+								<datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+							</listcell>
+                        </listitem>
+                    </listbox >
+                </panelchildren>
+            </panel>
+        <hlayout>
+        </hlayout>
+        <button id = "unRegisterMembersBtn" label="UnRegister Members" onClick="memberManagementComposer.unRegisterMembers(ViewUtil.getSelectedItems(memberDetailsList))" visible="@{memberManagementComposer.recordsFound}"/>
+        </vlayout>
+    </window>
+
+    <vbox self="@{define(left)}">
+            <a id="Home" label="Member Home" onClick='navigation.redirect("member")'/>
+            <a id="registerMember" label="Register Member" onClick='navigation.navigateToDefaultContainer("registerMember",null)'/>
+        </vbox>
+</zk>

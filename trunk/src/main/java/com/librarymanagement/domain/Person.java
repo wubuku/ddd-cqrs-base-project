@@ -3,6 +3,7 @@ package com.librarymanagement.domain;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
+import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
 import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.ddd.domain.annotations.PPT;
 
@@ -10,10 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-@AggregateRoot
 @PPT
 @Entity
-public class Person extends BaseAggregateRoot{
+public class Person extends IdGeneratingBaseEntity{
 
     private String firstName;
     private String middleName;
@@ -23,8 +23,9 @@ public class Person extends BaseAggregateRoot{
     Person() {
     }
 
-    public Person(String firstName, DateTime dateOfBirth) {
+    public Person(String firstName,String lastName, DateTime dateOfBirth) {
         this.firstName = firstName;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -45,11 +46,12 @@ public class Person extends BaseAggregateRoot{
         this.middleName = middleName;
     }
 
+    @NotNull
     String getLastName() {
         return lastName;
     }
 
-    void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
