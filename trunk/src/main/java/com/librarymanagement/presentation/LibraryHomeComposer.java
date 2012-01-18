@@ -19,7 +19,6 @@ public class LibraryHomeComposer extends AbstractZkComposer{
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         librarySummaryDto = bookQueries.getLibrarySummary();
-        System.out.println(librarySummaryDto.numberOfBooks);
         comp.setAttribute("dto",librarySummaryDto);
     }
 

@@ -11,8 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
 public class ApplicationSetup implements ApplicationContextAware {
 
@@ -30,7 +28,5 @@ public class ApplicationSetup implements ApplicationContextAware {
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, JdbcType.TIME, myBatisJodaDateTimeType);
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, JdbcType.TIMESTAMP, myBatisJodaDateTimeType);
         mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, null, myBatisJodaDateTimeType);
-
-
     }
 }

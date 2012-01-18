@@ -2,24 +2,17 @@ package com.simplepersoncrud.presentation.composer;
 
 import com.google.common.collect.Sets;
 import com.simplepersoncrud.application.commands.PersonNameChangeCommand;
-import com.simplepersoncrud.application.commands.UnRegisterCommand;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
+import com.simplepersoncrud.application.commands.UnRegisterCommand;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
-import org.modelmapper.ModelMapper;
-import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
-import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
-import org.nthdimenzion.presentation.infrastructure.Navigation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.util.GenericComposer;
 
 import java.util.Set;
 

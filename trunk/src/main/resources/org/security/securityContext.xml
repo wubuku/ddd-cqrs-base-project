@@ -12,7 +12,7 @@
 
     <security:http auto-config="true">
         <security:form-login login-page="/org/security/login.zul" always-use-default-target="true"
-                             default-target-url="/com/personsample/personPanel.zul" authentication-failure-url="/org/security/login.zul?login_error=1" authentication-success-handler-ref="authenticationSuccessHandler"/>
+                             default-target-url="/com/personsample/personPanel.zul" authentication-failure-url="/org/security/login.zul/login.zul?login_error=1" authentication-success-handler-ref="authenticationSuccessHandler"/>
         <security:logout logout-url="/BaseProject/logout" invalidate-session="true" />
     </security:http>
 

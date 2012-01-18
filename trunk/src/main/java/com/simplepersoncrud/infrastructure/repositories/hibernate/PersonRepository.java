@@ -1,8 +1,8 @@
 package com.simplepersoncrud.infrastructure.repositories.hibernate;
 
 import com.simplepersoncrud.domain.IPersonRepository;
-import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.PersonId;
+import com.simplepersoncrud.domain.SimplePerson;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;

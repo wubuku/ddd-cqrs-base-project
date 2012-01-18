@@ -1,7 +1,6 @@
-package integration.com.librarymanagement;
+package com.librarymanagement;
 
 import com.librarymanagement.domain.*;
-import com.librarymanagement.presentation.dto.BookDetailsDto;
 import com.librarymanagement.presentation.dto.LibrarySummaryDto;
 import com.librarymanagement.presentation.queries.BookQueries;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
@@ -21,9 +20,10 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
-    private BookFactory bookFactory;
+    private BookBuilder bookBuilder;
 
     @Autowired
     private HibernateTemplate hibernateTemplate;
@@ -59,24 +59,29 @@ public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
     public void testPurchaseBook() {
         systemUser.uses(new TestUserDetails());
         System.out.println(systemUser);
-        Book book = bookFactory.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000));
+        Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).withAuthors("Sudarshan").withCopies(10).build();
+//        Book eventSourcing = bookBuilder.createBook("Event Sourcing", "008", Money.of(CurrencyUnit.USD, 2000)).withAuthors("Greg Young").withCopies(2).build();
 
-        Long id = bookRepository.purchaseBook(book);
+        Long id = bookRepository.purchaseBook(javaPersistence);
+//        bookRepository.registerBook(eventSourcing);
         hibernateTemplate.flush();
-        hibernateTemplate.evict(book);
+        hibernateTemplate.evict(javaPersistence);
+//        hibernateTemplate.evict(eventSourcing);
 
-        book = bookRepository.getBookFromId(id);
-        BookDetailsDto bookDetailsDto = bookFinder.findAllBooks().get(0);
+        List<Map<String,?>> books = bookFinder.findAllBooks();
 
-        assertNotNull(book);
-        assertNotNull(book.getId());
-        assertNotNull(bookDetailsDto.getAmount());
-        assertTrue(bookDetailsDto.getAmount().compareTo(BigDecimal.valueOf(1000)) == 0);
+        Map<String,?> bookResult = books.get(0);
+
+        assertEquals(1,books.size());
+        assertNotNull(bookResult);
+        assertNotNull(bookResult.get("id"));
+        assertNotNull(bookResult.get("amount"));
+        assertTrue(((BigDecimal)bookResult.get("amount")).compareTo(BigDecimal.valueOf(1000)) == 0);
     }
 
     @Test
     public void testFindBookCount() {
-        Book book = bookFactory.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000));
+        Book book = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).withCopies(1).build();
         Long id = bookRepository.purchaseBook(book);
         hibernateTemplate.flush();
 
@@ -85,21 +90,14 @@ public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
         assertTrue(new Integer("1").equals(librarySummary.getNumberOfBooks()));
     }
 
-    @Test
-    public void temp() {
-        Book book = bookFactory.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000));
-        book = crudDao.save(book);
-
-        assertNotNull(book.getId());
-    }
 
     @Test
     public void findMembers() {
         Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
         Member member1 = memberBuilder.createMember("NthDimen", "S", DateTime.now()).withMiddleName("Hello").build();
 
-        member = crudDao.save(member);
-        member1 = crudDao.save(member1);
+        member = crudDao.update(member);
+        member1 = crudDao.update(member1);
         hibernateTemplate.flush();
         hibernateTemplate.evict(member);
         hibernateTemplate.evict(member1);
@@ -111,8 +109,14 @@ public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
     public void createMember() {
         Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
 
-        member = crudDao.save(member);
+        member = crudDao.update(member);
 
         assertNotNull(member.getId());
     }
+
+    @Test
+    public void temp(){
+        System.out.println(bookFinder.findAllBooksWithMember(Long.valueOf("1")));
+    }
 }
+

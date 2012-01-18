@@ -1,7 +1,7 @@
-package integration.org.nthdimenzion.security;
+package org.nthdimenzion.security;
 
 
-import integration.org.nthdimenzion.testdata.SecurityDetailsMaker;
+import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

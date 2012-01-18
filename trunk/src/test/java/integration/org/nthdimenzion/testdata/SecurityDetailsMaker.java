@@ -1,4 +1,4 @@
-package integration.org.nthdimenzion.testdata;
+package org.nthdimenzion.testdata;
 
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;

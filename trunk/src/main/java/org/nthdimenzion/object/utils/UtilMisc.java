@@ -1,7 +1,12 @@
 package org.nthdimenzion.object.utils;
 
+import com.google.common.collect.Lists;
+import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.List;
 
 public final class UtilMisc {
 
@@ -13,6 +18,17 @@ public final class UtilMisc {
     } catch (InterruptedException e) {
         logger.error("Error in threadSleep",e);
     }
+    }
+
+    public static List<Long> extractId(Collection<? extends IdGeneratingBaseEntity> entities){
+        if(UtilValidator.isEmpty(entities)){
+            return Lists.newArrayList();
+        }
+        List<Long> entityIds = Lists.newArrayList();
+        for(IdGeneratingBaseEntity entity : entities){
+            entityIds.add(entity.getId());
+        }
+        return entityIds;
     }
 
 }

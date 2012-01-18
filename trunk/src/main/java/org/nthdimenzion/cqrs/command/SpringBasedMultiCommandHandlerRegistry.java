@@ -2,9 +2,8 @@ package org.nthdimenzion.cqrs.command;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import org.nthdimenzion.cqrs.command.annotations.Command;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
-import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
-import org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.config.DestructionAwareBeanPostProcesso
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.nthdimenzion.cqrs.command.annotations.Command;
+
 import java.lang.reflect.Method;
 import java.util.Map;
 

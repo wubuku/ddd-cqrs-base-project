@@ -24,21 +24,21 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
             <panel title="List of Registered Members" closable="true" collapsible="true">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
-                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}">
+                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10" autopaging="true">
                         <listhead>
-                            <listheader>Id</listheader>
+                            <listheader>ID</listheader>
                             <listheader>Name</listheader>
                             <listheader>Date Of Birth</listheader>
                         </listhead>
                         <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
                             <attribute name="onDoubleClick">
-                                memberManagementComposer.selectMember(self.value.id);
+                                memberManagementComposer.selectMember(self.value.id,"registerMember");
                              </attribute>
                             <listcell>
 								<label value="@{member.id}"></label>
 							</listcell>
 							<listcell>
-								<label value="@{member.fullName}"></label>
+								<label value="@{member.name}"></label>
 							</listcell>
 							<listcell>
 								<datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>

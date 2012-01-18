@@ -1,15 +1,17 @@
 package org.nthdimenzion.presentation.infrastructure;
 
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 @Component
@@ -25,25 +27,60 @@ public class Navigation {
         logger.debug("Inject dependencies");
     }
 
-    public void redirectUsingResponse(String viewName,HttpServletResponse response ) throws IOException {
-    response.sendRedirect(viewResolver.resolveViewName(viewName));
+    public void redirectUsingResponse(String viewName, HttpServletResponse response) throws IOException {
+        response.sendRedirect(viewResolver.resolveViewName(viewName));
     }
 
-    public String findViewUrl(String viewName){
+    public String findViewUrl(String viewName) {
         return viewResolver.resolveViewName(viewName);
     }
 
     public void redirect(String viewName) {
         logger.debug("Redirecting to " + viewName + " viewResolver.resolveViewName(viewName)  " + viewResolver.resolveViewName(viewName));
-        Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName));
+        redirect(viewName, Collections.<String, String>emptyMap());
+    }
+
+    public void redirect(String viewName, Map<String, String> args) {
+        String url = buildUrl(viewName, args);
+        Executions.getCurrent().sendRedirect(url);
+    }
+
+    String buildUrl(String viewName, Map<String, ?> args) {
+        StringBuilder arguments = new StringBuilder();
+        String url = viewResolver.resolveViewName(viewName);
+        if (UtilValidator.isNotEmpty(args)) {
+            for (Map.Entry<String, ?> entry : args.entrySet()) {
+                arguments.append(entry.getKey());
+                arguments.append("=");
+                arguments.append(entry.getValue());
+                arguments.append("&");
+            }
+            arguments.deleteCharAt(arguments.length() - 1);
+            url = url.concat("?");
+        }
+        url = url.concat(arguments.toString());
+        return url;
     }
 
     public void redirectToPopupOnEachClick(String viewName) {
-        Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName), "_blank");
+        redirectToPopup(viewName, "_blank", Collections.<String, String>emptyMap());
+    }
+
+    public void redirectToPopupOnEachClick(String viewName,Map<String,String> args) {
+        redirectToPopup(viewName, "_blank", args);
     }
 
     public void redirectToPopup(String viewName) {
-        Executions.getCurrent().sendRedirect(viewResolver.resolveViewName(viewName), "_home");
+        redirectToPopup(viewName, "_home", Collections.<String, String>emptyMap());
+    }
+
+    public void redirectToPopup(String viewName,Map<String,String> args) {
+        redirectToPopup(viewName, "_home", args);
+    }
+
+    void redirectToPopup(String viewName,String target,Map<String,String> args) {
+        String url = buildUrl(viewName,args);
+        Executions.getCurrent().sendRedirect(url, target);
     }
 
     public void navigateToDefaultContainer(String viewName, Map<?, ?> arguments) {

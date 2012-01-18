@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 
+@Composer
 public class AbstractZkComposer extends GenericForwardComposer{
 
     @Autowired
@@ -26,7 +27,10 @@ public class AbstractZkComposer extends GenericForwardComposer{
 
 
     protected AbstractZkComposer(){
-        modelMapper.getConfiguration().setMethodAccessLevel(Configuration.AccessLevel.PACKAGE_PRIVATE);
+        modelMapper.getConfiguration().enableFieldMatching(true)
+                                      .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+
+
     }
 
     protected Object sendCommand(ICommand command){

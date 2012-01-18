@@ -5,15 +5,49 @@
 <mapper namespace="com.librarymanagement.presentation.queries.ILibraryFinder">
 
 
-    <select id="findAllBooks" resultType="com.librarymanagement.presentation.dto.BookDetailsDto">
+    <select id="findBookWithId" resultType="hashMap">
+      SELECT id,
+            name,
+            isbn,
+            authors,
+            available_copies as availableCopies,
+            AMOUNT as amount,
+            CURRENCY_CODE
+      FROM book
+      where id = #{bookId}
+    </select>
+
+
+  <select id="findAllBooks" resultType="hashMap">
     SELECT id,
           name,
-          AMOUNT,
+          isbn,
+          authors,
+          available_copies as availableCopies,
+          AMOUNT as amount,
           CURRENCY_CODE
     FROM book
     where ENTITY_STATUS = 0
-    order by id desc;
+    order by available_copies desc;
   </select>
+
+    <select id="findAllBooksWithMember" resultType="hashMap">
+      SELECT b.id,
+             b.name,
+             b.isbn,
+             b.authors,
+             bl.from_date as issueDate,
+            AMOUNT,
+            CURRENCY_CODE as currencyCode
+      FROM book as b,book_lending as bl
+      where b.ENTITY_STATUS = 0
+      and bl.member = #{memberId}
+      and bl.book = b.id
+
+
+    </select>
+
+
 
 
     <select id="findBookCountInLibrary" resultType="java.lang.Integer">

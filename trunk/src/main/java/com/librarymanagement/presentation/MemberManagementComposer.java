@@ -40,12 +40,12 @@ public class MemberManagementComposer extends AbstractZkComposer {
         return !isNoRecordsFound();
     }
 
-    public void selectMember(Long memberId) {
-        navigation.navigateToDefaultContainer("registerMember", ImmutableMap.of("memberId", memberId));
+    public void selectMember(Long memberId,String pageId) {
+        navigation.navigateToDefaultContainer(pageId, ImmutableMap.of("memberId", memberId));
     }
 
+
     public void unRegisterMembers(List<Member> unRegisteredMembers) {
-        System.out.println("unRegisteredMembers " + unRegisteredMembers);
         for (Member unRegisteredMember : unRegisteredMembers) {
             crudDao.deactivate(unRegisteredMember);
         }

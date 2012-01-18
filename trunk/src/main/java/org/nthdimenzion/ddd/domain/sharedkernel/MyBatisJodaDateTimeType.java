@@ -1,17 +1,17 @@
 package org.nthdimenzion.ddd.domain.sharedkernel;
 
-import org.apache.ibatis.type.*;
-import org.jasypt.util.numeric.BasicDecimalNumberEncryptor;
+import org.apache.ibatis.type.DateTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.DateTime;
 
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 @MappedTypes(value = DateTime.class)
-@MappedJdbcTypes(value = {JdbcType.DATE})
+@MappedJdbcTypes(value = {JdbcType.DATE,JdbcType.TIME,JdbcType.TIMESTAMP})
 public class MyBatisJodaDateTimeType extends DateTypeHandler {
 
     public MyBatisJodaDateTimeType() {

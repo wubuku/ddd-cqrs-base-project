@@ -23,7 +23,7 @@ public interface ICrud {
 	 * @param e the entity you want to update/save to the repository.
 	 * @return the entity updated.
 	 */
-	<E> E save(E e);
+	<E> E update(E e);
 	/**
 	 * The find method. READ (RETRIEVE)
 	 * @param pk the identification to find the specific entity.

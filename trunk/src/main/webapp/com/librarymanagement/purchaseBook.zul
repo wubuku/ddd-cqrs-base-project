@@ -1,0 +1,47 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./purchaseBook"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+pagetitle.setValue("Purchase Book");
+subpagetitle.setValue("Enter/Edit details of the purchased book");
+]]></zscript>
+    <window id="purchaseBook" apply="${purchaseBookComposer}" title="Purchase Book" border="normal" width="100%" self="@{define(content)}" height="100%">
+     <vlayout>
+        <hbox>
+            <label id = "bookId" value="@{bookDto.id}" visible="false"/>
+        </hbox>
+        <hlayout>
+            <label id = "lblBookName" value="Book Name"/>
+            <label zclass="labelReq" value="*"/>
+            <textbox id = "txtBookName" value="@{bookDto.name}" constraint="no empty" cols="40"/>
+        </hlayout>
+        <hlayout>
+            <label id = "lblIsbn" value="ISBN"/>
+            <label zclass="labelReq" value="*"/>
+            <textbox id = "txtIsbn" value="@{bookDto.isbn}" cols="40"/>
+        </hlayout>
+         <hlayout>
+            <label id = "lblAuthors" value="Authors"/>
+            <textbox id = "txtAuthors" value="@{bookDto.authors}" rows="4" cols="40"/>
+        </hlayout>
+        <hlayout>
+            <label id = "lblCopies" value="Copies"/>
+            <label zclass="labelReq" value="*"/>
+            <spinner id="copies" value="@{bookDto.copies}" constraint="no negative" />
+        </hlayout>
+        <hbox>
+            <button id = "purchaseBookBtn" label="Purchase Book" onClick="purchaseBookComposer.purchaseBook()" visible="@{purchaseBookComposer.purchaseBookView}"/>
+            <button id = "updateBookBtn" label="Done Editing" onClick="purchaseBookComposer.updateBook()" visible="@{purchaseBookComposer.updateView}"/>
+        </hbox>
+     </vlayout>
+
+    </window>
+         <vbox self="@{define(left)}">
+            <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+        </vbox>
+
+</zk>

@@ -1,6 +1,7 @@
 package com.librarymanagement.presentation.dto;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.joda.time.DateTime;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
@@ -12,6 +13,7 @@ public class BookDetailsDto implements Serializable {
     public String currency_code;
     public String name;
     public Long id;
+    public DateTime  fromDate;
 
     public BookDetailsDto() {
 
@@ -52,6 +54,14 @@ public class BookDetailsDto implements Serializable {
 
     public void setCurrency_code(String currency_code) {
         this.currency_code = currency_code;
+    }
+
+    public DateTime getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(DateTime fromDate) {
+        this.fromDate = fromDate;
     }
 
     @Override
