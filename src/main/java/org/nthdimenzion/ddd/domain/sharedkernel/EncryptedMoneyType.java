@@ -8,7 +8,6 @@ import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.jasypt.util.numeric.BasicDecimalNumberEncryptor;
-import org.jasypt.util.numeric.BasicIntegerNumberEncryptor;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 

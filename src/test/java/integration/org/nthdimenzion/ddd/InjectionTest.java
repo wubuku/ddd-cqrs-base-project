@@ -1,6 +1,5 @@
 package integration.org.nthdimenzion.ddd;
 
-import com.google.common.eventbus.EventBus;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;

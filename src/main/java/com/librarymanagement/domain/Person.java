@@ -2,18 +2,20 @@ package com.librarymanagement.domain;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
+import org.nthdimenzion.ddd.domain.INamed;
 import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
-import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.ddd.domain.annotations.PPT;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import static org.nthdimenzion.object.utils.StringUtils.nullSafeCopy;
+import static org.nthdimenzion.object.utils.StringUtils.replaceNullWithEmptyString;
 @PPT
 @Entity
-public class Person extends IdGeneratingBaseEntity{
+public final class Person extends IdGeneratingBaseEntity implements INamed {
 
     private String firstName;
     private String middleName;
@@ -23,23 +25,28 @@ public class Person extends IdGeneratingBaseEntity{
     Person() {
     }
 
-    public Person(String firstName,String lastName, DateTime dateOfBirth) {
+    Person(String firstName,String lastName, DateTime dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
+    Person(String firstName,String middleName,String lastName ,DateTime dateOfBirth) {
+        this(firstName,lastName,dateOfBirth);
+        this.middleName = middleName;
+    }
+
     @NotNull
-    String getFirstName() {
-        return firstName;
+    public String getFirstName() {
+        return nullSafeCopy(firstName);
     }
 
     void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    String getMiddleName() {
-        return middleName;
+    public String getMiddleName() {
+        return nullSafeCopy(middleName);
     }
 
     void setMiddleName(String middleName) {
@@ -47,24 +54,29 @@ public class Person extends IdGeneratingBaseEntity{
     }
 
     @NotNull
-    String getLastName() {
-        return lastName;
+    public String getLastName() {
+        return nullSafeCopy(lastName);
     }
 
-    public void setLastName(String lastName) {
+    void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     @Column
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     @NotNull
-    DateTime getDateOfBirth() {
-        return dateOfBirth;
+    public DateTime getDateOfBirth() {
+        return dateOfBirth!=null ? new DateTime(dateOfBirth) : null;
     }
 
     void setDateOfBirth(DateTime dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
+    @Transient
+    public String getName() {
+        return firstName + " " + replaceNullWithEmptyString(middleName) + " " + lastName;
+    }
 }
 

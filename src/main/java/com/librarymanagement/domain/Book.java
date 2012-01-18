@@ -13,7 +13,6 @@ import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 
 @AggregateRoot
 @PPT
@@ -21,21 +20,24 @@ import javax.validation.constraints.NotNull;
 public class Book extends BaseAggregateRoot{
     private String name;
     private String isbn;
-    private Integer copies;
+    private Integer availableCopies;
+    private Integer totalCopies;
     private Money cost;
     private String authors;
     private BookId bookId;
 
     Book() {
-        copies = 0;
+        totalCopies = 0;
+        availableCopies = totalCopies;
+
     }
 
     public Book(String name, String isbn,BookId bookId,Money cost) {
+        this();
         this.name = name;
         this.isbn = isbn;
         this.cost = cost;
         this.bookId = bookId;
-        copies = 0;
     }
 
     String getName() {
@@ -54,12 +56,12 @@ public class Book extends BaseAggregateRoot{
         this.isbn = isbn;
     }
 
-    Integer getCopies() {
-        return copies;
+    Integer getAvailableCopies() {
+        return availableCopies;
     }
 
-    void setCopies(Integer copies) {
-        this.copies = copies;
+    void setAvailableCopies(Integer availableCopies) {
+        this.availableCopies = availableCopies;
     }
 
     String getAuthors() {
@@ -67,31 +69,25 @@ public class Book extends BaseAggregateRoot{
     }
 
     public void purchaseCopies(Integer noOfCopiesPurchased){
-        copies = copies + noOfCopiesPurchased;
-    }
-
-    public void sellCopies(Integer noOfCopiesSold) throws NotEnoughCopiesInLibrary {
-        Integer copies = new Integer(this.copies.intValue());
-        copies = copies - noOfCopiesSold;
-        if(copies < 0){
-            throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(copies.toString(),name)).build());
-        }
-        this.copies = copies;
+        if(noOfCopiesPurchased==null)
+            noOfCopiesPurchased = 0;
+        availableCopies = availableCopies + noOfCopiesPurchased;
+        totalCopies = totalCopies + noOfCopiesPurchased;
     }
 
     void setAuthors(String authors) {
         this.authors = authors;
     }
 
-    public void borrowBook() throws NotEnoughCopiesInLibrary {
-    if(copies <=0){
-        throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(copies.toString(),name)).build());
+    public void lendBook() throws NotEnoughCopiesInLibrary {
+    if(availableCopies <=0){
+        throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(),name)).build());
     }
-    copies--;
+    availableCopies--;
     }
 
     public void returnBook(){
-        copies++;
+        availableCopies++;
     }
 
     @Embedded
@@ -105,12 +101,20 @@ public class Book extends BaseAggregateRoot{
 
     @Columns(columns = { @Column(name = "AMOUNT",precision = 64,scale = 2),@Column(name = "CURRENCY_CODE")})
     @Type(type= "org.nthdimenzion.ddd.domain.sharedkernel.MoneyType")
-    @NotNull
+//    @NotNull
     Money getCost() {
         return cost;
     }
 
     void setCost(Money cost) {
         this.cost = cost;
+    }
+
+    Integer getTotalCopies() {
+        return totalCopies;
+    }
+
+    void setTotalCopies(Integer totalCopies) {
+        this.totalCopies = totalCopies;
     }
 }

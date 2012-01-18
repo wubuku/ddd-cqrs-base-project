@@ -108,6 +108,8 @@ public class MoneyType implements CompositeUserType {
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
+        if(value==null)
+            return null;
         Money money = (Money)value;
         return Money.of(money);
     }

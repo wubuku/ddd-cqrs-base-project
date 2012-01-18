@@ -3,9 +3,6 @@ package com.librarymanagement.presentation.dto;
 import org.joda.time.DateTime;
 import org.nthdimenzion.object.utils.StringUtils;
 
-import javax.persistence.Transient;
-import java.util.Date;
-
 public class MemberDto {
 
     public Long id;
@@ -57,6 +54,4 @@ public class MemberDto {
     public String fullName(){
     return getFirstName() + " " + StringUtils.replaceNullWithEmptyString(getMiddleName()) + " " + getLastName();
     }
-
-
 }

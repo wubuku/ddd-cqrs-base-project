@@ -1,18 +1,14 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
-import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 @Entity
 @ValueObject

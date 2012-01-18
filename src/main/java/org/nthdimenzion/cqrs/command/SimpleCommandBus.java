@@ -32,17 +32,22 @@ public class SimpleCommandBus implements ICommandBus {
         try {
             return handler.invokeMethod(command);
         } catch (Throwable throwable) {
-            boolean isExceptionHandled = handleException(throwable);
-            logger.debug("Is exception handled " + isExceptionHandled);
-            if (!isExceptionHandled) {
+            boolean isExceptionEventRaised = raiseEventForException(throwable);
+            logger.debug("Is exception handled " + isExceptionEventRaised);
+            if (throwException(isExceptionEventRaised)) {
                 logger.error("Unhandled exception ",throwable);
                 throw new DisplayableException().havingCause(throwable);
+                //exceptionEventBus.raise(OperationFailed.createDefaultDisplayableFailure(throwable));
             }
         }
         return null;
     }
 
-    private boolean handleException(Throwable throwable) {
+    private boolean throwException(boolean exceptionEventRaised) {
+        return !exceptionEventRaised;
+    }
+
+    private boolean raiseEventForException(Throwable throwable) {
         logger.debug("Error bubbled up till CommandBus ",throwable);
         if(throwable instanceof InvocationTargetException){
             throwable = ((InvocationTargetException)throwable).getTargetException();

@@ -1,12 +1,8 @@
 package org.nthdimenzion.security.domain;
 
 import org.nthdimenzion.ddd.application.annotation.StateFullComponent;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collection;
 

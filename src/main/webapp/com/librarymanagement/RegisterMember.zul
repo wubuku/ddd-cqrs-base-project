@@ -17,26 +17,25 @@ subpagetitle.setValue("You can Register a member here");
         <hlayout>
             <label id = "lblMemberFirstName" value="First Name"/>
             <label zclass="labelReq" value="*"/>
-            <textbox id = "txtMemberFirstName" value="@{dto.firstName}" constraint="no empty"/>
+            <textbox id = "txtMemberFirstName" value="@{member.firstName}" constraint="no empty"/>
         </hlayout>
         <hlayout>
             <label id = "lblMemberMiddleName" value="Middle Name"/>
-            <textbox id = "txtMemberMiddleName" value="@{dto.middleName}"/>
+            <textbox id = "txtMemberMiddleName" value="@{member.middleName}"/>
         </hlayout>
          <hlayout>
             <label id = "lblMemberLastName" value="Last Name"/>
             <label zclass="labelReq" value="*"/>
-            <textbox id = "txtMemberLastName" value="@{dto.lastName}"  constraint="no empty"/>
+            <textbox id = "txtMemberLastName" value="@{member.lastName}"  constraint="no empty"/>
         </hlayout>
         <hlayout>
             <label id = "lblDateOfBirth" value="Date Of Birth"/>
             <label zclass="labelReq" value="*"/>
-            <!--<datebox id="dateOfBirth"  value="@{dto.dateOfBirth}" constraint="no empty"/>-->
-            <datebox id="dateOfBirth"  value="@{dto.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" />
+            <datebox id="dateOfBirth"  value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" />
         </hlayout>
         <hbox>
             <button id = "registerMemberBtn" label="Register Member" onClick="memberRegistrationComposer.registerMember()" visible="@{memberRegistrationComposer.registerMemberView}"/>
-            <button id = "updaterMemberBtn" label="Update Registration Details" onClick="memberRegistrationComposer.updaterMember()" visible="@{memberRegistrationComposer.updateView}"/>
+            <button id = "updaterMemberBtn" label="Done Editing" onClick="memberRegistrationComposer.updaterMember()" visible="@{memberRegistrationComposer.updateView}"/>
         </hbox>
      </vlayout>
     </window>

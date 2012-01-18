@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 @DomainRepositoryImpl
-public class BookRepository extends GenericHibernateRepository<Book,Long> implements IBookRepository{
+public class BookRepository extends GenericHibernateRepository<Book, Long> implements IBookRepository {
 
     @Autowired
     public BookRepository(HibernateTemplate hibernateTemplate) {
@@ -19,6 +19,11 @@ public class BookRepository extends GenericHibernateRepository<Book,Long> implem
     public Long purchaseBook(Book book) {
         book = save(book);
         return book.getId();
+    }
+
+    @Override
+    public Book updateBook(Book book) {
+        return save(book);
     }
 
     @Override

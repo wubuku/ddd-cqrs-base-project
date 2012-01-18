@@ -1,10 +1,15 @@
-package integration.org.nthdimenzion.cqrs.command;
+package org.nthdimenzion.cqrs.command;
 
-import integration.org.nthdimenzion.cqrs.command.testdata.*;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nthdimenzion.cqrs.command.*;
+import org.nthdimenzion.cqrs.command.Handler;
+import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.cqrs.command.IMultiCommandHandlerRegistry;
+import org.nthdimenzion.cqrs.command.NoCommandHandlerFoundException;
+import org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
+import org.nthdimenzion.cqrs.command.testdata.TestCommand;
+import org.nthdimenzion.cqrs.command.testdata.TestCommand1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;

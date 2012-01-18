@@ -1,0 +1,50 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/taskListingLayout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./bookPanel"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+
+pagetitle.setValue("Book Control Panel");
+subpagetitle.setValue("From here you can Manage all operations related to books in your library");
+
+
+]]></zscript>
+    <window id="bookPanel"  title="Book Panel" border="normal" self="@{define(content)}">
+        <div style="width:90%;height:90%">
+            <panel id="libraryDetails" title="Quick view of tasks you can do" closable="true" collapsible="true">
+                <panelchildren>
+                    <vlayout>
+                        <hlayout>
+                            <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
+                            <a id="purchaseBook" label="Purchase a new Book" onClick='navigation.redirect("purchaseBook")'/>
+                        </hlayout>
+                        <hlayout>
+                            <a id="removeBook" label="Scrap Book" />
+                            <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
+                        </hlayout>
+
+                        <hlayout>
+                            <label value="Most Active Book "/>
+                            <label value= "SCJP" />
+                        </hlayout>
+
+                        <hlayout>
+                            <label value="Most Active Member "/>
+                            <label value= "Sudarshan" />
+                        </hlayout>
+                    </vlayout>
+                </panelchildren>
+            </panel>
+        </div>
+    </window>
+
+
+
+</zk>

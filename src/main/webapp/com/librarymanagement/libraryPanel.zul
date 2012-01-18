@@ -63,7 +63,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
     </window>
 
         <vbox self="@{define(left)}">
-            <a id="bookControlPanel" label="Book Control Panel" />
+            <a id="bookControlPanel" label="Book Control Panel" onClick='navigation.redirect("bookPanel")'/>
             <a id="memberControlPanel" label="Member Control Panel" onClick='navigation.redirect("member")'/>
         </vbox>
 

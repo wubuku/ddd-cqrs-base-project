@@ -1,4 +1,4 @@
-package integration.com.simplepersoncrud.testdata;
+package com.simplepersoncrud.testdata;
 
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 

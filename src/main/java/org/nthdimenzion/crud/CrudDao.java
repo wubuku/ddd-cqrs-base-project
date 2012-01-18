@@ -1,10 +1,7 @@
 package org.nthdimenzion.crud;
 
-import org.hibernate.Criteria;
-import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.BaseEntity;
 import org.nthdimenzion.ddd.domain.LifeCycle;
 import org.nthdimenzion.object.utils.UtilValidator;
@@ -15,8 +12,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,7 +47,7 @@ public class CrudDao implements ICrud {
 
 	@Override
     @Transactional
-	public <E> E save(E e) {
+	public <E> E update(E e) {
 		hibernateTemplate.saveOrUpdate(e);
         return e;
 	}
@@ -107,7 +102,7 @@ public class CrudDao implements ICrud {
     @Transactional
     public <T extends BaseEntity> T deactivate(T t){
         t.markAsArchived();;
-        return  save(t);
+        return  update(t);
     }
 
 

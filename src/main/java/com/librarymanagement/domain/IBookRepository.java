@@ -8,4 +8,6 @@ public interface IBookRepository {
     Long purchaseBook(Book book);
 
     Book getBookFromId(Long id);
+
+    Book updateBook(Book book);
 }

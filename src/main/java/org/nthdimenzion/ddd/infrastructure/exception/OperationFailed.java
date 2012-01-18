@@ -9,4 +9,13 @@ public class OperationFailed implements IEvent{
     public OperationFailed(ErrorDetails errorDetails) {
         this.errorDetails = errorDetails;
     }
+
+    private OperationFailed(DisplayableException displayableException){
+        this(displayableException.getErrorDetails());
+    }
+
+    public static OperationFailed createDefaultDisplayableFailure(Throwable throwable){
+        DisplayableException displayableException = DisplayableException.DEFAULT_UI_EXCEPTION.havingCause(throwable);
+        return new OperationFailed(displayableException);
+    }
 }

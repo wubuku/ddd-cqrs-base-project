@@ -1,21 +1,16 @@
 package com.librarymanagement.domain;
 
-import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.nthdimenzion.crud.ICrudEntity;
-import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
+import org.nthdimenzion.ddd.domain.INamed;
 import org.nthdimenzion.ddd.domain.annotations.Role;
-import org.nthdimenzion.object.utils.StringUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 @Role
 @Entity
-public class Member extends PersonRole implements ICrudEntity{
+public class Member extends PersonRole implements ICrudEntity,INamed{
     public Member() {
     super();
     }
@@ -24,33 +19,71 @@ public class Member extends PersonRole implements ICrudEntity{
         super(person);
     }
 
+    @Override
     @Transient
-    public String fullName(){
-    return getPerson().getFirstName() + " " + StringUtils.replaceNullWithEmptyString(getPerson().getMiddleName()) + " " + getPerson().getLastName();
+    public String getName(){
+        return super.getPerson().getName();
     }
 
     @Transient
+    @Override
     public DateTime getDateOfBirth(){
-        return getPerson().getDateOfBirth();
+        return super.getDateOfBirth();
+    }
+
+    @Override
+    public void setDateOfBirth(DateTime dateOfBirth) {
+        super.setDateOfBirth(dateOfBirth);
     }
 
     @Transient
-    public Person getPerson(){
-        return super.getPerson();
+    @Override
+    public String getFirstName() {
+        return super.getFirstName();
     }
 
+    @Override
+    public void setFirstName(String firstName) {
+        super.setFirstName(firstName);
+    }
+
+    @Transient
+    @Override
+    public String getMiddleName() {
+        return super.getMiddleName();
+    }
+
+    @Override
+    public void setMiddleName(String middleName) {
+        super.setMiddleName(middleName);
+    }
+
+    @Transient
+    @Override
+    public String getLastName() {
+        return super.getLastName();
+    }
+
+    @Override
+    public void setLastName(String lastName) {
+        super.setLastName(lastName);
+    }
+
+    public String fullName(){
+        return super.getPerson().getName();
+    }
 
     @Override
     public String toString() {
         return "Member{" +
-                "memberId=" + getPerson().getFirstName() + getDateOfBirth() +
+                "memberId=" + super.getFirstName() + getDateOfBirth() +
                 '}';
     }
 
     @Override
     public void markAsArchived() {
-        super.markAsArchived();    //To change body of overridden methods use File | Settings | File Templates.
-        getPerson().markAsArchived();
+        super.markAsArchived();
+        super.getPerson().markAsArchived();
 
     }
 }

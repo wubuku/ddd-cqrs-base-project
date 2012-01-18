@@ -1,7 +1,5 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
-import org.nthdimenzion.object.utils.UtilValidator;
-
 import java.util.List;
 
 public interface IErrorMessageLocator {
