@@ -1,7 +1,7 @@
 package org.nthdimenzion.security.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 @ValueObject
 @Entity
-public class SecurityPermission extends IdGeneratingBaseEntity {
+public class SecurityPermission extends IdGeneratingArcheType {
 
     private String permissionId;
     private String description;
@@ -47,11 +47,11 @@ public class SecurityPermission extends IdGeneratingBaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
             SecurityPermission obj = (SecurityPermission) o;
             return new EqualsBuilder().reflectionEquals(obj, this);
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

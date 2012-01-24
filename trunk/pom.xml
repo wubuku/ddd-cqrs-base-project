@@ -223,17 +223,23 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         <!-- Mybatis dependencies  end -->
 
-        <!-- MyModel dependencies  start -->
+        <!-- Mapping dependencies  start -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>0.3.5</version>
         </dependency>
-        <!-- MyModel dependencies  end -->
+<!--
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.3.2</version>
+        </dependency>-->
+        <!-- Mapping dependencies  end -->
 
         <!-- Joda  dependencies  start -->
 
@@ -362,6 +368,14 @@
             <!--<scope>compile</scope>-->
         </dependency>
         <!-- Utiltity end -->
+
+        <!-- events start-->
+        <dependency>
+            <groupId>org.nthdimenzion</groupId>
+            <artifactId>simpleeventbus</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- events end-->
 
     </dependencies>
 

@@ -13,10 +13,6 @@ public interface ILibraryFinder {
 
     Integer findBookCountInLibrary();
 
-    String findMostBorrowedBook();
-
-    String findLeastBorrowedBook();
-
     Integer findCountOfMembersWhoHaveBorrowedBooks();
 
     List<MemberDto> upcomingBirthDays();
@@ -24,4 +20,10 @@ public interface ILibraryFinder {
     List<Map<String,?>> findAllBooksWithMember(Long memberId);
 
     Map<String,?> findBookWithId(Long bookId);
+
+    List<Map<String,?>> findBookLendings(Long memberId,Long bookId);
+
+    String findMostActiveBook();
+
+    MemberDto findMostActiveMember();
 }

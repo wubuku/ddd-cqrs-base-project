@@ -12,12 +12,15 @@ public abstract class AbstractCommandHandler {
 
     protected ModelMapper modelMapper = new ModelMapper();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final boolean success = true;
+    protected final boolean failure = false;
 
     @Autowired
     @Qualifier("applicationEventBus")
     protected IEventBus applicationEventBus;
 
     protected AbstractCommandHandler(){
-        modelMapper.getConfiguration().setMethodAccessLevel(Configuration.AccessLevel.PACKAGE_PRIVATE);
+        modelMapper.getConfiguration().enableFieldMatching(true)
+                                      .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 }

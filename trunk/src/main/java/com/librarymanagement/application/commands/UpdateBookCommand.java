@@ -14,10 +14,6 @@ public class UpdateBookCommand implements ICommand{
     public String authors;
     public Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -38,4 +34,7 @@ public class UpdateBookCommand implements ICommand{
         this.authors = authors;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

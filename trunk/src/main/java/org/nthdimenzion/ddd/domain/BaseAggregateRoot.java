@@ -8,13 +8,17 @@ import javax.persistence.Transient;
 
 
 @MappedSuperclass
-public abstract class BaseAggregateRoot extends IdGeneratingBaseEntity {
+public abstract class BaseAggregateRoot extends IdGeneratingArcheType {
 
-    private IEventBus domainEventBus;
+    protected IEventBus domainEventBus;
+
+
 
     public void setDomainEventBus(IEventBus domainEventBus) {
-        if (this.domainEventBus != null)
-            throw new IllegalStateException("DomainEventBus is already set! Probably You have logical error in code");
+        if (this.domainEventBus != null){
+        //throw new IllegalStateException("DomainEventBus is already set! Probably You have logical error in code");
+        logger.warn("DomainEventBus is already set! Probably You have logical error in code or the entity was picked from the cache");
+        }
         this.domainEventBus = domainEventBus;
     }
 

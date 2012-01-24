@@ -10,16 +10,16 @@ import javax.persistence.Embeddable;
 
 @ValueObject
 @Embeddable
-public class MemberId {
+public class BookLendingId {
 
     private String uid;
 
-    public MemberId(final String uid){
+    public BookLendingId(final String uid){
         Preconditions.checkNotNull(uid);
         this.uid = uid;
     }
 
-    MemberId(){
+    BookLendingId(){
 
     }
 
@@ -38,11 +38,11 @@ public class MemberId {
 
     @Override
     public boolean equals(Object o) {
-    if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
-            MemberId obj = (MemberId)o;
+    if (EqualsFacilitator.initialChecksPass(o, this)) {
+            BookLendingId obj = (BookLendingId)o;
             return new EqualsBuilder().append(uid,obj.uid).isEquals();
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

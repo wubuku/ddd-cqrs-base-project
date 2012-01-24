@@ -1,7 +1,7 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.util.ObjectUtils;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @ValueObject
-public class ErrorDetails extends IdGeneratingBaseEntity implements Cloneable {
+public class ErrorDetails extends IdGeneratingArcheType implements Cloneable {
 
     private String errorCode = "001";
     private String errorMessage = "Operation Failed.Please contact administrator";

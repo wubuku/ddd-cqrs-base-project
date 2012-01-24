@@ -20,7 +20,6 @@ public class MemberBuilder {
 
     public MemberBuilder createMember(String firstName, String lastName, DateTime dateOfBirth) {
         Person person = new Person(firstName, lastName, dateOfBirth);
-        MemberId memberId = new MemberId(idGenerator.nextId());
 //        member = new Member(person, memberId);
         member = new Member(person);
         return this;

@@ -34,23 +34,32 @@ public class SimpleCommandBus implements ICommandBus {
         } catch (Throwable throwable) {
             boolean isExceptionEventRaised = raiseEventForException(throwable);
             logger.debug("Is exception handled " + isExceptionEventRaised);
-            if (throwException(isExceptionEventRaised)) {
-                logger.error("Unhandled exception ",throwable);
-                throw new DisplayableException().havingCause(throwable);
-                //exceptionEventBus.raise(OperationFailed.createDefaultDisplayableFailure(throwable));
+            if (isNonDisplayBusinessException(isExceptionEventRaised, throwable.getCause())) {
+                logger.error("Unhandled exception ", throwable);
+                throwException(throwable);
+            } else if(!isExceptionEventRaised) {
+                raiseEventForUnexpectedException(throwable);
             }
         }
         return null;
     }
 
-    private boolean throwException(boolean exceptionEventRaised) {
-        return !exceptionEventRaised;
+    private void raiseEventForUnexpectedException(Throwable throwable) {
+        exceptionEventBus.raise(OperationFailed.createDefaultDisplayableException(throwable));
+    }
+
+    private void throwException(Throwable throwable) {
+        throw new DisplayableException().havingCause(throwable.getCause());
+    }
+
+    private boolean isNonDisplayBusinessException(boolean exceptionEventRaised, Throwable causeException) {
+        return !exceptionEventRaised && causeException instanceof IBaseException;
     }
 
     private boolean raiseEventForException(Throwable throwable) {
-        logger.debug("Error bubbled up till CommandBus ",throwable);
-        if(throwable instanceof InvocationTargetException){
-            throwable = ((InvocationTargetException)throwable).getTargetException();
+        logger.debug("Error bubbled up till CommandBus ", throwable);
+        if (throwable instanceof InvocationTargetException) {
+            throwable = ((InvocationTargetException) throwable).getTargetException();
         }
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();

@@ -14,7 +14,7 @@ public class OperationFailed implements IEvent{
         this(displayableException.getErrorDetails());
     }
 
-    public static OperationFailed createDefaultDisplayableFailure(Throwable throwable){
+    public static OperationFailed createDefaultDisplayableException(Throwable throwable){
         DisplayableException displayableException = DisplayableException.DEFAULT_UI_EXCEPTION.havingCause(throwable);
         return new OperationFailed(displayableException);
     }

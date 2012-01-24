@@ -98,13 +98,14 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test(expected = DisplayableException.class)
     @Rollback
     public void testCreatePersonWithLongLengthName() {
+        IDisplayMessages displayMessages = new DummyDisplayMessages();
+        presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("SudarshanSreenivasan")));
 
-        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled() == false);
+        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled() ==  false);
     }
 
     @Test
-    @Rollback
     public void testCreatePersonHavingNameWithSpaces() {
         IDisplayMessages displayMessages = new DummyDisplayMessages();
         presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
@@ -149,5 +150,7 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         List<MemberDto> memberDtos = libraryFinder.upcomingBirthDays();
         Assert.notEmpty(memberDtos);
         Assert.notNull(memberDtos.get(0).dateOfBirth);
+        System.out.println(memberDtos.get(0).dateOfBirth);
+        Assert.isTrue(memberDtos.get(0).dateOfBirth.getMonthOfYear()== DateTime.now().getMonthOfYear());
     }
 }

@@ -10,10 +10,20 @@ import org.nthdimenzion.presentation.infrastructure.Navigation;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constants;
+import com.librarymanagement.presentation.queries.ILibraryFinder;
+import com.librarymanagement.presentation.dto.MemberDto;
 
 pagetitle.setValue("Book Control Panel");
 subpagetitle.setValue("From here you can Manage all operations related to books in your library");
 
+ILibraryFinder libraryFinder = (ILibraryFinder)SpringUtil.getBean("ILibraryFinder",ILibraryFinder.class);
+
+MemberDto mostActiveMember = libraryFinder.findMostActiveMember();
+
+String findMostActiveBook = libraryFinder.findMostActiveBook();
+
+
+System.out.println (mostActiveMember.fullName());
 
 ]]></zscript>
     <window id="bookPanel"  title="Book Panel" border="normal" self="@{define(content)}">
@@ -32,12 +42,12 @@ subpagetitle.setValue("From here you can Manage all operations related to books 
 
                         <hlayout>
                             <label value="Most Active Book "/>
-                            <label value= "SCJP" />
+                            <label value= "${findMostActiveBook}" />
                         </hlayout>
 
                         <hlayout>
                             <label value="Most Active Member "/>
-                            <label value= "Sudarshan" />
+                            <label value= "@{mostActiveMember.fullName}" />
                         </hlayout>
                     </vlayout>
                 </panelchildren>

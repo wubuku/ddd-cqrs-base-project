@@ -2,6 +2,7 @@ package com.librarymanagement.domain;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.annotations.Immutable;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
@@ -10,6 +11,7 @@ import javax.persistence.Embeddable;
 
 @ValueObject
 @Embeddable
+@Immutable
 public class BookId {
 
     private String uid;
@@ -38,11 +40,11 @@ public class BookId {
 
     @Override
     public boolean equals(Object o) {
-    if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+    if (EqualsFacilitator.initialChecksPass(o, this)) {
             BookId obj = (BookId)o;
             return new EqualsBuilder().append(uid,obj.uid).isEquals();
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

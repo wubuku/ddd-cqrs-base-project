@@ -1,14 +1,25 @@
 package com.librarymanagement.infrastructure.repositories.hibernate;
 
 import com.librarymanagement.domain.Book;
+import com.librarymanagement.domain.BookId;
 import com.librarymanagement.domain.IBookRepository;
+import com.simplepersoncrud.domain.PersonId;
+import com.simplepersoncrud.domain.SimplePerson;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 @DomainRepositoryImpl
 public class BookRepository extends GenericHibernateRepository<Book, Long> implements IBookRepository {
+
+    @Autowired
+    @Qualifier("domainEventBus")
+    private IEventBus domainEventBus;
 
     @Autowired
     public BookRepository(HibernateTemplate hibernateTemplate) {
@@ -29,5 +40,30 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     @Override
     public Book getBookFromId(Long id) {
         return get(id);
+    }
+
+    @Override
+    public Book geBookWithUid(BookId bookId) {
+        DetachedCriteria bookFromUid = DetachedCriteria.forClass(Book.class);
+        bookFromUid.add(Restrictions.eq("bookId", bookId));
+        Book book = (Book) hibernateTemplate.findByCriteria(bookFromUid).get(0);
+        return updateBookWithDependencies(book);
+    }
+
+    @Override
+    public Book issueBook(Book book) {
+        book = save(book);
+        return book;
+    }
+
+    @Override
+    public Book returnBook(Book book) {
+        return save(book);
+    }
+
+    private Book updateBookWithDependencies(Book book) {
+        if (book != null)
+            book.setDomainEventBus(domainEventBus);
+        return book;
     }
 }

@@ -1,7 +1,7 @@
 package org.nthdimenzion.security.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 @ValueObject
 @Entity
-public class HomePageDetails extends IdGeneratingBaseEntity {
+public class HomePageDetails extends IdGeneratingArcheType {
 
     private String homepageViewId;
     private String description;
@@ -47,11 +47,11 @@ public class HomePageDetails extends IdGeneratingBaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
             HomePageDetails obj = (HomePageDetails) o;
             return new EqualsBuilder().reflectionEquals(obj, this);
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.nthdimenzion.crud;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
-import org.nthdimenzion.ddd.domain.BaseEntity;
+import org.nthdimenzion.ddd.domain.BaseArchetype;
 import org.nthdimenzion.ddd.domain.LifeCycle;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class CrudDao implements ICrud {
 	
 	@Override
     @Transactional
-	public Long add(BaseEntity e) {
+	public Long add(BaseArchetype e) {
 		return (Long) hibernateTemplate.save(e);
 	}
 
@@ -90,7 +90,7 @@ public class CrudDao implements ICrud {
     }
 
     @Override
-    public <T extends BaseEntity> List<T> unify(List<T> list) {
+    public <T extends BaseArchetype> List<T> unify(List<T> list) {
 	if (UtilValidator.isEmpty(list))
 		return list;
 	Set<T> unifier = new HashSet<T>();
@@ -100,7 +100,7 @@ public class CrudDao implements ICrud {
 
     @Override
     @Transactional
-    public <T extends BaseEntity> T deactivate(T t){
+    public <T extends BaseArchetype> T deactivate(T t){
         t.markAsArchived();;
         return  update(t);
     }

@@ -1,6 +1,7 @@
 package org.nthdimenzion.ddd.infrastructure;
 
 import org.nthdimenzion.ddd.domain.IEvent;
+import com.google.common.eventbus.*;
 
 public class EventBus implements IEventBus{
 

@@ -13,11 +13,15 @@ import org.nthdimenzion.object.utils.Constants;
 pagetitle.setValue("Transfer Books");
 ]]></zscript>
     <window id="transferBook"  title="Transfer Books" border="normal" self="@{define(content)}" apply="${transferBookComposer}">
-        <vlayout>
+        <vlayout height="100%">
+            <hbox>
+                <label value="Member Name "/>
+                <label value="@{transferBookComposer.memberName}"/>
+            </hbox>
             <panel title="Transfer Books" closable="true" collapsible="true">
                 <panelchildren>
                 <vlayout>
-                    <listbox  id="availableBookList" multiple="true" checkmark="true" model="@{transferBookComposer.allBooks,load-after='returnBtn.onClick,issueBook.onClick'}"                             mold="paging" pageSize="10" autopaging="true">
+                    <listbox  id="availableBooksListBox" multiple="true" checkmark="true" model="@{transferBookComposer.allBooks,load-after='returnBtn.onClick,issueBook.onClick'}"                             mold="paging" pageSize="5" autopaging="true">
                         <listhead>
                             <listheader>ID</listheader>
                             <listheader>Name</listheader>
@@ -46,7 +50,7 @@ pagetitle.setValue("Transfer Books");
                     <button id="issueBook" label = "Issue Books" onClick="transferBookComposer.issueBooks()"
                     />
 
-                    <listbox  id="booksWithMember" multiple="true" checkmark="true" model="@{transferBookComposer.booksWithMember,load-after='returnBtn.onClick,issueBook.onClick'}"                                        mold="paging" pageSize="10" autopaging="true">
+                    <listbox  id="booksWithMemberListBox" multiple="true" checkmark="true" model="@{transferBookComposer.booksWithMember,load-after='returnBtn.onClick,issueBook.onClick'}"                                        mold="paging" pageSize="5" autopaging="true">
                         <listhead>
                             <listheader>ID</listheader>
                             <listheader>Name</listheader>

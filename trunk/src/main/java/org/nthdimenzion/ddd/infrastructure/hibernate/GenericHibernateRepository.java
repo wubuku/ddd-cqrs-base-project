@@ -1,6 +1,6 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
-import org.nthdimenzion.ddd.domain.BaseEntity;
+import org.nthdimenzion.ddd.domain.BaseArchetype;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,7 +9,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class GenericHibernateRepository<E extends BaseEntity, K extends Serializable> {
+public abstract class GenericHibernateRepository<E extends BaseArchetype, K extends Serializable> {
     protected final HibernateTemplate hibernateTemplate;
     private Class<E> clazz;
 

@@ -2,8 +2,11 @@ package com.librarymanagement.presentation;
 
 import com.google.common.collect.Maps;
 import com.librarymanagement.application.commands.PurchaseBookCommand;
+import com.librarymanagement.application.commands.UpdateBookCommand;
+import com.librarymanagement.domain.Book;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
 import org.apache.commons.beanutils.BeanUtils;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.slf4j.Logger;
@@ -29,8 +32,9 @@ public class PurchaseBookComposer extends AbstractZkComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         initializePage();
-        Long bookId = Long.valueOf(Executions.getCurrent().getParameter("bookId"));
-        if (bookId != null) {
+        String id = Executions.getCurrent().getParameter("bookId");
+        if (UtilValidator.isNotEmpty(id)) {
+            Long bookId = Long.valueOf(Executions.getCurrent().getParameter("bookId"));
             bookDto = bookFinder.findBookWithId(bookId);
             isUpdateView = true;
         }
@@ -40,9 +44,10 @@ public class PurchaseBookComposer extends AbstractZkComposer {
 
     private void initializePage() {
         isUpdateView = false;
+        bookDto = Maps.newHashMap();
     }
 
-    public boolean isPurchaseBookView(){
+    public boolean isPurchaseBookView() {
         return !isUpdateView();
     }
 
@@ -54,12 +59,21 @@ public class PurchaseBookComposer extends AbstractZkComposer {
     public void purchaseBook() throws InvocationTargetException, IllegalAccessException {
         PurchaseBookCommand purchaseBookCommand = new PurchaseBookCommand();
         BeanUtils.populate(purchaseBookCommand, bookDto);
-        Long bookId = (Long)sendCommand(purchaseBookCommand);
+        Long bookId = (Long) sendCommand(purchaseBookCommand);
+        if(isSuccess(bookId)){
         displayMessages.displaySuccess();
+        navigation.redirect("bookList");
+    }
     }
 
 
-    public void updateBook(){
-        System.out.println("updateBook");
+    public void updateBook() throws InvocationTargetException, IllegalAccessException {
+        UpdateBookCommand updateBookCommand = new UpdateBookCommand();
+        BeanUtils.populate(updateBookCommand, bookDto);
+        Book book = (Book) sendCommand(updateBookCommand);
+        if (isSuccess(book))
+            displayMessages.displaySuccess();
     }
+
+
 }

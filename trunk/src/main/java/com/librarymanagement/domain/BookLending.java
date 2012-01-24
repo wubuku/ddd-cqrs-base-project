@@ -17,16 +17,27 @@ public class BookLending extends BaseAggregateRoot {
     private Book book;
     private Member member;
     private Interval lendingInterval;
+    private BookLendingId bookLendingId;
 
-    public BookLending() {
+    BookLending() {
         lendingInterval = Interval.start();
     }
 
-    public BookLending(Book book, Member member) {
+    public BookLending(BookLendingId bookLendingId,Book book, Member member) {
         this();
+        this.bookLendingId = bookLendingId;
         this.book = book;
         this.member = member;
 
+    }
+
+    @Embedded
+    public BookLendingId getBookLendingId() {
+        return bookLendingId;
+    }
+
+    void setBookLendingId(BookLendingId bookLendingId) {
+        this.bookLendingId = bookLendingId;
     }
 
     @ManyToOne
@@ -57,11 +68,16 @@ public class BookLending extends BaseAggregateRoot {
     }
 
     @Transient
-    public boolean isBookOverDue() {
+    public boolean isBookLendingCompleted() {
         return lendingInterval.isCompleted();
     }
-
-    public void extendDueDateBy(int days){
+    @Transient
+    public void extendDueDateBy(int days) {
         lendingInterval = lendingInterval.extendThruDateByDays(days);
+    }
+
+    @Transient
+    public void bookReturned(){
+        lendingInterval = lendingInterval.complete();
     }
 }

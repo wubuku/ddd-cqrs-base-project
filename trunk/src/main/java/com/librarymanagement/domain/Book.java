@@ -1,14 +1,20 @@
 package com.librarymanagement.domain;
 
 import com.google.common.collect.Lists;
+import com.librarymanagement.application.events.BookIssuedEvent;
+import com.librarymanagement.application.events.BookReturnedEvent;
 import com.librarymanagement.domain.error.NotEnoughCopiesInLibrary;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.Money;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
+import org.nthdimenzion.ddd.domain.INamed;
 import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.ddd.domain.annotations.PPT;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
+import org.nthdimenzion.object.utils.EqualsFacilitator;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -17,7 +23,7 @@ import javax.persistence.Entity;
 @AggregateRoot
 @PPT
 @Entity
-public class Book extends BaseAggregateRoot{
+public class Book extends BaseAggregateRoot implements INamed {
     private String name;
     private String isbn;
     private Integer availableCopies;
@@ -32,7 +38,7 @@ public class Book extends BaseAggregateRoot{
 
     }
 
-    public Book(String name, String isbn,BookId bookId,Money cost) {
+    public Book(String name, String isbn, BookId bookId, Money cost) {
         this();
         this.name = name;
         this.isbn = isbn;
@@ -40,7 +46,8 @@ public class Book extends BaseAggregateRoot{
         this.bookId = bookId;
     }
 
-    String getName() {
+    @Override
+    public String getName() {
         return name;
     }
 
@@ -68,26 +75,8 @@ public class Book extends BaseAggregateRoot{
         return authors;
     }
 
-    public void purchaseCopies(Integer noOfCopiesPurchased){
-        if(noOfCopiesPurchased==null)
-            noOfCopiesPurchased = 0;
-        availableCopies = availableCopies + noOfCopiesPurchased;
-        totalCopies = totalCopies + noOfCopiesPurchased;
-    }
-
     void setAuthors(String authors) {
         this.authors = authors;
-    }
-
-    public void lendBook() throws NotEnoughCopiesInLibrary {
-    if(availableCopies <=0){
-        throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(),name)).build());
-    }
-    availableCopies--;
-    }
-
-    public void returnBook(){
-        availableCopies++;
     }
 
     @Embedded
@@ -99,8 +88,8 @@ public class Book extends BaseAggregateRoot{
         this.bookId = bookId;
     }
 
-    @Columns(columns = { @Column(name = "AMOUNT",precision = 64,scale = 2),@Column(name = "CURRENCY_CODE")})
-    @Type(type= "org.nthdimenzion.ddd.domain.sharedkernel.MoneyType")
+    @Columns(columns = {@Column(name = "AMOUNT", precision = 64, scale = 2), @Column(name = "CURRENCY_CODE")})
+    @Type(type = "org.nthdimenzion.ddd.domain.sharedkernel.MoneyType")
 //    @NotNull
     Money getCost() {
         return cost;
@@ -116,5 +105,49 @@ public class Book extends BaseAggregateRoot{
 
     void setTotalCopies(Integer totalCopies) {
         this.totalCopies = totalCopies;
+    }
+
+    public void issueBook(Long memberId) throws NotEnoughCopiesInLibrary {
+        if (availableCopies <= 0) {
+            throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
+        }
+        availableCopies--;
+        domainEventBus.raise(new BookIssuedEvent(bookId, memberId));
+    }
+
+    public void returnBook(Long memberId) {
+        availableCopies++;
+        domainEventBus.raise(new BookReturnedEvent(bookId, memberId));
+    }
+
+    public void purchaseCopies(Integer noOfCopiesPurchased) {
+        if (noOfCopiesPurchased == null)
+            noOfCopiesPurchased = 1;
+        availableCopies = availableCopies + noOfCopiesPurchased;
+        totalCopies = totalCopies + noOfCopiesPurchased;
+    }
+
+    public void updateCopies(Integer noOfCopies) {
+
+    }
+
+
+    public String toString() {
+        return name;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
+            Book obj = (Book) o;
+            return new EqualsBuilder().append(bookId, obj.bookId).isEquals();
+        }
+        return EqualsFacilitator.initialChecksPass(o, this);
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtils.nullSafeHashCode(bookId);
     }
 }

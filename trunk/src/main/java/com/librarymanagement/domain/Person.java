@@ -3,7 +3,7 @@ package com.librarymanagement.domain;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.nthdimenzion.ddd.domain.INamed;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.PPT;
 
 import javax.persistence.Column;
@@ -15,7 +15,7 @@ import static org.nthdimenzion.object.utils.StringUtils.nullSafeCopy;
 import static org.nthdimenzion.object.utils.StringUtils.replaceNullWithEmptyString;
 @PPT
 @Entity
-public final class Person extends IdGeneratingBaseEntity implements INamed {
+public final class Person extends IdGeneratingArcheType implements INamed {
 
     private String firstName;
     private String middleName;

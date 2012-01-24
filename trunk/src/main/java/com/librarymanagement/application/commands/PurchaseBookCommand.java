@@ -32,5 +32,4 @@ public class PurchaseBookCommand implements ICommand{
     public void setAuthors(String authors) {
         this.authors = authors;
     }
-
 }
