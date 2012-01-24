@@ -37,11 +37,11 @@ public class SecurityGroupId {
 
     @Override
     public boolean equals(Object o) {
-        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
             SecurityGroupId obj = (SecurityGroupId) o;
             return new EqualsBuilder().append(uid, obj.uid).isEquals();
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

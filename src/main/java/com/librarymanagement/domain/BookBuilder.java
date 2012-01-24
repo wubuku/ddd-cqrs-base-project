@@ -26,7 +26,7 @@ public class BookBuilder {
         return this;
     }
 
-    public BookBuilder withCopies(Integer noOfCopiesPurchased) {
+    public BookBuilder purchaseCopies(Integer noOfCopiesPurchased) {
         book.purchaseCopies(noOfCopiesPurchased);
         return this;
     }

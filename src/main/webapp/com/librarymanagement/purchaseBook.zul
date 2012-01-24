@@ -28,11 +28,11 @@ subpagetitle.setValue("Enter/Edit details of the purchased book");
             <label id = "lblAuthors" value="Authors"/>
             <textbox id = "txtAuthors" value="@{bookDto.authors}" rows="4" cols="40"/>
         </hlayout>
-        <hlayout>
+       <!-- <hlayout>
             <label id = "lblCopies" value="Copies"/>
             <label zclass="labelReq" value="*"/>
             <spinner id="copies" value="@{bookDto.copies}" constraint="no negative" />
-        </hlayout>
+        </hlayout>-->
         <hbox>
             <button id = "purchaseBookBtn" label="Purchase Book" onClick="purchaseBookComposer.purchaseBook()" visible="@{purchaseBookComposer.purchaseBookView}"/>
             <button id = "updateBookBtn" label="Done Editing" onClick="purchaseBookComposer.updateBook()" visible="@{purchaseBookComposer.updateView}"/>
@@ -42,6 +42,7 @@ subpagetitle.setValue("Enter/Edit details of the purchased book");
     </window>
          <vbox self="@{define(left)}">
             <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+            <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
         </vbox>
 
 </zk>

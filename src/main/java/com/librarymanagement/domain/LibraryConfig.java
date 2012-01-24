@@ -1,11 +1,11 @@
 package com.librarymanagement.domain;
 
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 
 import javax.persistence.Entity;
 
 @Entity
-public class LibraryConfig extends IdGeneratingBaseEntity{
+public class LibraryConfig extends IdGeneratingArcheType {
     private String name;
     private Integer maxLendingPeriod;
 

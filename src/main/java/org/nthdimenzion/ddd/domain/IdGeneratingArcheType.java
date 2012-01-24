@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class IdGeneratingBaseEntity extends BaseEntity{
+public abstract class IdGeneratingArcheType extends BaseArchetype {
 
      private Long id;
 
@@ -25,11 +25,11 @@ public abstract class IdGeneratingBaseEntity extends BaseEntity{
 
     @Override
     public boolean equals(Object o) {
-    if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
-            IdGeneratingBaseEntity obj = (IdGeneratingBaseEntity)o;
+    if (EqualsFacilitator.initialChecksPass(o, this)) {
+            IdGeneratingArcheType obj = (IdGeneratingArcheType)o;
             return new EqualsBuilder().append(id,obj.id).isEquals();
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

@@ -10,4 +10,10 @@ public interface IBookRepository {
     Book getBookFromId(Long id);
 
     Book updateBook(Book book);
+
+    Book geBookWithUid(BookId bookId);
+
+    Book issueBook(Book book);
+
+    Book returnBook(Book book);
 }

@@ -66,10 +66,10 @@ public class BookDetailsDto implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
             return EqualsBuilder.reflectionEquals(o,this) ;
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

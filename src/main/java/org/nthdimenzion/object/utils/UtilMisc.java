@@ -1,7 +1,7 @@
 package org.nthdimenzion.object.utils;
 
 import com.google.common.collect.Lists;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +20,12 @@ public final class UtilMisc {
     }
     }
 
-    public static List<Long> extractId(Collection<? extends IdGeneratingBaseEntity> entities){
+    public static List<Long> extractId(Collection<? extends IdGeneratingArcheType> entities){
         if(UtilValidator.isEmpty(entities)){
             return Lists.newArrayList();
         }
         List<Long> entityIds = Lists.newArrayList();
-        for(IdGeneratingBaseEntity entity : entities){
+        for(IdGeneratingArcheType entity : entities){
             entityIds.add(entity.getId());
         }
         return entityIds;

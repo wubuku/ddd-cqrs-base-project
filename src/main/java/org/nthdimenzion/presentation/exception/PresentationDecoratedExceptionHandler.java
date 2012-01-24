@@ -1,6 +1,9 @@
 package org.nthdimenzion.presentation.exception;
 
+import com.adamtaft.eb.EventHandler;
 import com.google.common.eventbus.Subscribe;
+import org.nthdimenzion.ddd.domain.annotations.EventHandlers;
+import org.nthdimenzion.ddd.infrastructure.AbstractEventListener;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
@@ -9,14 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.zkoss.zk.ui.event.EventListener;
 
-@Component
+@EventHandlers
 @Qualifier("presentationDecoratedExceptionHandler")
-public class PresentationDecoratedExceptionHandler implements IExceptionHandler {
+public class PresentationDecoratedExceptionHandler extends AbstractEventListener implements IExceptionHandler{
 
     private final Logger logger = LoggerFactory.getLogger(PresentationDecoratedExceptionHandler.class);
-
-    private final IEventBus exceptionEventBus;
 
     private boolean isExceptionHandled = false;
 
@@ -30,9 +32,7 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler 
 
     @Autowired
     public PresentationDecoratedExceptionHandler(@Qualifier("exceptionEventBus") IEventBus exceptionEventBus) {
-        this.exceptionEventBus = exceptionEventBus;
-        logger.debug("exceptionEventBus Injected into constructor " + exceptionEventBus);
-        exceptionEventBus.register(this);
+        super(exceptionEventBus);
     }
 
     @Subscribe
@@ -44,12 +44,6 @@ public class PresentationDecoratedExceptionHandler implements IExceptionHandler 
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        logger.debug("Un register from exceptionEventBus on finalize of PresentationDecoratedExceptionHandler");
-        exceptionEventBus.unRegister(this);
-    }
 
     @Override
     public Boolean isExceptionHandled() {

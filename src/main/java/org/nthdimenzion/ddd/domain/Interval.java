@@ -87,8 +87,8 @@ public class Interval implements Serializable {
         return new Interval(fromDate, DateTime.now(), comments);
     }
 
-    public void complete() {
-        complete("No Remarks");
+    public Interval complete() {
+        return complete("No Remarks");
     }
 
     @Transient

@@ -50,11 +50,11 @@ public class SimplePerson extends BaseAggregateRoot {
 
     @Override
     public boolean equals(Object o) {
-    if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+    if (EqualsFacilitator.initialChecksPass(o, this)) {
             SimplePerson obj = (SimplePerson)o;
             return new EqualsBuilder().append(personId,obj.personId).isEquals();
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

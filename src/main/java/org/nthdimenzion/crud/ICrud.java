@@ -2,7 +2,7 @@ package org.nthdimenzion.crud;
 
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.nthdimenzion.ddd.domain.BaseEntity;
+import org.nthdimenzion.ddd.domain.BaseArchetype;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +12,7 @@ public interface ICrud {
 	 * The add method. CREATE
 	 * @param e the entity you want to add to a repository.
 	 */
-	Long add(BaseEntity e);
+	Long add(BaseArchetype e);
 	/**
 	 * The remove method. DELETE (DESTROY)
 	 * @param e the entity you want to remove from a repository.
@@ -41,8 +41,8 @@ public interface ICrud {
 
     <T> List<T> getAll(Class<T> klass, int firstResult, int maxResults);
 
-    <T extends BaseEntity> List<T> unify(List<T> list);
+    <T extends BaseArchetype> List<T> unify(List<T> list);
 
-    <T extends BaseEntity> T deactivate(T t);
+    <T extends BaseArchetype> T deactivate(T t);
 
 }

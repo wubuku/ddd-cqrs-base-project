@@ -92,7 +92,7 @@
 
 
     <welcome-file-list>
-		<welcome-file>/org/security/login.zul</welcome-file>
+		<welcome-file>/login.zul</welcome-file>
 	</welcome-file-list>
 
 

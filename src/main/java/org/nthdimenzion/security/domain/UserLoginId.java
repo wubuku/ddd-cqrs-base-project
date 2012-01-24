@@ -37,11 +37,11 @@ public class UserLoginId {
 
     @Override
     public boolean equals(Object o) {
-        if (EqualsFacilitator.PROCEED_WITH_EQUALS == EqualsFacilitator.initialChecks(o, this)) {
+        if (EqualsFacilitator.initialChecksPass(o, this)) {
             UserLoginId obj = (UserLoginId) o;
             return new EqualsBuilder().reflectionEquals(this, obj);
         }
-        return EqualsFacilitator.initialChecks(o, this);
+        return EqualsFacilitator.initialChecksPass(o, this);
     }
 
     @Override

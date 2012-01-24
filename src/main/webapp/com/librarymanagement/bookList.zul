@@ -56,5 +56,7 @@ subpagetitle.setValue("Double click on the book to select");
 
     <vbox self="@{define(left)}">
             <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+            <a id="purchaseBook" label="Purchase a new Book" onClick='navigation.redirect("purchaseBook")'/>
+             <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
     </vbox>
 </zk>

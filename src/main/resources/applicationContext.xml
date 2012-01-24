@@ -39,6 +39,7 @@
 			<array>
 				<value>org/error/exception.properties</value>
                 <value>com/simplepersoncrud/error/exception.properties</value>
+                <value>com/librarymanagement/error/exception.properties</value>
 			</array>
 		</property>
 	</bean>

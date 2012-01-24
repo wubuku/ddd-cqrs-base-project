@@ -1,7 +1,7 @@
 package com.librarymanagement.domain;
 
 import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.domain.IdGeneratingBaseEntity;
+import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.Role;
 
 import javax.persistence.CascadeType;
@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 @Role
 @MappedSuperclass
-public abstract class PersonRole extends IdGeneratingBaseEntity{
+public abstract class PersonRole extends IdGeneratingArcheType {
 
     private Person person;
 

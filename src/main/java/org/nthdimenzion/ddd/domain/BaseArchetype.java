@@ -1,16 +1,21 @@
 package org.nthdimenzion.ddd.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseArchetype {
 
 
     private Long version = 1L;
 
     private LifeCycle lifeCycle = new LifeCycle();
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Embedded
     protected LifeCycle getLifeCycle() {
