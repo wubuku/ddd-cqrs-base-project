@@ -21,10 +21,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
      private final Logger logger = LoggerFactory.getLogger(AuthenticationSuccessHandler.class);
 
-    public AuthenticationSuccessHandler(){
-        System.out.println("*** AuthenticationSuccessHandler **");
-    }
-
     @Autowired
     private Navigation navigation;
 

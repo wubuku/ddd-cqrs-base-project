@@ -1,4 +1,4 @@
-package integration.org.nthdimenzion.util;
+package org.nthdimenzion.util;
 
 import com.google.common.collect.ImmutableMap;
 import com.icegreen.greenmail.util.GreenMail;
@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.nthdimenzion.testinfrastructure.AbstractTest;
 import org.nthdimenzion.util.IMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,10 +22,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/testContext.xml", "classpath:/integrationContext.xml"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class MailSenderTest {
+@ContextConfiguration(locations = {"classpath:/integrationContext.xml"})
+public class MailSenderTest extends AbstractTest {
 
     @Autowired
     @Qualifier("testMailService")
