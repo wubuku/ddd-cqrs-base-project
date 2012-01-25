@@ -17,6 +17,10 @@ import java.util.Collections;
 @DomainRepositoryImpl
 public class BookLendingRepository extends GenericHibernateRepository<BookLending,Long> implements IBookLendingRepository{
 
+    protected BookLendingRepository(){
+
+    }
+
     @Autowired
     public BookLendingRepository(HibernateTemplate hibernateTemplate) {
         super(hibernateTemplate);

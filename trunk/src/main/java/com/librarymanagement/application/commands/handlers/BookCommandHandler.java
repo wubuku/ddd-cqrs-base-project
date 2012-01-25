@@ -5,7 +5,7 @@ import com.librarymanagement.application.commands.PurchaseBookCommand;
 import com.librarymanagement.application.commands.ReturnBooksCommand;
 import com.librarymanagement.application.commands.UpdateBookCommand;
 import com.librarymanagement.domain.*;
-import com.librarymanagement.domain.error.NotEnoughCopiesInLibrary;
+import com.librarymanagement.domain.error.NotEnoughCopies;
 import org.nthdimenzion.cqrs.command.AbstractCommandHandler;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.crud.ICrud;
@@ -37,13 +37,13 @@ public class BookCommandHandler extends AbstractCommandHandler {
         return book;
     }
 
-    public boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopiesInLibrary {
+    public boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopies {
         Set<BookId> bookIds = bookIssueCommand.bookIds;
         Member member = crudDao.find(Member.class, bookIssueCommand.memberId);
         for (BookId bookId : bookIds) {
             Book book = bookRepository.geBookWithUid(bookId);
-            book.issueBook(member.getId());
-            bookRepository.issueBook(book);
+            book.lend(member.getId());
+            bookRepository.lend(book);
         }
         return success;
     }
@@ -53,8 +53,8 @@ public class BookCommandHandler extends AbstractCommandHandler {
         Member member = crudDao.find(Member.class, bookReturnCommand.memberId);
         for (BookId bookId : bookIds) {
             Book book = bookRepository.geBookWithUid(bookId);
-            book.returnBook(member.getId());
-            bookRepository.returnBook(book);
+            book.rentalExpiry(member.getId());
+            bookRepository.rentalExpiry(book);
         }
         return success;
     }

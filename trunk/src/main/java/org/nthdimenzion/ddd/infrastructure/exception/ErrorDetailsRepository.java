@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ErrorDetailsRepository extends GenericHibernateRepository<ErrorDetails,Long> implements IErrorDetailsRepository{
 
-    ErrorDetailsRepository(){
+    protected ErrorDetailsRepository(){
 
     }
 

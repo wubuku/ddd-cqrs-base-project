@@ -10,9 +10,8 @@ import javax.persistence.Transient;
 @MappedSuperclass
 public abstract class BaseAggregateRoot extends IdGeneratingArcheType {
 
+    @Transient
     protected IEventBus domainEventBus;
-
-
 
     public void setDomainEventBus(IEventBus domainEventBus) {
         if (this.domainEventBus != null){
@@ -22,8 +21,4 @@ public abstract class BaseAggregateRoot extends IdGeneratingArcheType {
         this.domainEventBus = domainEventBus;
     }
 
-    @Transient
-    protected IEventBus getDomainEventBus() {
-        return domainEventBus;
-    }
 }

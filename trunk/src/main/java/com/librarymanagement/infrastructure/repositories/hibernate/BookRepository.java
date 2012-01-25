@@ -21,6 +21,10 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     @Qualifier("domainEventBus")
     private IEventBus domainEventBus;
 
+    protected BookRepository(){
+
+    }
+
     @Autowired
     public BookRepository(HibernateTemplate hibernateTemplate) {
         super(hibernateTemplate);
@@ -51,13 +55,13 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     }
 
     @Override
-    public Book issueBook(Book book) {
+    public Book lend(Book book) {
         book = save(book);
         return book;
     }
 
     @Override
-    public Book returnBook(Book book) {
+    public Book rentalExpiry(Book book) {
         return save(book);
     }
 

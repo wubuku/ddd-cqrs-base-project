@@ -3,7 +3,7 @@ package com.librarymanagement.domain;
 import com.google.common.collect.Lists;
 import com.librarymanagement.application.events.BookIssuedEvent;
 import com.librarymanagement.application.events.BookReturnedEvent;
-import com.librarymanagement.domain.error.NotEnoughCopiesInLibrary;
+import com.librarymanagement.domain.error.NotEnoughCopies;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
@@ -23,7 +23,7 @@ import javax.persistence.Entity;
 @AggregateRoot
 @PPT
 @Entity
-public class Book extends BaseAggregateRoot implements INamed {
+public class Book extends BaseAggregateRoot implements INamed,IRentable {
     private String name;
     private String isbn;
     private Integer availableCopies;
@@ -107,15 +107,17 @@ public class Book extends BaseAggregateRoot implements INamed {
         this.totalCopies = totalCopies;
     }
 
-    public void issueBook(Long memberId) throws NotEnoughCopiesInLibrary {
+    @Override
+    public void lend(Long memberId) throws NotEnoughCopies {
         if (availableCopies <= 0) {
-            throw new NotEnoughCopiesInLibrary(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
+            throw new NotEnoughCopies(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
         }
         availableCopies--;
         domainEventBus.raise(new BookIssuedEvent(bookId, memberId));
     }
 
-    public void returnBook(Long memberId) {
+    @Override
+    public void rentalExpiry(Long memberId) {
         availableCopies++;
         domainEventBus.raise(new BookReturnedEvent(bookId, memberId));
     }

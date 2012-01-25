@@ -13,7 +13,7 @@ public interface IBookRepository {
 
     Book geBookWithUid(BookId bookId);
 
-    Book issueBook(Book book);
+    Book lend(Book book);
 
-    Book returnBook(Book book);
+    Book rentalExpiry(Book book);
 }

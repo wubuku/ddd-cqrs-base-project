@@ -21,6 +21,10 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
      private final Logger logger = LoggerFactory.getLogger(AuthenticationSuccessHandler.class);
 
+    public AuthenticationSuccessHandler(){
+        System.out.println("*** AuthenticationSuccessHandler **");
+    }
+
     @Autowired
     private Navigation navigation;
 
@@ -32,28 +36,28 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
     /*private List<PasswordPolicyErrorStrategy> passwordCheckStrategies;
 
-     private UserLoginService userLoginService;
-     private CommonCrudService commonCrudService;
-     private PasswordPolicyService passwordPolicyService;
+    private UserLoginService userLoginService;
+    private CommonCrudService commonCrudService;
+    private PasswordPolicyService passwordPolicyService;
 
-     public PasswordPolicyService getPasswordPolicyService() {
-     return passwordPolicyService;
-     }
+    public PasswordPolicyService getPasswordPolicyService() {
+    return passwordPolicyService;
+    }
 
-     @Resource(name="passwordPolicyService")
-     @Required
-     public void setPasswordPolicyService(PasswordPolicyService passwordPolicyService) {
-     this.passwordPolicyService = passwordPolicyService;
-     }
+    @Resource(name="passwordPolicyService")
+    @Required
+    public void setPasswordPolicyService(PasswordPolicyService passwordPolicyService) {
+    this.passwordPolicyService = passwordPolicyService;
+    }
 
 
-     public void setUserLoginService(UserLoginService userLoginService) {
-     this.userLoginService = userLoginService;
-     }
+    public void setUserLoginService(UserLoginService userLoginService) {
+    this.userLoginService = userLoginService;
+    }
 
-     public void setPasswordCheckStrategies(List<PasswordPolicyErrorStrategy> passwordCheckStrategies) {
-     this.passwordCheckStrategies = passwordCheckStrategies;
-     }*/
+    public void setPasswordCheckStrategies(List<PasswordPolicyErrorStrategy> passwordCheckStrategies) {
+    this.passwordCheckStrategies = passwordCheckStrategies;
+    }*/
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -75,7 +79,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        logger.debug("Entry onAuthenticationSuccess");
+        logger.debug("Entry onLogoutSuccess");
 	/*if(authentication != null){
 		UserLogin login = ((UserLoginUserDetailsAdapter) authentication.getPrincipal()).getUserLogin();
 		EventLog log = new EventLog(EventType.APPLICATION_LOGOUT, "User - "+ login.getUsername() +" logged out.");

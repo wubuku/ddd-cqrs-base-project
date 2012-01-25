@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class SecurityTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-     @BeforeClass
+    @BeforeClass
     public static void onTimeSetUp(){
     TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken(new GrantedAuthorityImpl[]{new GrantedAuthorityImpl("ROLE_SUPERADMIN")});
     SecurityContextHolder.getContext().setAuthentication(token);
@@ -41,7 +41,7 @@ public class SecurityTest extends AbstractTransactionalJUnit4SpringContextTests 
     @Test
     public void testFindUserDetailsFromUserName(){
         // Setup from import.sql
-        userService.setSystemUser(new SystemUser(null));
+//        userService.setSystemUser(new SystemUser(null));
 
         UserDetails userDetails = userService.loadUserByUsername("sa");
 
@@ -52,7 +52,7 @@ public class SecurityTest extends AbstractTransactionalJUnit4SpringContextTests 
     @Test
     public void testLoadSecurityPermissionsForUserName(){
         // Setup from import.sql
-        userService.setSystemUser(new SystemUser(null));
+//        userService.setSystemUser(new SystemUser(null));
 
         UserDetails userDetails = userService.loadUserByUsername("sa");
 

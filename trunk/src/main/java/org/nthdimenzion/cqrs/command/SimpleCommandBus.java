@@ -32,9 +32,10 @@ public class SimpleCommandBus implements ICommandBus {
         try {
             return handler.invokeMethod(command);
         } catch (Throwable throwable) {
+            throwable = extractTargetException(throwable);
             boolean isExceptionEventRaised = raiseEventForException(throwable);
             logger.debug("Is exception handled " + isExceptionEventRaised);
-            if (isNonDisplayBusinessException(isExceptionEventRaised, throwable.getCause())) {
+            if (isNonDisplayBusinessException(isExceptionEventRaised, throwable)) {
                 logger.error("Unhandled exception ", throwable);
                 throwException(throwable);
             } else if(!isExceptionEventRaised) {
@@ -58,9 +59,6 @@ public class SimpleCommandBus implements ICommandBus {
 
     private boolean raiseEventForException(Throwable throwable) {
         logger.debug("Error bubbled up till CommandBus ", throwable);
-        if (throwable instanceof InvocationTargetException) {
-            throwable = ((InvocationTargetException) throwable).getTargetException();
-        }
         if (throwable instanceof IBaseException) {
             ErrorDetails errorDetails = ((IBaseException) throwable).getErrorDetails();
             if (errorDetails.getShowErrorInView()) {
@@ -69,6 +67,13 @@ public class SimpleCommandBus implements ICommandBus {
             }
         }
         return false;
+    }
+
+    private Throwable extractTargetException(Throwable throwable) {
+        if (throwable instanceof InvocationTargetException) {
+            throwable = ((InvocationTargetException) throwable).getTargetException();
+        }
+        return throwable;
     }
 
     @Override

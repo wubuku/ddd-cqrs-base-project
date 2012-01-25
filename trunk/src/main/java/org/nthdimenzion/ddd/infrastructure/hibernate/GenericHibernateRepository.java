@@ -1,6 +1,7 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
 import org.nthdimenzion.ddd.domain.BaseArchetype;
+import org.nthdimenzion.ddd.domain.IPersistable;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -17,6 +17,7 @@ import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import com.simplepersoncrud.testdata.DummyDisplayMessages;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,12 +26,16 @@ import org.nthdimenzion.crud.ICrud;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
 import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
+import org.nthdimenzion.security.application.services.UserService;
+import org.nthdimenzion.security.domain.SystemUser;
 import org.nthdimenzion.testdata.SecurityDetailsMaker;
+import org.nthdimenzion.testdata.TestUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,7 +47,7 @@ import java.util.List;
 
 /** @noinspection ALL*/
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/queryContext.xml"})
+@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/queryContext.xml","classpath:/testContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -72,8 +77,16 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private ICrud crudDao;
 
-    @BeforeClass
-    public static void onTimeSetUp(){
+    @Autowired
+    private SystemUser systemUser;
+
+     IDisplayMessages displayMessages = new DummyDisplayMessages();
+
+    @Before
+    public void setUpForEachTest(){
+    UserDetails userDetails = new TestUserDetails();
+    systemUser.uses(userDetails);
+    presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
     TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken(new GrantedAuthorityImpl[]{new GrantedAuthorityImpl("ROLE_SUPERADMIN")});
     SecurityContextHolder.getContext().setAuthentication(token);
     }
@@ -89,6 +102,8 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         Assert.notNull(commandBus);
 
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand("Sudarshan"));
+        Assert.notNull(actualId);
+
         SimplePerson person = personRepository.getPersonWithId(actualId);
 
         Assert.isTrue(actualId == person.getId());

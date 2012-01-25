@@ -1,4 +1,4 @@
-package integration.org.nthdimenzion.cqrs.command.testdata;
+package org.nthdimenzion.cqrs.command.testdata;
 
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand;

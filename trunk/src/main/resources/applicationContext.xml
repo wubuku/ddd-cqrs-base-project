@@ -44,6 +44,7 @@
 		</property>
 	</bean>
 
+    <context:component-scan base-package="org.nthdimenzion.security.domain"></context:component-scan>
 
     <import resource="databaseContext.xml"/>
     <import resource="queryContext.xml"/>

@@ -8,17 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.zkoss.spring.SpringUtil;
 
 @DomainService
 public class UserService implements UserDetailsService{
 
     private JdbcDaoImpl jdbcDao;
-    private SystemUser systemUser;
 
     @Autowired
-    public void setSystemUser(SystemUser systemUser) {
-        this.systemUser = systemUser;
-    }
+    private SystemUser systemUser;
 
     @Autowired
     public UserService(JdbcDaoImpl jdbcDao) {
