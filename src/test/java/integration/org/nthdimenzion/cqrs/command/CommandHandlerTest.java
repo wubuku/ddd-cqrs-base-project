@@ -10,23 +10,17 @@ import org.nthdimenzion.cqrs.command.NoCommandHandlerFoundException;
 import org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand1;
+import org.nthdimenzion.testinfrastructure.AbstractTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml","classpath:/queryContext.xml","classpath:/testContext.xml"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class CommandHandlerTest {
+public class CommandHandlerTest extends AbstractTest{
 
     @Autowired
     private IMultiCommandHandlerRegistry commandHandlerRegistry;
-
-    @Autowired
-    @Qualifier("simpleCommandBus")
-    private ICommandBus commandBus;
 
     @Test
     public void testCommandHandlerFinder(){

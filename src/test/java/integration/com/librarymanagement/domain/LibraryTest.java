@@ -21,6 +21,7 @@ import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHan
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.nthdimenzion.security.domain.SystemUser;
 import org.nthdimenzion.testdata.TestUserDetails;
+import org.nthdimenzion.testinfrastructure.AbstractTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -36,23 +37,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/testContext.xml", "classpath:/queryContext.xml"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class LibraryTest extends AbstractTest {
 
     @Autowired
     private BookBuilder bookBuilder;
 
     @Autowired
-    private HibernateTemplate hibernateTemplate;
-
-    @Autowired
     private IBookRepository bookRepository;
-
-    @Autowired
-    private SystemUser systemUser;
 
     @Autowired
     private BookQueries bookQueries;
@@ -61,34 +52,15 @@ public class LibraryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private ILibraryFinder bookFinder;
 
     @Autowired
-    private ICrud crudDao;
-
-    @Autowired
     private MemberBuilder memberBuilder;
 
     @Autowired
-    private SimpleCommandBus commandBus;
-
-    @Autowired
     private IBookLendingRepository bookLendingRepository;
-
-    @Autowired
-    @Qualifier("presentationDecoratedExceptionHandler")
-    private PresentationDecoratedExceptionHandler presentationDecoratedExceptionHandler;
-
-    IDisplayMessages displayMessages = new DummyDisplayMessages();
-
-    @Before
-    public void setUp(){
-        presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
-
-    }
 
 
     @Test
     public void testPurchaseBook() {
         systemUser.uses(new TestUserDetails());
-        System.out.println(systemUser);
         Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).withAuthors("Sudarshan").purchaseCopies(10).build();
 //        Book eventSourcing = bookBuilder.createBook("Event Sourcing", "008", Money.of(CurrencyUnit.USD, 2000)).withAuthors("Greg Young").withCopies(2).build();
 

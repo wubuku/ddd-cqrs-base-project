@@ -30,6 +30,7 @@ import org.nthdimenzion.security.application.services.UserService;
 import org.nthdimenzion.security.domain.SystemUser;
 import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.nthdimenzion.testdata.TestUserDetails;
+import org.nthdimenzion.testinfrastructure.AbstractTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -45,15 +46,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
-/** @noinspection ALL*/
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext.xml", "classpath:/queryContext.xml","classpath:/testContext.xml"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
-
-    @Autowired
-    @Qualifier("simpleCommandBus")
-    private ICommandBus commandBus;
+public class PersonTest extends AbstractTest {
 
     @Autowired
     private IPersonFinder iPersonFinder;
@@ -62,34 +55,11 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     private IPersonRepository personRepository;
 
     @Autowired
-    private PersonFactory personFactory;
-
-    @Autowired
-    @Qualifier("presentationDecoratedExceptionHandler")
-    private PresentationDecoratedExceptionHandler presentationDecoratedExceptionHandler;
-
-    @Autowired
     private ILibraryFinder libraryFinder;
 
     @Autowired
     private MemberBuilder memberBuilder;
 
-    @Autowired
-    private ICrud crudDao;
-
-    @Autowired
-    private SystemUser systemUser;
-
-     IDisplayMessages displayMessages = new DummyDisplayMessages();
-
-    @Before
-    public void setUpForEachTest(){
-    UserDetails userDetails = new TestUserDetails();
-    systemUser.uses(userDetails);
-    presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
-    TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken(new GrantedAuthorityImpl[]{new GrantedAuthorityImpl("ROLE_SUPERADMIN")});
-    SecurityContextHolder.getContext().setAuthentication(token);
-    }
 
     @AfterClass
     public static void onTimeTearDown(){
@@ -97,7 +67,6 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
     }
 
     @Test
-    @Rollback
     public void testPersonRegistration() throws PersonCreationException {
         Assert.notNull(commandBus);
 
@@ -111,7 +80,6 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 
     @Test(expected = DisplayableException.class)
-    @Rollback
     public void testCreatePersonWithLongLengthName() {
         IDisplayMessages displayMessages = new DummyDisplayMessages();
         presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
@@ -132,7 +100,6 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 
     @Test
-    @Rollback
     public void testDeletePersonDetails() throws PersonCreationException {
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("Sudarshan")));
 
@@ -143,21 +110,18 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 
     @Test
-    @Rollback
     public void testFindPeopleDetails() throws PersonCreationException {
         List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan2", 2L),new PersonDetailsDto("Sudarshan1", 1L));
         commandBus.send(new PersonRegistrationCommand(("Sudarshan1")));
         commandBus.send(new PersonRegistrationCommand(("Sudarshan2")));
 
         List<PersonDetailsDto> actualPeopleDetails = iPersonFinder.findAllPeople();
-        System.out.println(actualPeopleDetails);
 
         Assert.notEmpty(actualPeopleDetails);
 //        Assert.isTrue(expectedPeople.equals(actualPeopleDetails));
     }
 
     @Test
-    @Rollback
     public void testUpcomingBirthDays(){
         Member member = memberBuilder.createMember("Su", "Sree", DateTime.now()).build();
 
@@ -165,7 +129,6 @@ public class PersonTest extends AbstractTransactionalJUnit4SpringContextTests {
         List<MemberDto> memberDtos = libraryFinder.upcomingBirthDays();
         Assert.notEmpty(memberDtos);
         Assert.notNull(memberDtos.get(0).dateOfBirth);
-        System.out.println(memberDtos.get(0).dateOfBirth);
         Assert.isTrue(memberDtos.get(0).dateOfBirth.getMonthOfYear()== DateTime.now().getMonthOfYear());
     }
 }
