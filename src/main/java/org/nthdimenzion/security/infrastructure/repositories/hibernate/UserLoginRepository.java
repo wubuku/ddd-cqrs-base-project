@@ -12,6 +12,10 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 @DomainRepositoryImpl
 public class UserLoginRepository  extends GenericHibernateRepository<UserLogin, Long> implements IUserRepository{
 
+    protected UserLoginRepository(){
+
+    }
+
     @Autowired
     public UserLoginRepository (HibernateTemplate hibernateTemplate) {
         super(hibernateTemplate);

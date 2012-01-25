@@ -356,12 +356,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
             <version>1.8</version>
@@ -545,7 +539,7 @@
             </activation>
             <properties>
                 <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
-                <!--<hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>-->
+                <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>

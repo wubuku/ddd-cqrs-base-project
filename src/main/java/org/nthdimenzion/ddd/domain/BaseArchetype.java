@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 @MappedSuperclass
-public abstract class BaseArchetype {
+public abstract class BaseArchetype implements IPersistable{
 
 
     private Long version = 1L;

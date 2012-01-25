@@ -23,8 +23,6 @@ MemberDto mostActiveMember = libraryFinder.findMostActiveMember();
 String findMostActiveBook = libraryFinder.findMostActiveBook();
 
 
-System.out.println (mostActiveMember.fullName());
-
 ]]></zscript>
     <window id="bookPanel"  title="Book Panel" border="normal" self="@{define(content)}">
         <div style="width:90%;height:90%">
@@ -54,7 +52,4 @@ System.out.println (mostActiveMember.fullName());
             </panel>
         </div>
     </window>
-
-
-
 </zk>

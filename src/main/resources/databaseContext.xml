@@ -16,6 +16,8 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
+    <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
+
 	<bean
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 		id="sessionFactory">
@@ -25,7 +27,6 @@
 				<property name="packagesToScan">
 			<list>
                 <value>org.nthdimenzion.ddd.domain</value>
-                <!--<value>org.nthdimenzion.ddd.infrastructure.exception</value>-->
                 <value>org.nthdimenzion.security.domain</value>
 				<value>com.simplepersoncrud.domain</value>
                 <value>com.librarymanagement.domain</value>
@@ -43,8 +44,6 @@
         </property>
 		
 	</bean>
-
-	<bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
 
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
         <constructor-arg name="sessionFactory" ref="sessionFactory"></constructor-arg>

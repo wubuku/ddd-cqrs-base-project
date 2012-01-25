@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @DomainRepositoryImpl
 public class PersonRepository extends GenericHibernateRepository<SimplePerson, java.lang.Long> implements IPersonRepository {
 
-    PersonRepository(){
+    protected PersonRepository(){
 
     }
 

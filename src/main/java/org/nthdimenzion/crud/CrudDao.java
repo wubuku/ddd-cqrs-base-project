@@ -24,7 +24,7 @@ public class CrudDao implements ICrud {
 	private final static Logger logger = LoggerFactory.getLogger(CrudDao.class);
     private HibernateTemplate hibernateTemplate;
 
-    CrudDao(){
+    protected CrudDao(){
 
     }
 

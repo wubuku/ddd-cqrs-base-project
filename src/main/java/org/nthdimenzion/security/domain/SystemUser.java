@@ -1,6 +1,7 @@
 package org.nthdimenzion.security.domain;
 
 import org.nthdimenzion.ddd.application.annotation.StateFullComponent;
+import org.nthdimenzion.object.utils.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +11,7 @@ import java.util.Collection;
 public class SystemUser implements UserDetails{
     private UserDetails userDetails;
 
-    SystemUser() {
+    public SystemUser() {
     }
 
     public SystemUser(UserDetails userDetails) {
@@ -61,8 +62,5 @@ public class SystemUser implements UserDetails{
         return userDetails.isEnabled();
     }
 
-    @Override
-    public String toString() {
-        return userDetails.toString();
-    }
+
 }
