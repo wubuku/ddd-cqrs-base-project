@@ -32,8 +32,10 @@ public class CommandHandlerTest extends AbstractTestFacilitator {
     @Test
     public void testInvalidCommand(){
         TestCommand testCommand = new TestCommand();
-        commandBus.send(testCommand);
 
+        Object result = commandBus.send(testCommand);
+
+        Assert.assertNull(result);
         Assert.assertTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
     }
 }

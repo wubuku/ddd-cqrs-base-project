@@ -38,8 +38,6 @@ public class PurchaseBookCommand implements ICommand{
     public void validate() {
         Preconditions.checkNotNull(name);
         Preconditions.checkNotNull(isbn);
-        Preconditions.checkNotNull(copies);
-        Preconditions.checkNotNull(cost);
         Preconditions.checkNotNull(authors);
     }
 }

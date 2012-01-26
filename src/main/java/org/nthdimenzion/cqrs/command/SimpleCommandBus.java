@@ -30,7 +30,8 @@ public class SimpleCommandBus implements ICommandBus {
     public Object send(ICommand command) {
         Handler handler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
         try {
-            validate(command);
+            if (!validate(command))
+                return null;
             return handler.invokeMethod(command);
         } catch (Throwable throwable) {
             throwable = extractTargetException(throwable);
@@ -77,16 +78,19 @@ public class SimpleCommandBus implements ICommandBus {
         return throwable;
     }
 
-    private void validate(ICommand command) {
+    private boolean validate(ICommand command) {
+        boolean isValid = true;
         try {
             command.validate();
         } catch (Exception exception) {
             String exceptionDetails = exception.getMessage();
-            if(UtilValidator.isNotEmpty(exceptionDetails)){
+            if (UtilValidator.isNotEmpty(exceptionDetails)) {
                 commandValidationFailed.details = exceptionDetails;
             }
             exceptionEventBus.raise(commandValidationFailed);
+            isValid = false;
         }
+        return isValid;
     }
 
 

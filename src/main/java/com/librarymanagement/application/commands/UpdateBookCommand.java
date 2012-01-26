@@ -43,9 +43,6 @@ public class UpdateBookCommand implements ICommand{
     public void validate() {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(isbn);
-        Preconditions.checkNotNull(copies);
-        Preconditions.checkNotNull(cost);
-        Preconditions.checkNotNull(authors);
         Preconditions.checkNotNull(name);
     }
 }
