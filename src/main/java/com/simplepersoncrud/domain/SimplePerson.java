@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
 import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
+import org.nthdimenzion.ddd.domain.annotations.PPT;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
@@ -11,6 +12,7 @@ import javax.persistence.Embedded;
 
 @javax.persistence.Entity
 @AggregateRoot
+@PPT
 public class SimplePerson extends BaseAggregateRoot {
 
     private String name;
@@ -45,7 +47,7 @@ public class SimplePerson extends BaseAggregateRoot {
 
     @Override
     public String toString() {
-        return personId.toString();
+        return name;
     }
 
     @Override

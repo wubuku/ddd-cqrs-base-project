@@ -1,5 +1,6 @@
 package com.simplepersoncrud.application.commands;
 
+import com.google.common.base.Preconditions;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
 
@@ -29,5 +30,11 @@ public class PersonNameChangeCommand implements ICommand{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public void validate() {
+        Preconditions.checkNotNull(name);
+        Preconditions.checkNotNull(id);
     }
 }

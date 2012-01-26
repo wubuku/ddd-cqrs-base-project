@@ -1,5 +1,6 @@
 package com.librarymanagement.application.commands;
 
+import com.google.common.base.Preconditions;
 import org.joda.money.Money;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
@@ -31,5 +32,14 @@ public class PurchaseBookCommand implements ICommand{
 
     public void setAuthors(String authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public void validate() {
+        Preconditions.checkNotNull(name);
+        Preconditions.checkNotNull(isbn);
+        Preconditions.checkNotNull(copies);
+        Preconditions.checkNotNull(cost);
+        Preconditions.checkNotNull(authors);
     }
 }

@@ -15,7 +15,6 @@ public abstract class BaseAggregateRoot extends IdGeneratingArcheType {
 
     public void setDomainEventBus(IEventBus domainEventBus) {
         if (this.domainEventBus != null){
-        //throw new IllegalStateException("DomainEventBus is already set! Probably You have logical error in code");
         logger.warn("DomainEventBus is already set! Probably You have logical error in code or the entity was picked from the cache");
         }
         this.domainEventBus = domainEventBus;

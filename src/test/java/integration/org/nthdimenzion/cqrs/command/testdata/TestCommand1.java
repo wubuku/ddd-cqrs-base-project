@@ -6,4 +6,7 @@ import org.nthdimenzion.cqrs.command.annotations.Command;
 @Command
 public class TestCommand1 implements ICommand {
 
+    @Override
+    public void validate() {
+    }
 }

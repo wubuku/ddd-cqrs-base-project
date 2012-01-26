@@ -10,9 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.List;
 
-@Entity
 @ValueObject
-public class ErrorDetails extends IdGeneratingArcheType implements Cloneable {
+@Entity
+public class ErrorDetails extends IdGeneratingArcheType {
 
     private String errorCode = "001";
     private String errorMessage = "Operation Failed.Please contact administrator";

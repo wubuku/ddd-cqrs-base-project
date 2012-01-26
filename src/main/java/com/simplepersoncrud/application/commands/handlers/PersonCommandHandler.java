@@ -19,8 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @CommandHandler
 public class PersonCommandHandler extends AbstractCommandHandler{
 
-    private final Logger logger = LoggerFactory.getLogger(PersonCommandHandler.class);
-
     @Autowired
     private PersonFactory personFactory;
 

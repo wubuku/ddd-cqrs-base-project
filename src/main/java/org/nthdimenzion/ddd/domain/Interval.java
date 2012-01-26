@@ -3,6 +3,7 @@
  */
 package org.nthdimenzion.ddd.domain;
 
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 
 @Embeddable
 @ValueObject
+@Immutable
 public class Interval implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,9 +32,6 @@ public class Interval implements Serializable {
         return new Interval();
     }
 
-    public String getCompletionComments() {
-        return completionComments;
-    }
 
     public Interval() {
         fromDate = DateTime.now();
@@ -52,6 +51,10 @@ public class Interval implements Serializable {
     public Interval(DateTime fromDate) {
         this.fromDate = fromDate;
     }
+
+    public String getCompletionComments() {
+         return completionComments;
+     }
 
     @Column
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")

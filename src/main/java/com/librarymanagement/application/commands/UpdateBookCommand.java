@@ -1,5 +1,6 @@
 package com.librarymanagement.application.commands;
 
+import com.google.common.base.Preconditions;
 import org.joda.money.Money;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
@@ -36,5 +37,15 @@ public class UpdateBookCommand implements ICommand{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public void validate() {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(isbn);
+        Preconditions.checkNotNull(copies);
+        Preconditions.checkNotNull(cost);
+        Preconditions.checkNotNull(authors);
+        Preconditions.checkNotNull(name);
     }
 }

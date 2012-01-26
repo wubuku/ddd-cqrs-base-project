@@ -1,9 +1,11 @@
 package com.librarymanagement.application.commands;
 
+import com.google.common.base.Preconditions;
 import com.librarymanagement.domain.BookId;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Set;
@@ -20,4 +22,9 @@ public class IssueBooksCommand implements ICommand {
     }
 
 
+    @Override
+    public void validate() {
+        Preconditions.checkNotNull(memberId);
+        Preconditions.checkArgument(UtilValidator.isNotEmpty(bookIds));
+    }
 }

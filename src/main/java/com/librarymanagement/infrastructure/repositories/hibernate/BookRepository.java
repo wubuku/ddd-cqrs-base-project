@@ -17,10 +17,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 @DomainRepositoryImpl
 public class BookRepository extends GenericHibernateRepository<Book, Long> implements IBookRepository {
 
-    @Autowired
-    @Qualifier("domainEventBus")
-    private IEventBus domainEventBus;
-
     protected BookRepository(){
 
     }
@@ -48,8 +44,7 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
 
     @Override
     public Book geBookWithUid(BookId bookId) {
-        DetachedCriteria bookFromUid = DetachedCriteria.forClass(Book.class);
-        bookFromUid.add(Restrictions.eq("bookId", bookId));
+        DetachedCriteria bookFromUid = criteriaForUid("bookId",Book.class,bookId);
         Book book = (Book) hibernateTemplate.findByCriteria(bookFromUid).get(0);
         return updateBookWithDependencies(book);
     }

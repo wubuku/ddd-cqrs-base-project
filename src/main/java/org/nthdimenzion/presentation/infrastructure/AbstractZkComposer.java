@@ -4,6 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
+import org.nthdimenzion.ddd.infrastructure.exception.CommandValidationFailed;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +16,9 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 
 @Composer
-public class AbstractZkComposer extends GenericForwardComposer{
+public class AbstractZkComposer extends GenericForwardComposer {
 
-     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     @Qualifier("simpleCommandBus")
@@ -29,23 +32,22 @@ public class AbstractZkComposer extends GenericForwardComposer{
 
     protected ModelMapper modelMapper = new ModelMapper();
 
-
-    protected AbstractZkComposer(){
+    protected AbstractZkComposer() {
         modelMapper.getConfiguration().enableFieldMatching(true)
-                                      .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
 
 
     }
 
-    protected Object sendCommand(ICommand command){
+    protected Object sendCommand(ICommand command) {
         return commandBus.send(command);
     }
 
-    protected boolean isSuccess(Object object){
-        if(object instanceof Boolean){
-            Boolean success = (Boolean)object;
+    protected boolean isSuccess(Object object) {
+        if (object instanceof Boolean) {
+            Boolean success = (Boolean) object;
             return success.booleanValue();
         }
-        return object !=null;
+        return object != null;
     }
 }

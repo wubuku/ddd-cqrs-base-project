@@ -2,22 +2,13 @@ package org.nthdimenzion.cqrs.command;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.nthdimenzion.cqrs.command.Handler;
-import org.nthdimenzion.cqrs.command.ICommandBus;
-import org.nthdimenzion.cqrs.command.IMultiCommandHandlerRegistry;
-import org.nthdimenzion.cqrs.command.NoCommandHandlerFoundException;
 import org.nthdimenzion.cqrs.command.testdata.InvalidCommand;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand1;
-import org.nthdimenzion.testinfrastructure.AbstractTest;
+import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class CommandHandlerTest extends AbstractTest{
+public class CommandHandlerTest extends AbstractTestFacilitator {
 
     @Autowired
     private IMultiCommandHandlerRegistry commandHandlerRegistry;
@@ -36,5 +27,13 @@ public class CommandHandlerTest extends AbstractTest{
     public void testCommandHandlerFinderForInvalidCommand(){
         Assert.assertNotNull(commandHandlerRegistry);
         Handler handler = commandHandlerRegistry.findCommandHandlerFor(InvalidCommand.class);
+    }
+
+    @Test
+    public void testInvalidCommand(){
+        TestCommand testCommand = new TestCommand();
+        commandBus.send(testCommand);
+
+        Assert.assertTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
     }
 }

@@ -156,12 +156,6 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-oxm</artifactId>
-            <version>${org.springframework.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
@@ -233,12 +227,6 @@
             <artifactId>modelmapper</artifactId>
             <version>0.3.5</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>5.3.2</version>
-        </dependency>-->
         <!-- Mapping dependencies  end -->
 
         <!-- Joda  dependencies  start -->
@@ -355,21 +343,15 @@
             <version>1.6.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jasypt</groupId>
-            <artifactId>jasypt</artifactId>
-            <version>1.8</version>
-            <!--<scope>compile</scope>-->
-        </dependency>
-        <!-- Utiltity end -->
 
-        <!-- events start-->
         <dependency>
             <groupId>org.nthdimenzion</groupId>
             <artifactId>simpleeventbus</artifactId>
             <version>1.2</version>
         </dependency>
-        <!-- events end-->
+
+        <!-- Utiltity end -->
+
 
     </dependencies>
 
