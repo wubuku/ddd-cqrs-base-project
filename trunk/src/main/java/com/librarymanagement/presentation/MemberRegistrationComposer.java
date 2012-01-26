@@ -13,7 +13,6 @@ import org.zkoss.zk.ui.Executions;
 @Composer
 public class MemberRegistrationComposer extends AbstractZkComposer {
 
-    private final Logger logger = LoggerFactory.getLogger(MemberRegistrationComposer.class);
     private Member member;
 
     @Autowired

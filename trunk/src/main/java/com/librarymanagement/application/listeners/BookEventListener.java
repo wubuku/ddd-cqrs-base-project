@@ -1,6 +1,5 @@
 package com.librarymanagement.application.listeners;
 
-import com.adamtaft.eb.EventHandler;
 import com.google.common.eventbus.Subscribe;
 import com.librarymanagement.application.events.BookIssuedEvent;
 import com.librarymanagement.application.events.BookReturnedEvent;
@@ -11,7 +10,6 @@ import org.nthdimenzion.ddd.infrastructure.AbstractEventListener;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 @EventHandlers
 public class BookEventListener extends AbstractEventListener{

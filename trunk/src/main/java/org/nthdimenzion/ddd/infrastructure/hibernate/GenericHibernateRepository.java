@@ -1,5 +1,10 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
+import com.librarymanagement.domain.Book;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.BaseArchetype;
 import org.nthdimenzion.ddd.domain.IPersistable;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
@@ -25,7 +30,7 @@ public abstract class GenericHibernateRepository<E extends BaseArchetype, K exte
     }
 
     protected GenericHibernateRepository() {
-    hibernateTemplate = null;
+        hibernateTemplate = null;
     }
 
     protected E get(K id) {
@@ -59,6 +64,11 @@ public abstract class GenericHibernateRepository<E extends BaseArchetype, K exte
         return entity;
     }
 
+    protected DetachedCriteria criteriaForUid(String fieldName, Class clazz, Object uid) {
+        DetachedCriteria uidCriteria = DetachedCriteria.forClass(clazz);
+        uidCriteria.add(Restrictions.eq(fieldName, uid));
+        return uidCriteria;
+    }
 
 
 }

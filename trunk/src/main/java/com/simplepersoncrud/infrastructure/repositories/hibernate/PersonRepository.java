@@ -41,8 +41,7 @@ public class PersonRepository extends GenericHibernateRepository<SimplePerson, j
     }
 
     public SimplePerson getPersonWithUid(PersonId personId) {
-        DetachedCriteria personFromUid = DetachedCriteria.forClass(SimplePerson.class);
-        personFromUid.add(Restrictions.eq("personId", personId));
+        DetachedCriteria personFromUid = criteriaForUid("personId",SimplePerson.class,personId);
         SimplePerson person = (SimplePerson) hibernateTemplate.findByCriteria(personFromUid).get(0);
         return updatePersonWithDependencies(person);
     }

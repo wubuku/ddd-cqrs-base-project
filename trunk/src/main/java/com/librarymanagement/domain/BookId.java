@@ -9,8 +9,8 @@ import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Embeddable;
 
-@ValueObject
 @Embeddable
+@ValueObject
 @Immutable
 public class BookId {
 

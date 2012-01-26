@@ -1,9 +1,11 @@
 package com.librarymanagement.application.commands;
 
+import com.google.common.base.Preconditions;
 import com.librarymanagement.domain.BookId;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Set;
@@ -19,13 +21,8 @@ public class ReturnBooksCommand implements ICommand{
     }
 
     @Override
-    public boolean equals(Object o) {
-            return EqualsBuilder.reflectionEquals(o, this);
+    public void validate() {
+        Preconditions.checkArgument(UtilValidator.isNotEmpty(bookIds));
+        Preconditions.checkNotNull(memberId);
     }
-
-    @Override
-    public int hashCode() {
-        return ObjectUtils.nullSafeHashCode(new Object[]{bookIds, memberId});
-    }
-
 }

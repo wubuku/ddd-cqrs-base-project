@@ -1,5 +1,6 @@
 package org.nthdimenzion.cqrs.command.testdata;
 
+import org.nthdimenzion.cqrs.command.AbstractCommandHandler;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand;
 import org.nthdimenzion.cqrs.command.testdata.TestCommand1;
@@ -8,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @CommandHandler
 @Qualifier("advisedTestCommandHandler")
-public class MultiTestCommandHandler {
+public class MultiTestCommandHandler extends AbstractCommandHandler{
 
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     public Long anyName(TestCommand command) throws Throwable {

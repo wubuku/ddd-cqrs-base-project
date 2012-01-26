@@ -1,26 +1,16 @@
 package org.nthdimenzion.security;
 
 
-import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.modelmapper.internal.util.Assert;
 import org.nthdimenzion.security.application.services.UserService;
-import org.nthdimenzion.security.domain.SystemUser;
-import org.nthdimenzion.testinfrastructure.AbstractTest;
+import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class SecurityTest extends AbstractTest {
+public class SecurityTest extends AbstractTestFacilitator {
 
     @AfterClass
     public static void onTimeTearDown(){

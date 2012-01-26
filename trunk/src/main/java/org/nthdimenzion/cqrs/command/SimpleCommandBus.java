@@ -1,10 +1,8 @@
 package org.nthdimenzion.cqrs.command;
 
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
-import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
-import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
-import org.nthdimenzion.ddd.infrastructure.exception.IBaseException;
-import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
+import org.nthdimenzion.ddd.infrastructure.exception.*;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,13 @@ public class SimpleCommandBus implements ICommandBus {
     @Qualifier("exceptionEventBus")
     private IEventBus exceptionEventBus;
 
+    private CommandValidationFailed commandValidationFailed = new CommandValidationFailed();
+
     @Override
     public Object send(ICommand command) {
         Handler handler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
         try {
+            validate(command);
             return handler.invokeMethod(command);
         } catch (Throwable throwable) {
             throwable = extractTargetException(throwable);
@@ -38,7 +39,7 @@ public class SimpleCommandBus implements ICommandBus {
             if (isNonDisplayBusinessException(isExceptionEventRaised, throwable)) {
                 logger.error("Unhandled exception ", throwable);
                 throwException(throwable);
-            } else if(!isExceptionEventRaised) {
+            } else if (!isExceptionEventRaised) {
                 raiseEventForUnexpectedException(throwable);
             }
         }
@@ -75,6 +76,19 @@ public class SimpleCommandBus implements ICommandBus {
         }
         return throwable;
     }
+
+    private void validate(ICommand command) {
+        try {
+            command.validate();
+        } catch (Exception exception) {
+            String exceptionDetails = exception.getMessage();
+            if(UtilValidator.isNotEmpty(exceptionDetails)){
+                commandValidationFailed.details = exceptionDetails;
+            }
+            exceptionEventBus.raise(commandValidationFailed);
+        }
+    }
+
 
     @Override
     public <C> void subscribe(Class<C> commandType, ICommandHandler handler) {

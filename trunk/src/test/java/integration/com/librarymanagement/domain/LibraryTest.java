@@ -8,27 +8,13 @@ import com.librarymanagement.application.commands.UpdateBookCommand;
 import com.librarymanagement.presentation.dto.LibrarySummaryDto;
 import com.librarymanagement.presentation.queries.BookQueries;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
-import com.simplepersoncrud.testdata.DummyDisplayMessages;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.nthdimenzion.cqrs.command.SimpleCommandBus;
-import org.nthdimenzion.crud.ICrud;
-import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
-import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
-import org.nthdimenzion.security.domain.SystemUser;
 import org.nthdimenzion.testdata.TestUserDetails;
-import org.nthdimenzion.testinfrastructure.AbstractTest;
+import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
@@ -37,7 +23,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class LibraryTest extends AbstractTest {
+public class LibraryTest extends AbstractTestFacilitator {
 
     @Autowired
     private BookBuilder bookBuilder;

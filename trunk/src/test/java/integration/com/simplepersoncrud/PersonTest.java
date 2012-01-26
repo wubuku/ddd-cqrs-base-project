@@ -9,7 +9,6 @@ import com.librarymanagement.presentation.queries.ILibraryFinder;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
 import com.simplepersoncrud.application.commands.UnRegisterCommand;
 import com.simplepersoncrud.domain.IPersonRepository;
-import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import com.simplepersoncrud.presentation.IPersonFinder;
@@ -17,36 +16,17 @@ import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import com.simplepersoncrud.testdata.DummyDisplayMessages;
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.nthdimenzion.cqrs.command.ICommandBus;
-import org.nthdimenzion.crud.ICrud;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
-import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
-import org.nthdimenzion.security.application.services.UserService;
-import org.nthdimenzion.security.domain.SystemUser;
-import org.nthdimenzion.testdata.SecurityDetailsMaker;
-import org.nthdimenzion.testdata.TestUserDetails;
-import org.nthdimenzion.testinfrastructure.AbstractTest;
+import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import java.util.List;
 
-public class PersonTest extends AbstractTest {
+public class PersonTest extends AbstractTestFacilitator {
 
     @Autowired
     private IPersonFinder iPersonFinder;

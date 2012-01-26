@@ -6,14 +6,10 @@ import com.icegreen.greenmail.util.GreenMailUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.nthdimenzion.testinfrastructure.AbstractTest;
-import org.nthdimenzion.util.IMailService;
+import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.mail.Message;
 import java.util.Map;
@@ -23,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = {"classpath:/integrationContext.xml"})
-public class MailSenderTest extends AbstractTest {
+public class MailSenderTest extends AbstractTestFacilitator {
 
     @Autowired
     @Qualifier("testMailService")

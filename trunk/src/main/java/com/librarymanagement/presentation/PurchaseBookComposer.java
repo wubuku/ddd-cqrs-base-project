@@ -20,13 +20,11 @@ import java.util.Map;
 
 @Composer
 public class PurchaseBookComposer extends AbstractZkComposer {
-    private final Logger logger = LoggerFactory.getLogger(PurchaseBookComposer.class);
     private Map<String, ?> bookDto = Maps.newHashMap();
     private boolean isUpdateView = false;
 
     @Autowired
     private ILibraryFinder bookFinder;
-
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {

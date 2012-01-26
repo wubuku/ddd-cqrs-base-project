@@ -2,14 +2,16 @@ package com.librarymanagement.domain;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.annotations.Immutable;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Embeddable;
 
-@ValueObject
 @Embeddable
+@ValueObject
+@Immutable
 public class BookLendingId {
 
     private String uid;
