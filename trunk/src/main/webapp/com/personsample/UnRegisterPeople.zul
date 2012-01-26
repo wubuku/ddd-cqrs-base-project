@@ -25,9 +25,6 @@ Navigation navigation = SpringUtil.getBean("navigation",Navigation.class) ;
                     <listheader>Name</listheader>
                 </listhead>
                 <listitem self="@{each=person}" value="@{person}">
-                    <attribute name="onDoubleClick">
-                        personComposer.updateRegistrationDetails(self.value.id);
-                    </attribute>
                     <listcell label="@{person.id}" />
                     <listcell label="@{person.name}" />
                 </listitem>
