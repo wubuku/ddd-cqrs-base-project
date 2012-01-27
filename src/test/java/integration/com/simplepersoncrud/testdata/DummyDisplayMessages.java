@@ -42,11 +42,6 @@ public class DummyDisplayMessages implements IDisplayMessages<Object> {
     }
 
     @Override
-    public void showError(String message) {
-        this.message = message;
-    }
-
-    @Override
     public void displayError(String message) {
         this.message = message;
     }

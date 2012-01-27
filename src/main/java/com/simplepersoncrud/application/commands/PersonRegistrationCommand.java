@@ -8,7 +8,7 @@ import org.nthdimenzion.cqrs.command.annotations.Command;
 public class PersonRegistrationCommand implements ICommand{
     private String name;
 
-    PersonRegistrationCommand(){}
+    public PersonRegistrationCommand(){}
 
     public PersonRegistrationCommand(String name) {
         this.name = name;

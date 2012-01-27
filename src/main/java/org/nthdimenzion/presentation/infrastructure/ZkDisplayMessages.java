@@ -62,11 +62,6 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
     }
 
     @Override
-    public void showError(String message) {
-        display(message, ZkMultiLineMessageBox.OK, Messagebox.ERROR);
-    }
-
-    @Override
     public void displayError(String message) {
         display(message, ZkMultiLineMessageBox.OK, ZkMultiLineMessageBox.ERROR);
     }

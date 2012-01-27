@@ -32,7 +32,7 @@ public class BookCommandHandler extends AbstractCommandHandler {
 
     public Book updateBook(UpdateBookCommand updateBookCommand) {
         Book book = bookRepository.getBookFromId(updateBookCommand.id);
-        modelMapper.map(updateBookCommand, book);
+        book = populate(updateBookCommand,book);
         book = bookRepository.updateBook(book);
         return book;
     }

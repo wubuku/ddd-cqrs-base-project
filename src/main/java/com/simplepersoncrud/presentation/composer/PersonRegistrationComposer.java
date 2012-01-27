@@ -32,8 +32,8 @@ public class PersonRegistrationComposer extends AbstractZkComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         initializePage();
-        Long personId = (Long)Executions.getCurrent().getArg().get("personId");
-        if(personId!=null){
+        Long personId = (Long) Executions.getCurrent().getArg().get("personId");
+        if (personId != null) {
             personDetailsDto = personFinder.findPersonDetails(personId);
             personRegistrationBtnLbl = "Update Registration Details";
             isUpdateView = true;
@@ -51,30 +51,34 @@ public class PersonRegistrationComposer extends AbstractZkComposer {
     }
 
     public void registerPerson() {
-        if(isUpdateView){
+        if (isUpdateView) {
             updateRegistrationDetails(personDetailsDto);
-         return;
+            return;
         }
         logger.debug("Entry into registerPerson " + personDetailsDto);
-        PersonRegistrationCommand personRegistrationCommand = modelMapper.map(personDetailsDto,PersonRegistrationCommand.class);
+        PersonRegistrationCommand personRegistrationCommand = populate(personDetailsDto, PersonRegistrationCommand.class);
         logger.debug(personRegistrationCommand.getName());
-        Long id = (Long)sendCommand(personRegistrationCommand);
-        navigation.redirect("personPanel");
+        Long id = (Long) sendCommand(personRegistrationCommand);
+        if (isSuccess(id)) {
+            displayMessages.showSuccess("Person has been registered successfully with id " + id);
+            navigation.redirect("personPanel");
+        }
     }
 
     private void updateRegistrationDetails(PersonDetailsDto personDetailsDto) {
-        PersonNameChangeCommand personNameChangeCommand = modelMapper.map(personDetailsDto,PersonNameChangeCommand.class);
+        PersonNameChangeCommand personNameChangeCommand = populate(personDetailsDto, PersonNameChangeCommand.class);
         logger.debug(" personNameChangeCommand.getId() " + personNameChangeCommand.getId());
-        sendCommand(personNameChangeCommand);
-        navigation.redirect("personPanel");
+        if (isSuccess(sendCommand(personNameChangeCommand))) {
+            navigation.redirect("personPanel");
+        }
     }
 
     public void unRegisterPerson(Long personId) {
         logger.debug("Entry into deregisterPerson " + personId);
         Set<Long> personTpBeDeleted = Sets.newHashSet(personId);
         UnRegisterCommand deletePersonCommand = new UnRegisterCommand(personTpBeDeleted);
-        sendCommand(deletePersonCommand);
-        navigation.redirect("personPanel");
+        if (isSuccess(sendCommand(deletePersonCommand)))
+            navigation.redirect("personPanel");
     }
 
     public String getPersonRegistrationBtnLbl() {

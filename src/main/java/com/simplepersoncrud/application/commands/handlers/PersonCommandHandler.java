@@ -43,15 +43,16 @@ public class PersonCommandHandler extends AbstractCommandHandler{
     public SimplePerson handlePersonNameChange(PersonNameChangeCommand personRegistrationCommand) {
         logger.debug("personRegistrationCommand.getId() " + personRegistrationCommand.getId());
         SimplePerson person = personRepository.getPersonWithId(personRegistrationCommand.getId());
-        modelMapper.map(personRegistrationCommand, person);
+        person = populate(personRegistrationCommand,person);
+//        modelMapper.map(personRegistrationCommand, person);
         return personRepository.changeNameFor(person);
     }
 
-    public Void handleUnRegistration(UnRegisterCommand deletePersonCommand) {
+    public Boolean handleUnRegistration(UnRegisterCommand deletePersonCommand) {
         logger.debug("handle(handleUnRegistration) ");
         for (Long personToBeDeletedId : deletePersonCommand.getPeopleToBeDeleted()) {
             personRepository.unRegisterPerson(personToBeDeletedId);
         }
-        return null;
+        return Boolean.TRUE;
     }
 }

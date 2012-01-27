@@ -6,6 +6,7 @@ import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.CommandValidationFailed;
+import org.nthdimenzion.object.utils.UtilMisc;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.slf4j.Logger;
@@ -30,16 +31,16 @@ public class AbstractZkComposer extends GenericForwardComposer {
     @Autowired
     protected Navigation navigation;
 
-    protected ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper = new ModelMapper();
 
     protected AbstractZkComposer() {
         modelMapper.getConfiguration().enableFieldMatching(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-
-
     }
 
     protected Object sendCommand(ICommand command) {
+        if(command==null)
+            return command;
         return commandBus.send(command);
     }
 
@@ -49,5 +50,23 @@ public class AbstractZkComposer extends GenericForwardComposer {
             return success.booleanValue();
         }
         return object != null;
+    }
+
+    protected  <D, S> D populate(S source, D destination){
+        return UtilMisc.populate(source,destination,modelMapper);
+    }
+
+    /***
+     *
+     * @param source
+     * @param clazz
+     * @param <D>
+     * @param <S>
+     * @return instance of clazz
+     *
+     * Ensure destination class has a public no arg constructor
+     */
+    public <D, S> D populate(S source, Class<D> clazz){
+        return UtilMisc.populate(source,clazz,modelMapper);
     }
 }
