@@ -24,7 +24,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
             <panel title="List of Registered Members" closable="true" collapsible="true">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
-                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10" autopaging="true">
+                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10">
                         <listhead>
                             <listheader>ID</listheader>
                             <listheader>Name</listheader>

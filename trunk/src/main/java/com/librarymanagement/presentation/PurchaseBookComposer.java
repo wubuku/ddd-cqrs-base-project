@@ -54,20 +54,20 @@ public class PurchaseBookComposer extends AbstractZkComposer {
     }
 
 
-    public void purchaseBook() throws InvocationTargetException, IllegalAccessException {
+    public void purchaseBook() {
         PurchaseBookCommand purchaseBookCommand = new PurchaseBookCommand();
-        BeanUtils.populate(purchaseBookCommand, bookDto);
+        populate(bookDto, purchaseBookCommand);
         Long bookId = (Long) sendCommand(purchaseBookCommand);
-        if(isSuccess(bookId)){
-        displayMessages.displaySuccess();
-        navigation.redirect("bookList");
-    }
+        if (isSuccess(bookId)) {
+            displayMessages.displaySuccess();
+            navigation.redirect("bookList");
+        }
     }
 
 
-    public void updateBook() throws InvocationTargetException, IllegalAccessException {
+    public void updateBook()  {
         UpdateBookCommand updateBookCommand = new UpdateBookCommand();
-        BeanUtils.populate(updateBookCommand, bookDto);
+        populate(bookDto, updateBookCommand);
         Book book = (Book) sendCommand(updateBookCommand);
         if (isSuccess(book))
             displayMessages.displaySuccess();

@@ -10,7 +10,8 @@ public class PersonNameChangeCommand implements ICommand{
     private String name;
     private Long id;
 
-    PersonNameChangeCommand(){}
+    public PersonNameChangeCommand() {
+    }
 
     public PersonNameChangeCommand(String name) {
         this.name = name;

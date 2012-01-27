@@ -83,7 +83,7 @@ public class TransferBookComposer extends AbstractZkComposer {
         ReturnBooksCommand bookReturnCommand = new ReturnBooksCommand(bookIds, memberId);
         Boolean result = (Boolean) sendCommand(bookReturnCommand);
         if (isSuccess(result))
-            displayMessages.displaySuccess();
+            displayMessages.displaySuccess("Books have been returned successfully");
 
     }
 
@@ -106,7 +106,7 @@ public class TransferBookComposer extends AbstractZkComposer {
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(bookIds, memberId);
         Boolean result = (Boolean) sendCommand(bookIssueCommand);
         if (isSuccess(result))
-            displayMessages.displaySuccess();
+            displayMessages.displaySuccess("Books have been issued successfully");
     }
 
     public void setBooksWithMember(List<Map<String, ?>> booksWithMember) {

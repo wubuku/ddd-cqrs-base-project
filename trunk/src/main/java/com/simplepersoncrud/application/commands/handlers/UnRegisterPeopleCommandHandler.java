@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @CommandHandler
-public class UnRegisterPeopleCommandHandler implements ICommandHandler<UnRegisterCommand, Void> {
+public class UnRegisterPeopleCommandHandler implements ICommandHandler<UnRegisterCommand, Boolean> {
 
     private final Logger logger = LoggerFactory.getLogger(UnRegisterPeopleCommandHandler.class);
 
@@ -18,11 +18,11 @@ public class UnRegisterPeopleCommandHandler implements ICommandHandler<UnRegiste
 
 
     @Override
-    public Void handle(UnRegisterCommand deletePersonCommand) {
+    public Boolean handle(UnRegisterCommand deletePersonCommand) {
         logger.debug("handle(DeletePersonCommand) ");
         for (Long personToBeDeletedId : deletePersonCommand.getPeopleToBeDeleted()) {
             personRepository.unRegisterPerson(personToBeDeletedId);
         }
-        return null;
+        return Boolean.TRUE;
     }
 }

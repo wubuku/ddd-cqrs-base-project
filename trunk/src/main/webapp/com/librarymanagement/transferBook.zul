@@ -11,6 +11,7 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constants;
 pagetitle.setValue("Transfer Books");
+subpagetitle.setValue("Select a book and then issue or return the book as desired");
 ]]></zscript>
     <window id="transferBook"  title="Transfer Books" border="normal" self="@{define(content)}" apply="${transferBookComposer}">
         <vlayout height="100%">
@@ -18,10 +19,9 @@ pagetitle.setValue("Transfer Books");
                 <label value="Member Name "/>
                 <label value="@{transferBookComposer.memberName}"/>
             </hbox>
-            <panel title="Transfer Books" closable="true" collapsible="true">
+            <panel title="List of All available books, Select one or more books that need to issued">
                 <panelchildren>
-                <vlayout>
-                    <listbox  id="availableBooksListBox" multiple="true" checkmark="true" model="@{transferBookComposer.allBooks,load-after='returnBtn.onClick,issueBook.onClick'}"                             mold="paging" pageSize="5" autopaging="true">
+                    <listbox  id="availableBooksListBox" multiple="true" checkmark="true" model="@{transferBookComposer.allBooks,load-after='returnBtn.onClick,issueBook.onClick'}"  mold="paging" pageSize="4">
                         <listhead>
                             <listheader>ID</listheader>
                             <listheader>Name</listheader>
@@ -49,8 +49,11 @@ pagetitle.setValue("Transfer Books");
                     </listbox>
                     <button id="issueBook" label = "Issue Books" onClick="transferBookComposer.issueBooks()"
                     />
-
-                    <listbox  id="booksWithMemberListBox" multiple="true" checkmark="true" model="@{transferBookComposer.booksWithMember,load-after='returnBtn.onClick,issueBook.onClick'}"                                        mold="paging" pageSize="5" autopaging="true">
+                </panelchildren>
+            </panel>
+            <panel title="List of books issued by member,Select one or more books that the member wishes to return">
+                <panelchildren>
+                    <listbox  id="booksWithMemberListBox" multiple="true" checkmark="true" model="@{transferBookComposer.booksWithMember,load-after='returnBtn.onClick,issueBook.onClick'}"                                        mold="paging" pageSize="4">
                         <listhead>
                             <listheader>ID</listheader>
                             <listheader>Name</listheader>
@@ -77,7 +80,6 @@ pagetitle.setValue("Transfer Books");
                         </listitem>
                     </listbox>
                     <button id="returnBtn" label = "Return Books" onClick="transferBookComposer.returnBooks()"/>
-                </vlayout>
                 </panelchildren>
             </panel>
         </vlayout>

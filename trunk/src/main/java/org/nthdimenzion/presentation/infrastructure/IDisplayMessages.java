@@ -13,8 +13,6 @@ public interface IDisplayMessages<T> {
 
 	void showMessage(String message);
 
-	void showError(String message);
-
 	void displayError(String message);
 
 	void displaySuccess();
