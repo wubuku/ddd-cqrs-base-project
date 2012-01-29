@@ -13,8 +13,8 @@ public abstract class AbstractCommandHandler {
 
     private ModelMapper modelMapper = new ModelMapper();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected final boolean success = true;
-    protected final boolean failure = false;
+    protected final Boolean success = Boolean.TRUE;
+    protected final Boolean failure = Boolean.FALSE;
 
     @Autowired
     @Qualifier("applicationEventBus")
@@ -25,7 +25,7 @@ public abstract class AbstractCommandHandler {
                                       .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 
-    protected  <D, S> D populate(S source, D destination){
+    protected  final <D, S> D populate(S source, D destination){
         return UtilMisc.populate(source, destination, modelMapper);
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractCommandHandler {
      *
      * Ensure destination class has a public no arg constructor
      */
-    public <D, S> D populate(S source, Class<D> clazz){
+    public final <D, S> D populate(S source, Class<D> clazz){
         return UtilMisc.populate(source,clazz,modelMapper);
     }
 }

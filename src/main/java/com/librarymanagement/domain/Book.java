@@ -3,7 +3,7 @@ package com.librarymanagement.domain;
 import com.google.common.collect.Lists;
 import com.librarymanagement.application.events.BookIssuedEvent;
 import com.librarymanagement.application.events.BookReturnedEvent;
-import com.librarymanagement.domain.error.NotEnoughCopies;
+import com.librarymanagement.domain.error.NotEnoughCopiesException;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
@@ -23,7 +23,7 @@ import javax.persistence.Entity;
 @AggregateRoot
 @PPT
 @Entity
-public class Book extends BaseAggregateRoot implements INamed,IRentable {
+public class Book extends BaseAggregateRoot implements INamed, IRentable {
     private String name;
     private String isbn;
     private Integer availableCopies;
@@ -108,9 +108,9 @@ public class Book extends BaseAggregateRoot implements INamed,IRentable {
     }
 
     @Override
-    public void lend(Long memberId) throws NotEnoughCopies {
+    public void lend(Long memberId) throws NotEnoughCopiesException {
         if (availableCopies <= 0) {
-            throw new NotEnoughCopies(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
+            throw new NotEnoughCopiesException(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
         }
         availableCopies--;
         domainEventBus.raise(new BookIssuedEvent(bookId, memberId));
@@ -129,8 +129,11 @@ public class Book extends BaseAggregateRoot implements INamed,IRentable {
         totalCopies = totalCopies + noOfCopiesPurchased;
     }
 
-    public void updateCopies(Integer noOfCopies) {
-
+    public void sellCopies(Integer noOfCopiesSold) throws NotEnoughCopiesException {
+        if (noOfCopiesSold > availableCopies)
+            throw new NotEnoughCopiesException(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
+        availableCopies = availableCopies - noOfCopiesSold;
+        totalCopies = totalCopies - noOfCopiesSold;
     }
 
 

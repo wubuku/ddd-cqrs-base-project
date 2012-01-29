@@ -67,7 +67,6 @@ public class SimpleMapScope implements Scope {
 
     @Override
     public Object resolveContextualObject(String key) {
-        System.out.println("Hello World");
         return null;
     }
 

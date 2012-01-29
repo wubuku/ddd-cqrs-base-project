@@ -31,12 +31,17 @@ String findMostActiveBook = libraryFinder.findMostActiveBook();
                     <vlayout>
                         <hlayout>
                             <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
-                            <a id="purchaseBook" label="Purchase a new Book" onClick='navigation.redirect("purchaseBook")'/>
+                            <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
                         </hlayout>
                         <hlayout>
                             <a id="removeBook" label="Scrap Book" />
                             <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
                         </hlayout>
+
+                        <hlayout>
+                            <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
+                        </hlayout>
+
 
                         <hlayout>
                             <label value="Most Active Book "/>

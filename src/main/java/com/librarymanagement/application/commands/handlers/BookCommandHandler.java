@@ -1,11 +1,8 @@
 package com.librarymanagement.application.commands.handlers;
 
-import com.librarymanagement.application.commands.IssueBooksCommand;
-import com.librarymanagement.application.commands.PurchaseBookCommand;
-import com.librarymanagement.application.commands.ReturnBooksCommand;
-import com.librarymanagement.application.commands.UpdateBookCommand;
+import com.librarymanagement.application.commands.*;
 import com.librarymanagement.domain.*;
-import com.librarymanagement.domain.error.NotEnoughCopies;
+import com.librarymanagement.domain.error.NotEnoughCopiesException;
 import org.nthdimenzion.cqrs.command.AbstractCommandHandler;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.crud.ICrud;
@@ -24,9 +21,9 @@ public class BookCommandHandler extends AbstractCommandHandler {
     @Autowired
     private ICrud crudDao;
 
-    public Long purchaseBook(PurchaseBookCommand purchaseBookCommand) {
+    public Long registerBook(RegisterBookCommand purchaseBookCommand) {
         Book book = bookBuilder.createBook(purchaseBookCommand.name, purchaseBookCommand.isbn, purchaseBookCommand.cost).withAuthors(purchaseBookCommand.authors).purchaseCopies(purchaseBookCommand.copies).build();
-        Long bookId = bookRepository.purchaseBook(book);
+        Long bookId = bookRepository.registerBook(book);
         return bookId;
     }
 
@@ -37,7 +34,7 @@ public class BookCommandHandler extends AbstractCommandHandler {
         return book;
     }
 
-    public boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopies {
+    public Boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopiesException {
         Set<BookId> bookIds = bookIssueCommand.bookIds;
         Member member = crudDao.find(Member.class, bookIssueCommand.memberId);
         for (BookId bookId : bookIds) {
@@ -48,7 +45,7 @@ public class BookCommandHandler extends AbstractCommandHandler {
         return success;
     }
 
-    public boolean returnBook(ReturnBooksCommand bookReturnCommand) {
+    public Boolean returnBook(ReturnBooksCommand bookReturnCommand) {
         Set<BookId> bookIds = bookReturnCommand.bookIds;
         Member member = crudDao.find(Member.class, bookReturnCommand.memberId);
         for (BookId bookId : bookIds) {
@@ -57,6 +54,18 @@ public class BookCommandHandler extends AbstractCommandHandler {
             bookRepository.rentalExpiry(book);
         }
         return success;
+    }
+
+    public Book purchaseCopies(PurchaseBookCopiesCommand purchaseBookCopiesCommand){
+        Book book = bookRepository.geBookWithUid(purchaseBookCopiesCommand.bookId);
+        book.purchaseCopies(purchaseBookCopiesCommand.noOfCopiesToPurchase);
+        return bookRepository.purchaseCopies(book);
+    }
+
+    public Book sellCopies(SellBookCopiesCommand sellBookCopiesCommand) throws NotEnoughCopiesException {
+        Book book = bookRepository.geBookWithUid(sellBookCopiesCommand.bookId);
+        book.sellCopies(sellBookCopiesCommand.noOfCopiesToSell);
+        return bookRepository.sellCopies(book);
     }
 
 }

@@ -6,7 +6,7 @@ import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
 
 @Command
-public class PurchaseBookCommand implements ICommand{
+public class RegisterBookCommand implements ICommand{
 
     public String name;
     public String isbn;
