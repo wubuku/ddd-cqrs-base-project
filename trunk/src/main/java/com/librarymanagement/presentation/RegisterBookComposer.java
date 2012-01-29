@@ -1,25 +1,21 @@
 package com.librarymanagement.presentation;
 
 import com.google.common.collect.Maps;
-import com.librarymanagement.application.commands.PurchaseBookCommand;
+import com.librarymanagement.application.commands.RegisterBookCommand;
 import com.librarymanagement.application.commands.UpdateBookCommand;
 import com.librarymanagement.domain.Book;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
-import org.apache.commons.beanutils.BeanUtils;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @Composer
-public class PurchaseBookComposer extends AbstractZkComposer {
+public class RegisterBookComposer extends AbstractZkComposer {
     private Map<String, ?> bookDto = Maps.newHashMap();
     private boolean isUpdateView = false;
 
@@ -45,7 +41,7 @@ public class PurchaseBookComposer extends AbstractZkComposer {
         bookDto = Maps.newHashMap();
     }
 
-    public boolean isPurchaseBookView() {
+    public boolean isRegisterBookView() {
         return !isUpdateView();
     }
 
@@ -54,8 +50,8 @@ public class PurchaseBookComposer extends AbstractZkComposer {
     }
 
 
-    public void purchaseBook() {
-        PurchaseBookCommand purchaseBookCommand = new PurchaseBookCommand();
+    public void registerBook() {
+        RegisterBookCommand purchaseBookCommand = new RegisterBookCommand();
         populate(bookDto, purchaseBookCommand);
         Long bookId = (Long) sendCommand(purchaseBookCommand);
         if (isSuccess(bookId)) {

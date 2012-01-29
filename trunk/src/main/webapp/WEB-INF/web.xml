@@ -33,13 +33,31 @@
         <!-- The Spring RequestContextLister uses thread bound variables so to
         use this Spring freatures requires that we apply <disable-event-thread />
         within zk.xml -->
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
+
     <listener>
         <description>ZK listener for session cleanup</description>
         <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
     </listener>
 
+    <servlet>
+        <description>ZK loader for ZUML pages</description>
+        <servlet-name>zkLoader</servlet-name>
+        <servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
+
+        <init-param>
+            <param-name>update-uri</param-name>
+            <param-value>/zkau</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <description>The asynchronous update engine for ZK</description>
+        <servlet-name>auEngine</servlet-name>
+        <servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>zkLoader</servlet-name>
@@ -55,25 +73,6 @@
         <servlet-name>auEngine</servlet-name>
         <url-pattern>/zkau/*</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <description>ZK loader for ZUML pages</description>
-        <servlet-name>zkLoader</servlet-name>
-        <servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
-
-        <init-param>
-            <param-name>update-uri</param-name>
-            <param-value>/zkau</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-
-    <servlet>
-        <description>The asynchronous update engine for ZK</description>
-        <servlet-name>auEngine</servlet-name>
-        <servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
-    </servlet>
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

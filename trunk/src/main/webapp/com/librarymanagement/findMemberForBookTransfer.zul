@@ -52,6 +52,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
     <vbox self="@{define(left)}">
         <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
         <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
-        <!--<a id="transferBooks" label="Transfer Books" onClick='navigation.navigateToDefaultContainer("transferBook",null)'/>-->
+        <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
+        <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
     </vbox>
 </zk>

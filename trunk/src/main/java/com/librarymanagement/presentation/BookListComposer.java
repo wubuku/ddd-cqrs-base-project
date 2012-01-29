@@ -35,9 +35,7 @@ public class BookListComposer extends AbstractZkComposer{
         return bookList;
     }
 
-    public void selectBook(Map<String,?> book){
-        System.out.println(book);
-//        navigation.redirect("updateBook");
-        navigation.redirect("updateBook", ImmutableMap.of("bookId",String.valueOf(book.get("id"))));
+    public void selectBook(Map<String,?> book,String viewId){
+        navigation.redirect(viewId, ImmutableMap.of("bookId",String.valueOf(book.get("id"))));
     }
 }

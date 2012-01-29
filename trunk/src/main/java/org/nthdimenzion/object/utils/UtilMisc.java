@@ -55,4 +55,8 @@ public final class UtilMisc {
          D destination = org.springframework.beans.BeanUtils.instantiate(clazz);
          return populate(source,destination,modelMapper);
      }
+
+     public static <T> T returnDefaultIfNull(T input,T defaultValue){
+          return  input==null ? defaultValue : input;
+     }
 }

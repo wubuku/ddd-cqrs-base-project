@@ -27,7 +27,7 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     }
 
     @Override
-    public Long purchaseBook(Book book) {
+    public Long registerBook(Book book) {
         book = save(book);
         return book.getId();
     }
@@ -58,6 +58,16 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     @Override
     public Book rentalExpiry(Book book) {
         return save(book);
+    }
+
+    @Override
+    public Book purchaseCopies(Book book) {
+        return updateBook(book);
+    }
+
+    @Override
+    public Book sellCopies(Book book) {
+        return updateBook(book);
     }
 
     private Book updateBookWithDependencies(Book book) {

@@ -1,10 +1,7 @@
 package com.librarymanagement.domain;
 
 import com.google.common.collect.Sets;
-import com.librarymanagement.application.commands.IssueBooksCommand;
-import com.librarymanagement.application.commands.ReturnBooksCommand;
-import com.librarymanagement.application.commands.PurchaseBookCommand;
-import com.librarymanagement.application.commands.UpdateBookCommand;
+import com.librarymanagement.application.commands.*;
 import com.librarymanagement.presentation.dto.LibrarySummaryDto;
 import com.librarymanagement.presentation.queries.BookQueries;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
@@ -45,12 +42,12 @@ public class LibraryTest extends AbstractTestFacilitator {
 
 
     @Test
-    public void testPurchaseBook() {
+    public void testRegisterBook() {
         systemUser.uses(new TestUserDetails());
         Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).withAuthors("Sudarshan").purchaseCopies(10).build();
 //        Book eventSourcing = bookBuilder.createBook("Event Sourcing", "008", Money.of(CurrencyUnit.USD, 2000)).withAuthors("Greg Young").withCopies(2).build();
 
-        Long id = bookRepository.purchaseBook(javaPersistence);
+        Long id = bookRepository.registerBook(javaPersistence);
 //        bookRepository.registerBook(eventSourcing);
         hibernateTemplate.flush();
         hibernateTemplate.evict(javaPersistence);
@@ -69,8 +66,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     @Test
     public void testFindBookCount() {
-        Book book = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).purchaseCopies(1).build();
-        Long id = bookRepository.purchaseBook(book);
+        registerBook();
         hibernateTemplate.flush();
 
         LibrarySummaryDto librarySummary = bookQueries.getLibrarySummary();
@@ -95,25 +91,23 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     @Test
     public void createMember() {
-        Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
-
-        Long memberId = crudDao.add(member);
+        Long memberId = registerTestMember();
 
         assertNotNull(memberId);
     }
 
     @Test
-    public void testBookPurchase() {
-        PurchaseBookCommand purchaseBookCommand = createPurchaseBookCommand();
+    public void testBookRegistration() {
+        RegisterBookCommand registerBookCommand = createRegisterBookCommand();
 
-        Long bookId = (Long) commandBus.send(purchaseBookCommand);
+        Long bookId = (Long) commandBus.send(registerBookCommand);
 
         Assert.notNull(bookId);
     }
 
     @Test
     public void testBookUpdate() {
-        PurchaseBookCommand purchaseBookCommand = createPurchaseBookCommand();
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
         Long bookId = (Long) commandBus.send(purchaseBookCommand);
 
         UpdateBookCommand updateBookCommand = new UpdateBookCommand();
@@ -128,8 +122,8 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     }
 
-    private PurchaseBookCommand createPurchaseBookCommand() {
-        PurchaseBookCommand purchaseBookCommand = new PurchaseBookCommand();
+    private RegisterBookCommand createRegisterBookCommand() {
+        RegisterBookCommand purchaseBookCommand = new RegisterBookCommand();
         purchaseBookCommand.name = "SCJP";
         purchaseBookCommand.authors = "Sudarshan";
         purchaseBookCommand.isbn = "007";
@@ -140,9 +134,8 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     @Test
     public void testIssueBook() {
-        Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
-        Long memberId = crudDao.add(member);
-        PurchaseBookCommand purchaseBookCommand = createPurchaseBookCommand();
+        Long memberId = registerTestMember();
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
         Long bookId = (Long) commandBus.send(purchaseBookCommand);
         Book book = bookRepository.getBookFromId(bookId);
 
@@ -150,7 +143,7 @@ public class LibraryTest extends AbstractTestFacilitator {
         commandBus.send(bookIssueCommand);
         hibernateTemplate.flush();
 
-        BookLending bookLending = bookLendingRepository.findOpenBookLending(book,member);
+        BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
         Assert.notNull(bookLending);
         Assert.isTrue(0 == book.getAvailableCopies());
         Assert.isTrue(1 == book.getTotalCopies());
@@ -158,9 +151,8 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     @Test
     public void testIssueUnavailableBook() {
-        Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
-        Long memberId = crudDao.add(member);
-        PurchaseBookCommand purchaseBookCommand = createPurchaseBookCommand();
+        Long memberId = registerTestMember();
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
         purchaseBookCommand.copies = 0;
         Long bookId = (Long) commandBus.send(purchaseBookCommand);
         Book book = bookRepository.getBookFromId(bookId);
@@ -169,7 +161,7 @@ public class LibraryTest extends AbstractTestFacilitator {
         commandBus.send(bookIssueCommand);
         hibernateTemplate.flush();
 
-        BookLending bookLending = bookLendingRepository.findOpenBookLending(book,member);
+        BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
 
         Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
         Assert.isNull(bookLending);
@@ -179,11 +171,9 @@ public class LibraryTest extends AbstractTestFacilitator {
 
     @Test
     public void testReturnBook() {
-        Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
-        Long memberId = crudDao.add(member);
-        PurchaseBookCommand purchaseBookCommand = createPurchaseBookCommand();
-        Long bookId = (Long) commandBus.send(purchaseBookCommand);
-        Book book = bookRepository.getBookFromId(bookId);
+        Long memberId = registerTestMember();
+        Book book = registerBook();
+        Long bookId = book.getId();
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
 
@@ -191,10 +181,10 @@ public class LibraryTest extends AbstractTestFacilitator {
         commandBus.send(bookReturnCommand);
 
         hibernateTemplate.flush();
-        List bookLendings = bookFinder.findBookLendings(memberId,bookId);
-        Map<String,?> firstBookLending = (Map<String,?>)bookLendings.get(0);
-        BookLending bookLending = bookLendingRepository.getBookLendingFromId((Long)firstBookLending.get("id"));
-        List<Map<String,?>> booksWithMember = bookFinder.findAllBooksWithMember(memberId);
+        List bookLendings = bookFinder.findBookLendings(memberId, bookId);
+        Map<String, ?> firstBookLending = (Map<String, ?>) bookLendings.get(0);
+        BookLending bookLending = bookLendingRepository.getBookLendingFromId((Long) firstBookLending.get("id"));
+        List<Map<String, ?>> booksWithMember = bookFinder.findAllBooksWithMember(memberId);
 
         Assert.isTrue(1 == book.getAvailableCopies());
         Assert.isTrue(1 == book.getTotalCopies());
@@ -202,7 +192,50 @@ public class LibraryTest extends AbstractTestFacilitator {
         Assert.notNull(bookLendings);
         Assert.notNull(bookLending);
         Assert.isTrue(true == bookLending.isBookLendingCompleted());
+    }
+
+    @Test
+    public void testPurchaseBookCopies() {
+        Book book = registerBook();
+        PurchaseBookCopiesCommand purchaseBookCopiesCommand = new PurchaseBookCopiesCommand(book.getBookId(),3);
+        book = (Book) commandBus.send(purchaseBookCopiesCommand);
+
+        Assert.isTrue(book.getAvailableCopies()==4);
+        Assert.isTrue(book.getTotalCopies()==4);
 
     }
+
+    @Test
+    public void testInvalidSaleOfBookCopies() {
+        Book book = registerBook();
+        SellBookCopiesCommand sellBookCopiesCommand = new SellBookCopiesCommand(book.getBookId(),3);
+        Book result = (Book) commandBus.send(sellBookCopiesCommand);
+
+        Assert.isNull(result);
+        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
+    }
+
+    @Test
+    public void testSaleOfBookCopies() {
+        Book book = registerBook();
+        SellBookCopiesCommand sellBookCopiesCommand = new SellBookCopiesCommand(book.getBookId(),1);
+        Book result = (Book) commandBus.send(sellBookCopiesCommand);
+
+        Assert.notNull(result);
+        Assert.isTrue(result.getAvailableCopies()==0);
+        Assert.isTrue(result.getTotalCopies()==0);
+    }
+
+    private Book registerBook() {
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
+        Long bookId = (Long) commandBus.send(purchaseBookCommand);
+        return bookRepository.getBookFromId(bookId);
+    }
+
+    private Long registerTestMember() {
+        Member member = memberBuilder.createMember("Sudarshan", "S", DateTime.now()).withMiddleName("Hello").build();
+        return crudDao.add(member);
+    }
+
 }
 

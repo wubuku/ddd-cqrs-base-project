@@ -1,5 +1,7 @@
 package org.nthdimenzion.presentation.infrastructure;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.sys.ExecutionsCtrl;
 import org.zkoss.zul.Label;
@@ -9,7 +11,9 @@ import org.zkoss.zul.Messagebox;
 public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
 
 
+    public static final String STYLE = "font-size:14px;color:%s;line-height:40px;font-weight:bold";
     private final String title;
+    protected static final Logger logger = LoggerFactory.getLogger(ZkDisplayMessages.class);
 
     private String sucessfulOperationMessage = "Operation Completed Successfully";
 
@@ -47,7 +51,7 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
 
     @Override
     public void showSuccessInPopUp(String message) {
-        display(message, Messagebox.OK, Messagebox.INFORMATION,true);
+        display(message, Messagebox.OK, Messagebox.INFORMATION, true);
     }
 
     @Override
@@ -81,32 +85,41 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
         try {
             Messagebox.show(message, title, buttons, icon, eventListener);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.warn("Error in display messages",e);
+
         }
     }
 
     @Override
     public void clearMessage() {
-        final Label l = (Label) ExecutionsCtrl.getCurrentCtrl().getCurrentPage().getFellow(successsMessageLabelId, true);
+        final Label l = getHeaderLabel();
         l.setValue(null);
     }
 
-    private int display(String message, int buttons, String icon,boolean isPopup){
+    private int display(String message, int buttons, String icon, boolean isPopup) {
         if (isErrorMessage(icon) || isSuccessMessageLabelNotAvailable() || isPopup) {
-            try {
-                return multiLineMessageBox.show(message, title, buttons, icon, true);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Contact Administrator", e);
-            }
-        } else {
-            final Label l = (Label) ExecutionsCtrl.getCurrentCtrl().getCurrentPage().getFellow(successsMessageLabelId, true);
+            final Label l = getHeaderLabel();
             l.setValue(message);
+            l.setStyle(getStyleForLabel("red"));
+            return 0;
+        } else {
+            final Label l = getHeaderLabel();
+            l.setValue(message);
+            l.setStyle(getStyleForLabel("#00AA00"));
             return 0;
         }
     }
 
+    public String getStyleForLabel(String color) {
+        return String.format(STYLE, color);
+    }
+
+    private Label getHeaderLabel() {
+        return (Label) ExecutionsCtrl.getCurrentCtrl().getCurrentPage().getFellow(successsMessageLabelId, true);
+    }
+
     private int display(String message, int buttons, String icon) {
-        return display(message,buttons,icon,false);
+        return display(message, buttons, icon, false);
     }
 
     private boolean isSuccessMessageLabelNotAvailable() {

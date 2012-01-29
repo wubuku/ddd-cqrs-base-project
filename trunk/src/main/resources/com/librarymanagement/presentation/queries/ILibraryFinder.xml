@@ -11,8 +11,10 @@
             isbn as isbn,
             authors as authors,
             available_copies as availableCopies,
+            total_copies as totalCopies,
             AMOUNT as amount,
-            CURRENCY_CODE as currencyCode
+            CURRENCY_CODE as currencyCode,
+            uid as bookId
       FROM book
       where id = #{bookId}
     </select>
@@ -25,6 +27,7 @@
           isbn,
           authors,
           available_copies as availableCopies,
+          total_copies as totalCopies,
           AMOUNT as amount,
           CURRENCY_CODE
     FROM book

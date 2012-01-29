@@ -13,11 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 
 @Composer
-public class AbstractZkComposer extends GenericForwardComposer {
+public abstract class AbstractZkComposer extends GenericForwardComposer {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,20 +32,20 @@ public class AbstractZkComposer extends GenericForwardComposer {
     @Autowired
     protected Navigation navigation;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     protected AbstractZkComposer() {
         modelMapper.getConfiguration().enableFieldMatching(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 
-    protected Object sendCommand(ICommand command) {
-        if(command==null)
+    protected final Object sendCommand(ICommand command) {
+        if (command == null)
             return command;
         return commandBus.send(command);
     }
 
-    protected boolean isSuccess(Object object) {
+    protected final boolean isSuccess(Object object) {
         if (object instanceof Boolean) {
             Boolean success = (Boolean) object;
             return success.booleanValue();
@@ -52,21 +53,26 @@ public class AbstractZkComposer extends GenericForwardComposer {
         return object != null;
     }
 
-    protected  <D, S> D populate(S source, D destination){
-        return UtilMisc.populate(source,destination,modelMapper);
+    protected final <D, S> D populate(S source, D destination) {
+        return UtilMisc.populate(source, destination, modelMapper);
     }
 
-    /***
-     *
+    /**
      * @param source
      * @param clazz
      * @param <D>
      * @param <S>
      * @return instance of clazz
-     *
-     * Ensure destination class has a public no arg constructor
+     *         <p/>
+     *         Ensure destination class has a public no arg constructor
      */
-    public <D, S> D populate(S source, Class<D> clazz){
-        return UtilMisc.populate(source,clazz,modelMapper);
+    public final <D, S> D populate(S source, Class<D> clazz) {
+        return UtilMisc.populate(source, clazz, modelMapper);
+    }
+
+    protected final String getParam(String paramId) {
+        logger.debug("ParamId " + paramId);
+        return Executions.getCurrent().getParameter(paramId);
+
     }
 }

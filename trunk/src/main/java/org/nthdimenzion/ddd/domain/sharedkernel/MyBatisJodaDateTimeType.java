@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @MappedTypes(value = DateTime.class)
-@MappedJdbcTypes(value = {JdbcType.DATE,JdbcType.TIME,JdbcType.TIMESTAMP})
+//@MappedJdbcTypes(value = {JdbcType.DATE,JdbcType.TIME,JdbcType.TIMESTAMP})
 public class MyBatisJodaDateTimeType extends BaseTypeHandler<DateTime>{
 
     public MyBatisJodaDateTimeType() {
