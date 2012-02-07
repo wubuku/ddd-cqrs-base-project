@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @Component
 @Qualifier("simpleCommandBus")
@@ -26,25 +27,52 @@ public class SimpleCommandBus implements ICommandBus {
 
     private CommandValidationFailed commandValidationFailed = new CommandValidationFailed();
 
+    @Autowired
+    private List<ICommandInterceptor> commandInterceptors;
+
     @Override
     public Object send(ICommand command) {
         Handler handler = commandHandlerRegistry.findCommandHandlerFor(command.getClass());
+        Object result = null;
         try {
-            if (!validate(command))
-                return null;
-            return handler.invokeMethod(command);
+            if (validate(command)) {
+                preInterceptors(commandInterceptors, command);
+                result = handler.invokeMethod(command);
+                postInterceptors(commandInterceptors,command,result);
+            }
         } catch (Throwable throwable) {
-            throwable = extractTargetException(throwable);
-            boolean isExceptionEventRaised = raiseEventForException(throwable);
-            logger.debug("Is exception handled " + isExceptionEventRaised);
-            if (isNonDisplayBusinessException(isExceptionEventRaised, throwable)) {
-                logger.error("Unhandled exception ", throwable);
-                throwException(throwable);
-            } else if (!isExceptionEventRaised) {
-                raiseEventForUnexpectedException(throwable);
+            raiseEventForThrowable(throwable);
+            result = null;
+        }
+        return result;
+    }
+
+    private void raiseEventForThrowable(Throwable throwable) {
+        throwable = extractTargetException(throwable);
+        boolean isExceptionEventRaised = raiseEventForException(throwable);
+        logger.debug("Is exception handled " + isExceptionEventRaised);
+        if (isNonDisplayBusinessException(isExceptionEventRaised, throwable)) {
+            logger.error("Unhandled exception ", throwable);
+            throwException(throwable);
+        } else if (!isExceptionEventRaised) {
+            raiseEventForUnexpectedException(throwable);
+        }
+    }
+
+    private void postInterceptors(List<ICommandInterceptor> interceptors, ICommand command, Object result) {
+        if (UtilValidator.isNotEmpty(interceptors)) {
+            for (ICommandInterceptor interceptor : interceptors) {
+                interceptor.post(command,result);
             }
         }
-        return null;
+    }
+
+    private void preInterceptors(List<ICommandInterceptor> interceptors, ICommand command) {
+        if (UtilValidator.isNotEmpty(interceptors)) {
+            for (ICommandInterceptor interceptor : interceptors) {
+                interceptor.pre(command);
+            }
+        }
     }
 
     private void raiseEventForUnexpectedException(Throwable throwable) {
@@ -93,14 +121,4 @@ public class SimpleCommandBus implements ICommandBus {
         return isValid;
     }
 
-
-    @Override
-    public <C> void subscribe(Class<C> commandType, ICommandHandler handler) {
-        throw new UnsupportedOperationException("Will be available in future realeses, Method Signature may change");
-    }
-
-    @Override
-    public <C> void unsubscribe(Class<C> commandType, ICommandHandler handler) {
-        throw new UnsupportedOperationException("Will be available in future realeses, Method Signature may change");
-    }
 }

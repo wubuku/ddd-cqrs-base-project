@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
 import org.nthdimenzion.ddd.domain.BaseArchetype;
 import org.nthdimenzion.ddd.domain.IPersistable;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
@@ -15,7 +16,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class GenericHibernateRepository<E extends BaseArchetype, K extends Serializable> {
+public abstract class GenericHibernateRepository<E extends BaseAggregateRoot, K extends Serializable> {
     protected final HibernateTemplate hibernateTemplate;
     private Class<E> clazz;
 

@@ -11,14 +11,13 @@ import javax.persistence.Transient;
 import java.util.List;
 
 @ValueObject
-@Entity
-public class ErrorDetails extends IdGeneratingArcheType {
+public class ErrorDetails {
 
     private String errorCode = "001";
     private String errorMessage = "Operation Failed.Please contact administrator";
     private Throwable exception;
     private Boolean isShowErrorInView = Boolean.TRUE;
-    public static IErrorMessageLocator errorMessageLocator;
+    public  static IErrorMessageLocator errorMessageLocator;
 
 
     ErrorDetails() {

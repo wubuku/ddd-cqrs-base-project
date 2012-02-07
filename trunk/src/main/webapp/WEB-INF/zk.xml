@@ -11,8 +11,7 @@
         <disable-event-thread/>
     </system-config>
 
-    <zscript language="Java">
-	</zscript>
+    <!--<zscript language="Java"/>-->
 
     <language-config>
 		<addon-uri>/WEB-INF/zkoss/zk-addon.xml</addon-uri>
