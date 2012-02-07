@@ -51,6 +51,13 @@ public final class UtilMisc {
         return destination;
     }
 
+        /**
+     * @param source
+     * @param clazz
+     * @return instance of clazz
+     *         <p/>
+     *         Ensure destination class has a public no arg constructor
+     */
      public static <D, S> D populate(S source, Class<D> clazz, ModelMapper modelMapper){
          D destination = org.springframework.beans.BeanUtils.instantiate(clazz);
          return populate(source,destination,modelMapper);

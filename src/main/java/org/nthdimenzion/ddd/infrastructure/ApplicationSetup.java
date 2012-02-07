@@ -19,14 +19,5 @@ public class ApplicationSetup implements ApplicationContextAware {
 
         ErrorMessageLocator errorMessageLocator = applicationContext.getBean("errorMessageLocator", ErrorMessageLocator.class);
         ErrorDetails.errorMessageLocator = errorMessageLocator;
-
-        /*SqlSessionFactory mybatisSessionFactory = applicationContext.getBean("sqlSessionFactory", SqlSessionFactory.class);
-        MyBatisJodaDateTimeType myBatisJodaDateTimeType = applicationContext.getBean("myBatisJodaDateTimeType", MyBatisJodaDateTimeType.class);*/
-
-        /*mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, myBatisJodaDateTimeType);
-        mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, JdbcType.DATE, myBatisJodaDateTimeType);
-        mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, JdbcType.TIME, myBatisJodaDateTimeType);
-        mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, JdbcType.TIMESTAMP, myBatisJodaDateTimeType);*/
-//        mybatisSessionFactory.getConfiguration().getTypeHandlerRegistry().register(DateTime.class, null, myBatisJodaDateTimeType);
     }
 }

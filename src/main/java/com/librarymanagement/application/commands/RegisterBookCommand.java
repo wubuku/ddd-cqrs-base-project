@@ -40,4 +40,15 @@ public class RegisterBookCommand implements ICommand{
         Preconditions.checkNotNull(isbn);
         Preconditions.checkNotNull(authors);
     }
+
+    @Override
+    public String toString() {
+        return "RegisterBookCommand{" +
+                "name='" + name + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", copies=" + copies +
+                ", cost=" + cost +
+                ", authors='" + authors + '\'' +
+                '}';
+    }
 }

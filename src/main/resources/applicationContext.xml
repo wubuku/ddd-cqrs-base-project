@@ -4,7 +4,9 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd  http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd  http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
 
     <bean id="exceptionEventBus" class="org.nthdimenzion.ddd.infrastructure.EventBus">
@@ -34,15 +36,15 @@
         </constructor-arg>
     </bean>
 
-     <bean id="errorMessageLocator" class="org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator">
-		<property name="exceptionMessageHolders">
-			<array>
-				<value>org/error/exception.properties</value>
+    <bean id="errorMessageLocator" class="org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator">
+        <property name="exceptionMessageHolders">
+            <array>
+                <value>org/error/exception.properties</value>
                 <value>com/simplepersoncrud/error/exception.properties</value>
                 <value>com/librarymanagement/error/exception.properties</value>
-			</array>
-		</property>
-	</bean>
+            </array>
+        </property>
+    </bean>
 
     <context:component-scan base-package="org.nthdimenzion.security.domain"></context:component-scan>
 
@@ -52,6 +54,10 @@
     <import resource="org/presentation/presentationBeanContext.xml"/>
     <import resource="org/security/securityContext.xml"/>
 
+    <util:list id="commandInterceptors" list-class="java.util.ArrayList" value-type="org.nthdimenzion.cqrs.command.ICommandInterceptor">
+        <ref bean="commandLoggingInterceptor" />
+    </util:list>
+
 
     <context:component-scan base-package="org.nthdimenzion"></context:component-scan>
     <context:component-scan base-package="com.simplepersoncrud"></context:component-scan>
@@ -59,11 +65,11 @@
 
     <context:annotation-config/>
 
-<!--
-    <bean id="errorRecorder" class="org.nthdimenzion.ddd.infrastructure.exception.PersistableErrorRecorder">
-        <constructor-arg name="errorDetailsRepository" ref="errorDetailsRepository"/>
-        <constructor-arg name="exceptionEventBus" ref="exceptionEventBus"/>
-    </bean>
--->
+    <!--
+        <bean id="errorRecorder" class="org.nthdimenzion.ddd.infrastructure.exception.PersistableErrorRecorder">
+            <constructor-arg name="errorDetailsRepository" ref="errorDetailsRepository"/>
+            <constructor-arg name="exceptionEventBus" ref="exceptionEventBus"/>
+        </bean>
+    -->
 
 </beans>
