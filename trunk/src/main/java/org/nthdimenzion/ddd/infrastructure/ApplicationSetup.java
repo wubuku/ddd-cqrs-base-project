@@ -1,9 +1,5 @@
 package org.nthdimenzion.ddd.infrastructure;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.type.JdbcType;
-import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.domain.sharedkernel.MyBatisJodaDateTimeType;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator;
 import org.springframework.beans.BeansException;

@@ -1,13 +1,8 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
-import com.librarymanagement.domain.Book;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
-import org.nthdimenzion.ddd.domain.BaseArchetype;
-import org.nthdimenzion.ddd.domain.IPersistable;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

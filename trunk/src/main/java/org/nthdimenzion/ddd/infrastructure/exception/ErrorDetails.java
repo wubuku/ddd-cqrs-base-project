@@ -1,12 +1,10 @@
 package org.nthdimenzion.ddd.infrastructure.exception;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.List;
 

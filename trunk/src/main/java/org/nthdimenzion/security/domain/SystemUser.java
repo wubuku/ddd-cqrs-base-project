@@ -2,7 +2,6 @@ package org.nthdimenzion.security.domain;
 
 import org.nthdimenzion.ddd.application.annotation.StateFullComponent;
 import org.nthdimenzion.ddd.domain.INamed;
-import org.nthdimenzion.object.utils.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
