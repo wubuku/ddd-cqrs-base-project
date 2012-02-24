@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.simplepersoncrud.presentation.IPersonFinder">
+
+
+  <select id="findAllPeople" resultType="com.simplepersoncrud.presentation.dto.PersonDetailsDto">
+    SELECT id,
+          name
+    FROM Simple_Person
+    where ENTITY_STATUS = 0
+    order by id desc;
+  </select>
+
+    <select id="findPersonDetails" resultType="com.simplepersoncrud.presentation.dto.PersonDetailsDto">
+      SELECT id,
+            name
+      FROM Simple_Person
+      where id = #{personId};
+    </select>
+
+<select id="getPeopleSummary" resultType="com.simplepersoncrud.presentation.dto.PeopleSummaryDto">
+      SELECT count(*) as totalPeopleCount
+      FROM Simple_Person
+      where ENTITY_STATUS = 0;
+    </select>
+
+
+</mapper>

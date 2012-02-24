@@ -1,0 +1,47 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:n="http://www.zkoss.org/2005/zk/native"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+   <style>
+      .autoSize{position:absolute;width:100%;height:100%}
+      .loginWrapper{position:absolute;width:100%}
+   </style>
+   <n:body class="login">
+      <window contentSclass="login">
+         <image src="/org/images/login_bg.png" sclass="autoSize" />
+         <div sclass="loginWrapper">
+            <div sclass="loginCont">
+               <!--<image sclass="logo" />-->
+               <div align="center"> 
+                  <label value="${customMessage}" style="color: #f00; font-size: 12px; font-weight: bold; text-align: center;" if="${!empty SPRING_SECURITY_LAST_EXCEPTION.message}" />
+               </div>
+               <n:form id="loginForm" name="loginForm" action="j_spring_security_check" method="POST">
+                  <div align="center" width="100%" height="1px">
+                     <label value="The system should only be accessed by authorized users" style="color: #f00; font-size: 12px; font-weight: bold; text-align: center;" if="${!empty SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                  </div>
+                  <n:br />
+                  <label value="User ID" />
+                  <n:input name="j_username" width="200px" focus="true" id="j_username">
+                     <attribute name="onCreate">
+                        String userfocuscmd="jQuery(\"input:text:visible:first\").focus();";
+                        Clients.evalJavaScript(userfocuscmd);
+                     </attribute>
+                  </n:input>
+                  <label value="Password" style="margin:10px 10px 10px 0px" />
+                  <n:input type="password" name="j_password" width="200px" />
+                  <div>
+                     <n:input class="signIn" type="submit" value="Login" />
+                  </div>
+                  <!--<a href="#" onClick='Executions.sendRedirect("/forgot-password.zul");'>Forgotten your password?</a>-->
+                  <div sclass="help">
+                  </div>
+                  <div zclass="footer" style="maring-top:10px">
+                     <n:p>Powered by NthDimenzion Solutions</n:p>
+                  </div>
+               </n:form>
+            </div>
+         </div>
+      </window>
+   </n:body>
+</zk>
