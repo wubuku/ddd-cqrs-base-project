@@ -1,0 +1,88 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./transferBook"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.nthdimenzion.presentation.util.ViewUtil;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+pagetitle.setValue("Transfer Books");
+subpagetitle.setValue("Select a book and then issue or return the book as desired");
+]]></zscript>
+    <window id="transferBook"  title="Transfer Books" border="normal" self="@{define(content)}" apply="${transferBookComposer}">
+        <vlayout height="100%">
+            <hbox>
+                <label value="Member Name "/>
+                <label value="@{transferBookComposer.memberName}"/>
+            </hbox>
+            <panel title="List of All available books, Select one or more books that need to issued">
+                <panelchildren>
+                    <listbox  id="availableBooksListBox" multiple="true" checkmark="true" model="@{transferBookComposer.allBooks,load-after='returnBtn.onClick,issueBook.onClick'}"  mold="paging" pageSize="4">
+                        <listhead>
+                            <listheader>ID</listheader>
+                            <listheader>Name</listheader>
+                            <listheader>ISBN</listheader>
+                            <listheader>Authors</listheader>
+                            <listheader>Available Copies</listheader>
+                        </listhead>
+                        <listitem self="@{each='book'}" value="@{book}">
+                            <listcell>
+								<label value="@{book.id}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{book.name}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{book.isbn}"></label>
+							</listcell>
+                            <listcell>
+                                <label value="@{book.authors}"></label>
+                            </listcell>
+                            <listcell>
+                                <label value="@{book.availableCopies}"></label>
+                            </listcell>
+                        </listitem>
+                    </listbox>
+                    <button id="issueBook" label = "Issue Books" onClick="transferBookComposer.issueBooks()"
+                    />
+                </panelchildren>
+            </panel>
+            <panel title="List of books issued by member,Select one or more books that the member wishes to return">
+                <panelchildren>
+                    <listbox  id="booksWithMemberListBox" multiple="true" checkmark="true" model="@{transferBookComposer.booksWithMember,load-after='returnBtn.onClick,issueBook.onClick'}"                                        mold="paging" pageSize="4">
+                        <listhead>
+                            <listheader>ID</listheader>
+                            <listheader>Name</listheader>
+                            <listheader>ISBN</listheader>
+                            <listheader>Authors</listheader>
+                            <listheader>Issue Date</listheader>
+                        </listhead>
+                        <listitem self="@{each='memberBook'}" value="@{memberBook}">
+                            <listcell>
+								<label value="@{memberBook.id}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{memberBook.name}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{memberBook.isbn}"></label>
+							</listcell>
+                            <listcell>
+                                <label value="@{memberBook.authors}"></label>
+                            </listcell>
+                            <listcell>
+                                <label value="@{memberBook.issueDate}"></label>
+                            </listcell>
+                        </listitem>
+                    </listbox>
+                    <button id="returnBtn" label = "Return Books" onClick="transferBookComposer.returnBooks()"/>
+                </panelchildren>
+            </panel>
+        </vlayout>
+    </window>
+
+</zk>

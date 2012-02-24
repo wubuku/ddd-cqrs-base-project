@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+
+    <bean id="exceptionEventBus" class="org.nthdimenzion.ddd.infrastructure.EventBus">
+        <qualifier value="exceptionEventBus"/>
+        <constructor-arg name="eventBus">
+            <bean class="com.google.common.eventbus.EventBus">
+                <constructor-arg name="identifier" value="exceptionEventBus"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="domainEventBus" class="org.nthdimenzion.ddd.infrastructure.EventBus">
+        <qualifier value="domainEventBus"/>
+        <constructor-arg name="eventBus">
+            <bean class="com.google.common.eventbus.EventBus">
+                <constructor-arg name="identifier" value="domainEventBus"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="applicationEventBus" class="org.nthdimenzion.ddd.infrastructure.EventBus">
+        <qualifier value="applicationEventBus"/>
+        <constructor-arg name="eventBus">
+            <bean class="com.google.common.eventbus.EventBus">
+                <constructor-arg name="identifier" value="applicationEventBus"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="errorMessageLocator" class="org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator">
+        <property name="exceptionMessageHolders">
+            <array>
+                <value>org/error/exception.properties</value>
+                <value>com/simplepersoncrud/error/exception.properties</value>
+                <value>com/librarymanagement/error/exception.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="org.nthdimenzion.security.domain"></context:component-scan>
+
+    <import resource="databaseContext.xml"/>
+    <import resource="queryContext.xml"/>
+    <import resource="integrationContext.xml"/>
+    <import resource="org/presentation/presentationBeanContext.xml"/>
+    <import resource="org/security/securityContext.xml"/>
+
+    <util:list id="commandInterceptors" list-class="java.util.ArrayList" value-type="org.nthdimenzion.cqrs.command.ICommandInterceptor">
+        <ref bean="commandLoggingInterceptor" />
+    </util:list>
+
+
+    <context:component-scan base-package="org.nthdimenzion"></context:component-scan>
+    <context:component-scan base-package="com.simplepersoncrud"></context:component-scan>
+    <context:component-scan base-package="com.librarymanagement"></context:component-scan>
+
+    <context:annotation-config/>
+
+    <!--
+        <bean id="errorRecorder" class="org.nthdimenzion.ddd.infrastructure.exception.PersistableErrorRecorder">
+            <constructor-arg name="errorDetailsRepository" ref="errorDetailsRepository"/>
+            <constructor-arg name="exceptionEventBus" ref="exceptionEventBus"/>
+        </bean>
+    -->
+</beans>

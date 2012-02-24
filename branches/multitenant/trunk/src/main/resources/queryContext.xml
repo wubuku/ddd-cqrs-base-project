@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceRef"/>
+        <property name="typeHandlersPackage" value="org.nthdimenzion.ddd.domain.sharedkernel"/>
+    </bean>
+
+    <bean id="finderComponentScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.simplepersoncrud.presentation,com.librarymanagement.presentation"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+
+    </bean>
+
+</beans>
