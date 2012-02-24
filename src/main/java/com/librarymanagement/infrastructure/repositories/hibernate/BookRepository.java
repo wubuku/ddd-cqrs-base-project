@@ -3,15 +3,10 @@ package com.librarymanagement.infrastructure.repositories.hibernate;
 import com.librarymanagement.domain.Book;
 import com.librarymanagement.domain.BookId;
 import com.librarymanagement.domain.IBookRepository;
-import com.simplepersoncrud.domain.PersonId;
-import com.simplepersoncrud.domain.SimplePerson;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
-import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 @DomainRepositoryImpl

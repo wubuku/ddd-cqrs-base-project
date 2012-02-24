@@ -12,8 +12,6 @@ import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import java.util.Collections;
-
 @DomainRepositoryImpl
 public class BookLendingRepository extends GenericHibernateRepository<BookLending,Long> implements IBookLendingRepository{
 

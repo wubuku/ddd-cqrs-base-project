@@ -14,5 +14,4 @@ public interface IPersonRepository {
     SimplePerson changeNameFor(SimplePerson person);
 
     SimplePerson getPersonWithUid(PersonId personId);
-
 }

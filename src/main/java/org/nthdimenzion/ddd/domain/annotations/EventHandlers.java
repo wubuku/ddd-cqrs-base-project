@@ -1,9 +1,9 @@
 package org.nthdimenzion.ddd.domain.annotations;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
-
-import org.springframework.stereotype.Component;
 
 @Component
 @Target(ElementType.TYPE)

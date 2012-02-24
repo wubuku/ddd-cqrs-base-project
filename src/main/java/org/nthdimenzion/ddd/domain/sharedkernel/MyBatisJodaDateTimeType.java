@@ -1,6 +1,8 @@
 package org.nthdimenzion.ddd.domain.sharedkernel;
 
-import org.apache.ibatis.type.*;
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.DateTime;
 
 import java.sql.CallableStatement;

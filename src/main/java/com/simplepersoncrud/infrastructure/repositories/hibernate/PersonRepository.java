@@ -4,7 +4,6 @@ import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.PersonId;
 import com.simplepersoncrud.domain.SimplePerson;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
 import org.springframework.beans.factory.annotation.Autowired;

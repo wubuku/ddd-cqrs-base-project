@@ -6,7 +6,6 @@ package org.nthdimenzion.ddd.domain;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.domain.annotations.MI;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.springframework.util.ObjectUtils;
 

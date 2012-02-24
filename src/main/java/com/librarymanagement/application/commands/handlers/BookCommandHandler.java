@@ -7,6 +7,7 @@ import org.nthdimenzion.cqrs.command.AbstractCommandHandler;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.crud.ICrud;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Set;
 
 @CommandHandler

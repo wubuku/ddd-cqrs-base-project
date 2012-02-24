@@ -1,19 +1,14 @@
 package org.nthdimenzion.ddd.infrastructure.hibernate;
 
-import com.google.common.collect.Lists;
-import org.apache.velocity.util.StringUtils;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.application.annotation.StateFullComponent;
 import org.nthdimenzion.ddd.domain.LifeCycle;
 import org.nthdimenzion.security.domain.SystemUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 
 public class AutoColumnsPopulator extends EmptyInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
