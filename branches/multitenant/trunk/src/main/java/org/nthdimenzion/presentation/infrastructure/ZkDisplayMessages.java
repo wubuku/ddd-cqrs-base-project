@@ -8,7 +8,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 
 
-public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
+public final class ZkDisplayMessages implements IDisplayMessages<EventListener> {
 
 
     public static final String STYLE = "font-size:14px;color:%s;line-height:40px;font-weight:bold";

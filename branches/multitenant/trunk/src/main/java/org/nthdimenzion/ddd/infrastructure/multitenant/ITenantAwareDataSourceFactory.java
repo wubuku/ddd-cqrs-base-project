@@ -8,10 +8,6 @@ import java.util.Map;
 
 public interface ITenantAwareDataSourceFactory {
 
-    public static ITenantAwareDataSourceFactory INSTANCE = new DataSourceFactory();
-    
-    DataSource getCommonSchemaDataSource();
-
     Map<Object,Object> initialiseConfiguredTenantDataSources();
 
     Map<Object, Object>  fetchConfiguredTenantDataSources();

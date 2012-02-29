@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 @EventHandlers
 @Qualifier("presentationDecoratedExceptionHandler")
-public class PresentationDecoratedExceptionHandler extends AbstractEventListener implements IExceptionHandler{
+public final class PresentationDecoratedExceptionHandler extends AbstractEventListener implements IExceptionHandler{
 
     private boolean isExceptionHandled = false;
 
@@ -20,7 +20,7 @@ public class PresentationDecoratedExceptionHandler extends AbstractEventListener
     @Qualifier("zkDisplayMessages")
     private IDisplayMessages displayMessages;
 
-    public void setDisplayMessages(IDisplayMessages displayMessages) {
+    public void setDisplayMessages(final IDisplayMessages displayMessages) {
         this.displayMessages = displayMessages;
     }
 
