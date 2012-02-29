@@ -14,7 +14,7 @@ UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
 			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
 	</n:div>
 	<div sclass="loggedIn">
-	    <n:a href="/BaseProject/" class="signout">Log Off</n:a>
+	    <n:a href="/MultiTenantBaseProject/" class="signout">Log Off</n:a>
 	    <h:br></h:br>
         <label value="Logged In "/>
         <label value="${userDetails.username}"/>

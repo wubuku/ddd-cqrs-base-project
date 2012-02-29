@@ -18,10 +18,12 @@ import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;
+import org.nthdimenzion.ddd.infrastructure.multitenant.TenantIdHolder;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -90,15 +92,16 @@ public class PersonTest extends AbstractTestFacilitator {
 
 
     @Test
+    @Rollback(value = false)
     public void testFindPeopleDetails() throws PersonCreationException {
+        List<PersonDetailsDto> actualPeopleDetails = null;
+            TenantIdHolder.setTenantId(JUNIT_TESTING_TENANT_ID);
         List<PersonDetailsDto> expectedPeople = Lists.newArrayList(new PersonDetailsDto("Sudarshan2", 2L),new PersonDetailsDto("Sudarshan1", 1L));
         commandBus.send(new PersonRegistrationCommand(("Sudarshan1")));
         commandBus.send(new PersonRegistrationCommand(("Sudarshan2")));
-
-        List<PersonDetailsDto> actualPeopleDetails = iPersonFinder.findAllPeople();
-
+        actualPeopleDetails = iPersonFinder.findAllPeople();
+        System.out.println(actualPeopleDetails);
         Assert.notEmpty(actualPeopleDetails);
-//        Assert.isTrue(expectedPeople.equals(actualPeopleDetails));
     }
 
     @Test

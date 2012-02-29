@@ -39,6 +39,7 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                   <div zclass="footer" style="maring-top:10px">
                      <n:p>Powered by NthDimenzion Solutions</n:p>
                   </div>
+                   <n:input name="tenantId" width="200px" id="tenantId" value="001"/>
                </n:form>
             </div>
          </div>

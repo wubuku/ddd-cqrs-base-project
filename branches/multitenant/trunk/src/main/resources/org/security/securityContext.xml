@@ -10,22 +10,19 @@
 
     <security:global-method-security pre-post-annotations="enabled"/>
 
-     <!-- Don't set any role restrictions on login.jsp -->
-
-
     <security:http auto-config="true">
         <security:intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:form-login login-page="/login.zul" always-use-default-target="true"
                              default-target-url="/com/personsample/personPanel.zul" authentication-failure-url="/login.zul?login_error=1" authentication-success-handler-ref="authenticationSuccessHandler"/>
-        <security:logout logout-url="/BaseProject/logout" invalidate-session="true" logout-success-url="/login.zul"/>
+        <security:logout logout-url="/MultiTenantBaseProject/logout" invalidate-session="true" logout-success-url="/login.zul"/>
     </security:http>
 
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="userService"/>
     </security:authentication-manager>
 
-    <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource" ref="dataSourceRef"/>
+    <bean id="userValidationService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource"  ref="tenantRoutingDataSource"/>
         <property name="enableGroups" value="true"/>
         <property name="enableAuthorities" value="false"/>
         <property name="usersByUsernameQuery"

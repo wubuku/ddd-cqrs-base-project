@@ -9,6 +9,7 @@ import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.annotation.Rollback;
 
 public class SecurityTest extends AbstractTestFacilitator {
 
@@ -30,6 +31,7 @@ public class SecurityTest extends AbstractTestFacilitator {
     }
 
     @Test
+    @Rollback(value = false)
     public void testLoadSecurityPermissionsForUserName(){
         // Setup from import.sql
         UserDetails userDetails = userService.loadUserByUsername("sa");

@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.crud.ICrud;
+import org.nthdimenzion.ddd.infrastructure.multitenant.TenantIdHolder;
 import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.nthdimenzion.security.domain.SystemUser;
@@ -13,15 +14,17 @@ import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.nthdimenzion.testdata.TestUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +33,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Ignore
 public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringContextTests {
 
+    protected static final String JUNIT_TESTING_TENANT_ID = "004";
     @Autowired
     @Qualifier("simpleCommandBus")
     protected ICommandBus commandBus;
@@ -38,7 +42,7 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
     @Qualifier("presentationDecoratedExceptionHandler")
     protected PresentationDecoratedExceptionHandler presentationDecoratedExceptionHandler;
 
-     @Autowired
+    @Autowired
     protected ICrud crudDao;
 
     @Autowired
@@ -49,14 +53,29 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
 
     protected IDisplayMessages displayMessages = new DummyDisplayMessages();
 
+    private static boolean isSetupPending = true;
+
     @Before
-    public void setUpForEachTest(){
-        System.out.println("###################");
-    UserDetails userDetails = new TestUserDetails();
-    systemUser.uses(userDetails);
-    presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
-    TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken(new GrantedAuthorityImpl[]{new GrantedAuthorityImpl("ROLE_SUPERADMIN")});
-    SecurityContextHolder.getContext().setAuthentication(token);
+    public void setUpForEachTest() {
+        UserDetails userDetails = new TestUserDetails();
+        systemUser.uses(userDetails);
+        presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
+        TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken("ROLE_SUPERADMIN");
+        SecurityContextHolder.getContext().setAuthentication(token);
+        TenantIdHolder.setTenantId(JUNIT_TESTING_TENANT_ID);
     }
+
+    public void cleanup() {
+        TenantIdHolder.clearTenantId();
+    }
+
+    /*public static void setup(){
+        SimpleJdbcTemplate template = new SimpleJdbcTemplate(dataSource);
+        ClassPathResource resource = new ClassPathResource("/create-table.sql");
+        SimpleJdbcTestUtils.executeSqlScript(template, resource, true);
+    }
+*/
+
+
 
 }
