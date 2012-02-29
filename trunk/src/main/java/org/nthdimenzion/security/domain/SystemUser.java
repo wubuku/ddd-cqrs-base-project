@@ -2,14 +2,16 @@ package org.nthdimenzion.security.domain;
 
 import org.nthdimenzion.ddd.application.annotation.StateFullComponent;
 import org.nthdimenzion.ddd.domain.INamed;
+import org.nthdimenzion.ddd.domain.ITenantAware;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 @StateFullComponent
-public class SystemUser implements UserDetails,INamed{
+public class SystemUser implements UserDetails,INamed,ITenantAware{
     private UserDetails userDetails;
+    private String tenantId;
 
     public SystemUser() {
     }
@@ -28,7 +30,7 @@ public class SystemUser implements UserDetails,INamed{
     }
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return userDetails.getAuthorities();
     }
 
@@ -62,9 +64,13 @@ public class SystemUser implements UserDetails,INamed{
         return userDetails.isEnabled();
     }
 
-
     @Override
     public String getName() {
         return getUsername();
+    }
+
+    @Override
+    public String getTenantId() {
+        return tenantId;
     }
 }

@@ -10,8 +10,8 @@
 -->
 
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://java.sun.com/xml/ns/javaee
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation=" http://java.sun.com/xml/ns/javaee
       http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <context-param>
@@ -21,19 +21,19 @@
 
 
     <context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>baseproject</param-value>
-	</context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>baseproject</param-value>
+    </context-param>
 
     <listener>
-		<display-name>Spring Context Loader</display-name>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+        <display-name>Spring Context Loader</display-name>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <listener>
         <!-- The Spring RequestContextLister uses thread bound variables so to
         use this Spring freatures requires that we apply <disable-event-thread />
         within zk.xml -->
-    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
     <listener>
@@ -75,9 +75,21 @@
     </servlet-mapping>
 
     <filter>
+        <filter-name>Tenant Security Context Filter</filter-name>
+        <filter-class>
+            org.nthdimenzion.presentation.infrastructure.multitenant.TenantIdFilter
+        </filter-class>
+    </filter>
+
+    <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
+
+    <filter-mapping>
+        <filter-name>Tenant Security Context Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
     <filter-mapping>
@@ -86,15 +98,13 @@
     </filter-mapping>
 
     <session-config>
-		<session-timeout>-1</session-timeout>
-	</session-config>
+        <session-timeout>-1</session-timeout>
+    </session-config>
 
 
     <welcome-file-list>
-		<welcome-file>/login.zul</welcome-file>
-	</welcome-file-list>
-
-
+        <welcome-file>/login.zul</welcome-file>
+    </welcome-file-list>
 
 
 </web-app>

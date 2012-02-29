@@ -3,23 +3,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.nthdimenzion</groupId>
-    <artifactId>BaseProject</artifactId>
+    <artifactId>MultiTenantBaseProject</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>BaseProject</name>
+    <name>MultiTenantBaseProject</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss.home>${env.JBOSS_HOME}</jboss.home>
         <jboss.domain>default</jboss.domain>
         <zk.version>5.0.8</zk.version>
-        <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+        <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
         <hibernate-core-version>3.6.7.Final</hibernate-core-version>
 
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.username>root</jdbc.username>
         <jdbc.password>nthdimenzion</jdbc.password>
-        <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
+        <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</jdbc.datasource>
         <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
         <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
         <hibernate.show_sql>true</hibernate.show_sql>
@@ -368,7 +368,7 @@
 
     <build>
         <defaultGoal>package</defaultGoal>
-        <finalName>BaseProject</finalName>
+        <finalName>MultiTenantBaseProject</finalName>
 
         <resources>
             <resource>
@@ -414,7 +414,7 @@
                 <configuration>
                     <jbossHome>${jboss.home}</jbossHome>
                     <serverName>${jboss.domain}</serverName>
-                    <fileName>target/BaseProject.war</fileName>
+                    <fileName>target/MultiTenantBaseProject.war</fileName>
                     <unpack>true</unpack>
                 </configuration>
             </plugin>
@@ -518,23 +518,26 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
+                <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
+                <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultdev</default.jdbc.url>
                 <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
-        <profile>
 
+        <profile>
             <id>test</id>
             <properties>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectTest</jdbc.url>
+                <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
+                <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaulttest</default.jdbc.url>
                 <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>
             <id>production</id>
             <properties>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectProd</jdbc.url>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
+                <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultprod</default.jdbc.url>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
     </profiles>

@@ -31,6 +31,7 @@
 		<timer-keep-alive>true</timer-keep-alive>
 		<device-type>ajax</device-type>
 		<timeout-uri>/login.zul</timeout-uri>
+        <session-timeout>20</session-timeout>
 	</session-config>
 
 </zk>

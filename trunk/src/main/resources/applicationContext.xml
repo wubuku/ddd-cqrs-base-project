@@ -6,6 +6,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
+    <!-- Application Setup-->
+    <context:component-scan base-package="org.nthdimenzion.ddd.infrastructure.spring"></context:component-scan>
+
+    <context:component-scan base-package="org.nthdimenzion.ddd.domain" />
+
+    <bean id="errorMessageLocator" class="org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator">
+        <property name="exceptionMessageHolders">
+            <array>
+                <value>org/error/exception.properties</value>
+                <value>com/simplepersoncrud/error/exception.properties</value>
+                <value>com/librarymanagement/error/exception.properties</value>
+            </array>
+        </property>
+    </bean>
+
 
     <bean id="exceptionEventBus" class="org.nthdimenzion.ddd.infrastructure.EventBus">
         <qualifier value="exceptionEventBus"/>
@@ -34,17 +49,6 @@
         </constructor-arg>
     </bean>
 
-    <bean id="errorMessageLocator" class="org.nthdimenzion.ddd.infrastructure.exception.ErrorMessageLocator">
-        <property name="exceptionMessageHolders">
-            <array>
-                <value>org/error/exception.properties</value>
-                <value>com/simplepersoncrud/error/exception.properties</value>
-                <value>com/librarymanagement/error/exception.properties</value>
-            </array>
-        </property>
-    </bean>
-
-    <context:component-scan base-package="org.nthdimenzion.security.domain"></context:component-scan>
 
     <import resource="databaseContext.xml"/>
     <import resource="queryContext.xml"/>
@@ -57,7 +61,7 @@
     </util:list>
 
 
-    <context:component-scan base-package="org.nthdimenzion"></context:component-scan>
+    <context:component-scan base-package="org.nthdimenzion" />
     <context:component-scan base-package="com.simplepersoncrud"></context:component-scan>
     <context:component-scan base-package="com.librarymanagement"></context:component-scan>
 

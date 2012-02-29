@@ -7,57 +7,93 @@
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <bean id="dataSourceFactory" class="org.nthdimenzion.ddd.infrastructure.multitenant.DataSourceFactory"
+          init-method="initialiseConfiguredTenantDataSources">
+        <property name="dataSource">
+            <bean class="${jdbc.datasource}" name="commonSchema">
+                <property name="url" value="${common.jdbc.url}"/>
+                <property name="user" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </bean>
+        </property>
+    </bean>
 
-	<bean id="dataSourceRef" class="${jdbc.datasource}">
-		<!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
-		<property name="url" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-	</bean>
+    <bean id="commonSchemaJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg name="dataSource">
+            <bean class="${jdbc.datasource}" name="commonSchema">
+                <property name="url" value="${common.jdbc.url}"/>
+                <property name="user" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
 
-    <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
+    <bean id="tenantRoutingDataSource" class="org.nthdimenzion.ddd.infrastructure.multitenant.TenantRoutingDataSource"
+          depends-on="dataSourceFactory">
+        <constructor-arg name="tenantAwareDataSourceFactory" ref="dataSourceFactory"/>
+        <property name="defaultTargetDataSource">
+            <bean class="${jdbc.datasource}">
+                <qualifier value="default"/>
+                <property name="url" value="${default.jdbc.url}"/>
+                <property name="user" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </bean>
+        </property>
+    </bean>
 
-	<bean
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		id="sessionFactory">
-		<property name="dataSource" ref="dataSourceRef"></property>
-		<property name="entityInterceptor" ref="autoColumnsPopulator"/>
-		<property name="namingStrategy" ref="namingStrategy"></property>
-				<property name="packagesToScan">
-			<list>
+
+    <!--<bean id="commonTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="commonDataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="commonTransactionManager" />
+
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="commonTransactionManager"/>-->
+
+
+    <bean class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" id="sessionFactory"
+          depends-on="errorMessageLocator,systemUser,tenantRoutingDataSource">
+        <property name="dataSource" ref="tenantRoutingDataSource"/>
+        <property name="entityInterceptor" ref="autoColumnsPopulator"/>
+        <property name="namingStrategy" ref="namingStrategy"></property>
+        <property name="packagesToScan">
+            <list>
                 <value>org.nthdimenzion.ddd.domain</value>
                 <value>org.nthdimenzion.security.domain</value>
-				<value>com.simplepersoncrud.domain</value>
+                <value>com.simplepersoncrud.domain</value>
                 <value>com.librarymanagement.domain</value>
-			</list>
-		</property>
+            </list>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
                 <prop key="bytecode.provider">cglib</prop>
                 <prop key="hibernate.hbm2ddl.import_files">common.sql,librarymanagement.sql</prop>
             </props>
         </property>
-		
-	</bean>
+    </bean>
 
-    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate"
+          depends-on="sessionFactory">
         <constructor-arg name="sessionFactory" ref="sessionFactory"></constructor-arg>
         <constructor-arg name="allowCreate" value="true"></constructor-arg>
     </bean>
-	
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
 
-	<bean id="namingStrategy" class="org.nthdimenzion.ddd.infrastructure.hibernate.CustomNamingStrategy" />
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager" depends-on="sessionFactory">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
-	
-	<tx:annotation-driven proxy-target-class="true" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <tx:annotation-driven proxy-target-class="true"/>
+
+    <bean id="namingStrategy" class="org.nthdimenzion.ddd.infrastructure.hibernate.CustomNamingStrategy"/>
+
+    <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"
+          depends-on="systemUser"/>
 
 </beans>
