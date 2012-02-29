@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component("idGenerator")
-public class InMemoryIdGenerator implements IIdGenerator{
+public final class InMemoryIdGenerator implements IIdGenerator{
 
     @Override
     public String nextId() {

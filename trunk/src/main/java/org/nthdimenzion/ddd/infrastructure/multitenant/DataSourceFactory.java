@@ -24,11 +24,6 @@ public class DataSourceFactory extends NamedParameterJdbcDaoSupport implements I
     private static final Logger logger = LoggerFactory.getLogger(DataSourceFactory.class);
     Map<Object, Object> tenantIdToDataSourceMap = null;
 
-    @Override
-    public DataSource getCommonSchemaDataSource() {
-        return getJdbcTemplate().getDataSource();
-    }
-
     DataSource createDataSource(ITenantAware tenant) {
         logger.debug("Going to create a brand new datasource for tenant " + tenant.getTenantId());
         Preconditions.checkNotNull(tenant);

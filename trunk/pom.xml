@@ -488,13 +488,13 @@
                             *services*
                         </filter>
                         <filter>
-                            -*domain*
+                            *domain*
                         </filter>
                         <filter>
                             *repositories.hibernate*
                         </filter>
                         <filter>
-                            *org.nthdimenzion.cqrs.command*
+                            -*org.nthdimenzion.cqrs.command*
                         </filter>
                         <filter>
                             *ddd*

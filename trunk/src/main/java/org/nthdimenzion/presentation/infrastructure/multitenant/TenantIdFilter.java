@@ -8,7 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class TenantIdFilter implements Filter {
+public final class TenantIdFilter implements Filter {
 
     private static final String
             SPRING_SECURITY_CHECK_MAPPING = "/j_spring_security_check";
