@@ -1,4 +1,4 @@
-package integration.org.nthdimenzion.ddd;
+package org.nthdimenzion.ddd;
 
 import com.simplepersoncrud.domain.error.PersonCreationException;
 import org.junit.Test;
