@@ -1,11 +1,8 @@
-USE `common`;
-DROP TABLE IF EXISTS `tenant`; 
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`common` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-CREATE TABLE `tenant` ( `tenantId` varchar(10) NOT NULL, `tenantName` varchar(100) NOT NULL, `isEnabled` tinyint(1) NOT NULL, `customisationId` int(11) NOT NULL, PRIMARY KEY  (`tenantId`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS common.`tenant_customisation_details`;
 
-DROP TABLE IF EXISTS `tenant_customisation_details`;
-
-CREATE TABLE `tenant_customisation_details` ( `customisationId` bigint(20) NOT NULL, `jdbcUrl` varchar(100) NOT NULL, `jdbcUsername` varchar(100) NOT NULL, `jdbcPassword` varchar(100) NOT NULL, PRIMARY KEY  (`customisationId`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE common.`tenant_customisation_details` ( `customisationId` bigint(20) NOT NULL, `jdbcUrl` varchar(100) NOT NULL, `jdbcUsername` varchar(100) NOT NULL, `jdbcPassword` varchar(100) NOT NULL, PRIMARY KEY  (`customisationId`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO common.tenant_customisation_details (customisationId, jdbcUrl, jdbcUsername, jdbcPassword ) VALUES (1, 'jdbc:mysql://localhost:3306/TenantOne', 'root', 'nthdimenzion' );
 
@@ -16,6 +13,12 @@ INSERT INTO common.tenant_customisation_details (customisationId, jdbcUrl, jdbcU
 INSERT INTO common.tenant_customisation_details (customisationId, jdbcUrl, jdbcUsername, jdbcPassword ) VALUES (4, 'jdbc:mysql://localhost:3306/TenantDefaultTest', 'root', 'nthdimenzion' );
 
 INSERT INTO common.tenant_customisation_details (customisationId, jdbcUrl, jdbcUsername, jdbcPassword ) VALUES (5, 'jdbc:mysql://localhost:3306/TenantDefaultProd', 'root', 'nthdimenzion' );
+
+
+DROP TABLE IF EXISTS common.`tenant`;
+
+CREATE TABLE common.`tenant` ( `tenantId` varchar(10) NOT NULL, `tenantName` varchar(100) NOT NULL, `isEnabled` tinyint(1) NOT NULL, `customisationId` int(11) NOT NULL, PRIMARY KEY  (`tenantId`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 INSERT INTO common.tenant (tenantId, tenantName, isEnabled, customisationId ) VALUES ('001', 'Me', TRUE, 1 );
 

@@ -21,13 +21,19 @@
         <security:authentication-provider user-service-ref="userService"/>
     </security:authentication-manager>
 
-    <bean id="userValidationService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource"  ref="tenantRoutingDataSource"/>
-        <property name="enableGroups" value="true"/>
-        <property name="enableAuthorities" value="false"/>
-        <property name="usersByUsernameQuery"
-                  value="select ul.username,ul.password,ul.enabled from USER_LOGIN ul where ul.username = ?"/>
-        <property name="groupAuthoritiesByUsernameQuery" value="select sg.id group_id,sg.name group_name,sp.PERMISSION_ID permission
+    <bean id="authenticationSuccessHandler" class  = "org.nthdimenzion.security.presentation.AuthenticationSuccessHandler">
+        <property name="alwaysUseDefaultTargetUrl"  value="true"/>
+        <property name="defaultTargetUrl" value="/personSample/personPanel.zul"/>
+    </bean>
+
+    <beans profile="multitenant">
+        <bean id="userValidationService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+            <property name="dataSource"  ref="tenantRoutingDataSource"/>
+            <property name="enableGroups" value="true"/>
+            <property name="enableAuthorities" value="false"/>
+            <property name="usersByUsernameQuery"
+                      value="select ul.username,ul.password,ul.enabled from USER_LOGIN ul where ul.username = ?"/>
+            <property name="groupAuthoritiesByUsernameQuery" value="select sg.id group_id,sg.name group_name,sp.PERMISSION_ID permission
 			from USER_LOGIN ul,SECURITY_GROUP sg,SECURITY_PERMISSION sp,
 			USERLOGIN_SECURITY_GROUPS ulsg,
 			SECURITYGROUP_SECURITY_PERMISSIONS sgsp
@@ -36,12 +42,28 @@
 			and ulsg.SECURITYGROUPS = sg.id
 			and sgsp.SECURITYGROUP = sg.id
 			and sgsp.SECURITYPERMISSIONS = sp.id"/>
-    </bean>
+        </bean>
+    </beans>
 
-    <bean id="authenticationSuccessHandler" class  = "org.nthdimenzion.security.presentation.AuthenticationSuccessHandler">
-        <property name="alwaysUseDefaultTargetUrl"  value="true"/>
-        <property name="defaultTargetUrl" value="/personSample/personPanel.zul"/>
-    </bean>
+    <beans profile="standalone">
+        <bean id="userValidationService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+            <property name="dataSource"  ref="dataSourceRef"/>
+            <property name="enableGroups" value="true"/>
+            <property name="enableAuthorities" value="false"/>
+            <property name="usersByUsernameQuery"
+                      value="select ul.username,ul.password,ul.enabled from USER_LOGIN ul where ul.username = ?"/>
+            <property name="groupAuthoritiesByUsernameQuery" value="select sg.id group_id,sg.name group_name,sp.PERMISSION_ID permission
+			from USER_LOGIN ul,SECURITY_GROUP sg,SECURITY_PERMISSION sp,
+			USERLOGIN_SECURITY_GROUPS ulsg,
+			SECURITYGROUP_SECURITY_PERMISSIONS sgsp
+			where ul.username = ?
+			and ul.id = ulsg.USERLOGIN
+			and ulsg.SECURITYGROUPS = sg.id
+			and sgsp.SECURITYGROUP = sg.id
+			and sgsp.SECURITYPERMISSIONS = sp.id"/>
+        </bean>
+
+    </beans>
 
 
 </beans>

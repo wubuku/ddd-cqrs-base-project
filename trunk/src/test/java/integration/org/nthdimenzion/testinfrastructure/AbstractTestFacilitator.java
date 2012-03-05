@@ -21,6 +21,7 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +32,7 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 @ContextConfiguration(locations = {"classpath:/testContext.xml","classpath:/applicationContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Ignore
+@ActiveProfiles(profiles = "standalone")
 public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringContextTests {
 
     protected static final String JUNIT_TESTING_TENANT_ID = "004";
