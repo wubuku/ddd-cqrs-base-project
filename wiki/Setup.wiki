@@ -22,13 +22,15 @@ We will first run the application using [http://en.wikipedia.org/wiki/Jetty_(Web
 
 2) open command prompt and traverse to  %your checkout path%/ddd-cqrs-base-project\trunk\
 
-3) type in mvn clean compile install
+3) A post on how to set up your database can be found [http://noobjuggler.blogspot.in/2012/03/configuring-database-for-dddcqrs-base.html here]
+
+4) type in mvn clean compile install
 Then you will get a BUILD SUCCESSFUL message
 
-4) type in mvn jetty:run
+5) type in mvn jetty:run
 Then you will get a BUILD SUCCESSFUL message, and the application has been deployed
 
-5) Open your favorite browser and goto http://localhost:8080/BaseProject
+6) Open your favorite browser and goto http://localhost:8080/BaseProject
 
 
 A more detailed explanation of the above along with screen shots is available [http://noobjuggler.blogspot.com/2011/11/how-to-deploy-dddcqrs-base-project.html here] 
