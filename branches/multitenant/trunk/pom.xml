@@ -520,7 +520,7 @@
             <properties>
                 <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
                 <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultdev</default.jdbc.url>
-                <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
 

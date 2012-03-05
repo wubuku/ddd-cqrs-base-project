@@ -1,5 +1,6 @@
 package org.nthdimenzion.ddd.infrastructure.multitenant;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.nthdimenzion.ddd.domain.ITenantAware;
 import org.nthdimenzion.ddd.domain.multitenant.Tenant;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
+@Ignore
 public class MultiTenantTest extends AbstractTestFacilitator {
 
     @Autowired

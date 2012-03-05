@@ -19,6 +19,11 @@
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>org.nthdimenzion.ddd.infrastructure.spring.ApplicationSetup</param-value>
+    </context-param>
+
 
     <context-param>
         <param-name>webAppRootKey</param-name>
