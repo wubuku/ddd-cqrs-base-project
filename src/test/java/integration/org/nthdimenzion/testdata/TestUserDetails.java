@@ -3,6 +3,7 @@ package org.nthdimenzion.testdata;
 import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ public class TestUserDetails implements UserDetails {
     Collection<GrantedAuthority> grantedAuthorities = Lists.newArrayList();
 
     public TestUserDetails() {
-        grantedAuthorities.add(new GrantedAuthorityImpl("ROLE_SUPERADMIN"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
     }
 
     @Override

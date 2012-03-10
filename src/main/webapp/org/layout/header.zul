@@ -6,15 +6,17 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.nthdimenzion.security.domain.SystemUser;
-
+import javax.servlet.ServletContext;
+import org.zkoss.zk.ui.Execution;
 UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
+
 ]]></zscript>
 <div sclass="top">
    <n:div class="logoCont">
 			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
 	</n:div>
 	<div sclass="loggedIn">
-	    <n:a href="/BaseProject/" class="signout">Log Off</n:a>
+	    <a href="/" zclass="signout">Log Off</a>
 	    <h:br></h:br>
         <label value="Logged In "/>
         <label value="${userDetails.username}"/>

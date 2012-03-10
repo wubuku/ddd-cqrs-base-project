@@ -13,12 +13,12 @@
         <jboss.home>${env.JBOSS_HOME}</jboss.home>
         <jboss.domain>default</jboss.domain>
         <zk.version>5.0.8</zk.version>
-        <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+        <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
         <hibernate-core-version>3.6.7.Final</hibernate-core-version>
 
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.username>root</jdbc.username>
-        <jdbc.password>nthdimenzion</jdbc.password>
+        <jdbc.password></jdbc.password>
         <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
         <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
         <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
@@ -302,20 +302,6 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.4.GA</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.natpryce</groupId>
             <artifactId>make-it-easy</artifactId>
             <version>3.1.0</version>
@@ -346,6 +332,30 @@
 
         <!-- Utiltity end -->
 
+        <!-- Need to double check on this start -->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.4.GA</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Need to double check on this end -->
+
+        <!-- Cloud start -->
+        <dependency>
+            <groupId>org.cloudfoundry</groupId>
+            <artifactId>cloudfoundry-runtime</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+        <!-- Cloud end -->
+
 
     </dependencies>
 
@@ -364,7 +374,14 @@
             <id>mvnrepo</id>
             <url>http://mvnrepository.com</url>
         </repository>
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Framework Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
+        </repository>
+
     </repositories>
+
 
     <build>
         <defaultGoal>package</defaultGoal>

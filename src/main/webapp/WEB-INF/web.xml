@@ -25,6 +25,11 @@
 		<param-value>baseproject</param-value>
 	</context-param>
 
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>org.nthdimenzion.ddd.infrastructure.ApplicationSetup</param-value>
+    </context-param>
+
     <listener>
 		<display-name>Spring Context Loader</display-name>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

@@ -8,7 +8,7 @@
   <select id="findAllPeople" resultType="com.simplepersoncrud.presentation.dto.PersonDetailsDto">
     SELECT id,
           name
-    FROM Simple_Person
+    FROM SIMPLE_PERSON
     where ENTITY_STATUS = 0
     order by id desc;
   </select>
@@ -16,13 +16,13 @@
     <select id="findPersonDetails" resultType="com.simplepersoncrud.presentation.dto.PersonDetailsDto">
       SELECT id,
             name
-      FROM Simple_Person
+      FROM SIMPLE_PERSON
       where id = #{personId};
     </select>
 
 <select id="getPeopleSummary" resultType="com.simplepersoncrud.presentation.dto.PeopleSummaryDto">
       SELECT count(*) as totalPeopleCount
-      FROM Simple_Person
+      FROM SIMPLE_PERSON
       where ENTITY_STATUS = 0;
     </select>
 
