@@ -1,6 +1,7 @@
 package com.librarymanagement.presentation.queries;
 
 import com.librarymanagement.presentation.dto.LibrarySummaryDto;
+import org.joda.time.DateTime;
 import org.nthdimenzion.cqrs.query.annotations.Finder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class BookQueries {
         Integer bookCountInLibrary = libraryFinder.findBookCountInLibrary();
         Integer countOfMembersWhoHaveBorrowedBooks = libraryFinder.findCountOfMembersWhoHaveBorrowedBooks();
         LibrarySummaryDto librarySummaryDto = new LibrarySummaryDto(bookCountInLibrary,countOfMembersWhoHaveBorrowedBooks);
-        librarySummaryDto.memberDtos = libraryFinder.upcomingBirthDays();
+        librarySummaryDto.memberDtos = libraryFinder.upcomingBirthDays(DateTime.now().toDate());
         return librarySummaryDto;
     }
 }

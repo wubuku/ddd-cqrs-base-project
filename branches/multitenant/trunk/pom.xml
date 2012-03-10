@@ -18,7 +18,7 @@
 
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.username>root</jdbc.username>
-        <jdbc.password>nthdimenzion</jdbc.password>
+        <jdbc.password></jdbc.password>
         <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</jdbc.datasource>
         <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
         <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
@@ -305,14 +305,14 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.4.GA</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -343,8 +343,16 @@
             <artifactId>velocity</artifactId>
             <version>1.6.2</version>
         </dependency>
-
         <!-- Utiltity end -->
+
+        <!-- Cloud start -->
+        <dependency>
+            <groupId>org.cloudfoundry</groupId>
+            <artifactId>cloudfoundry-runtime</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+        <!-- Cloud end -->
+
 
 
     </dependencies>
@@ -363,6 +371,11 @@
         <repository>
             <id>mvnrepo</id>
             <url>http://mvnrepository.com</url>
+        </repository>
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Framework Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
         </repository>
     </repositories>
 
@@ -520,7 +533,7 @@
             <properties>
                 <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
                 <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultdev</default.jdbc.url>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
 
@@ -537,7 +550,7 @@
             <properties>
                 <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
                 <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultprod</default.jdbc.url>
-                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
     </profiles>

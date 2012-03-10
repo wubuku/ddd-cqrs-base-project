@@ -44,7 +44,7 @@ pagetitle.setValue("Buy or Sell copies");
 
             <hlayout>
                 <label value="No of Copies "/>
-                <spinner id="noOfCopies" width="25%" constraint="no negative, no zero" value="1"/>
+                <spinner id="noOfCopies" width="25%" constraint="no negative, no zero" value="1" onChange=""/>
             </hlayout>
 
             <hlayout>

@@ -12,6 +12,8 @@ import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import java.util.List;
+
 @DomainRepositoryImpl
 public class BookLendingRepository extends GenericHibernateRepository<BookLending,Long> implements IBookLendingRepository{
 
@@ -42,6 +44,15 @@ public class BookLendingRepository extends GenericHibernateRepository<BookLendin
         criteria.add(Restrictions.isNull("lendingInterval.thruDate"));
         BookLending bookLending = UtilValidator.isNotEmpty(hibernateTemplate.findByCriteria(criteria)) ? (BookLending)hibernateTemplate.findByCriteria(criteria).get(0): null;
         return bookLending;
+    }
+
+    @Override
+    public List<BookLending> findAllBooksWithMember(Member member) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(BookLending.class);
+        criteria.add(Restrictions.eq("member", member));
+        criteria.add(Restrictions.isNull("lendingInterval.thruDate"));
+        List<BookLending> openBookLendings = hibernateTemplate.findByCriteria(criteria);
+        return openBookLendings;
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constants;
 import com.librarymanagement.presentation.MemberManagementComposer;
 pagetitle.setValue("Member Details Management");
-subpagetitle.setValue("Double on member to view details");
+subpagetitle.setValue("Double click on member to view details");
 
 
 MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberManagementComposer",MemberManagementComposer.class) ;

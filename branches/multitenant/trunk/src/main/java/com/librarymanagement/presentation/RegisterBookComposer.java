@@ -51,9 +51,9 @@ public class RegisterBookComposer extends AbstractZkComposer {
 
 
     public void registerBook() {
-        RegisterBookCommand purchaseBookCommand = new RegisterBookCommand();
-        populate(bookDto, purchaseBookCommand);
-        Long bookId = (Long) sendCommand(purchaseBookCommand);
+        RegisterBookCommand registerBookCommand = new RegisterBookCommand();
+        populate(bookDto, registerBookCommand);
+        Long bookId = (Long) sendCommand(registerBookCommand);
         if (isSuccess(bookId)) {
             displayMessages.displaySuccess();
             navigation.redirect("bookList");

@@ -32,6 +32,7 @@ public final class PresentationDecoratedExceptionHandler extends AbstractEventLi
     @Subscribe
     @Override
     public void failedOperationHandler(OperationFailed operationFailed) {
+        logger.error("Bubbled up exception " + operationFailed.errorDetails.getException());
         if (operationFailed.errorDetails.getShowErrorInView()) {
             displayMessages.displayError(operationFailed.errorDetails.toString());
             isExceptionHandled = true;
@@ -40,6 +41,7 @@ public final class PresentationDecoratedExceptionHandler extends AbstractEventLi
 
     @Subscribe
     public void failedCommandValidationHandler(CommandValidationFailed commandValidationFailed){
+        logger.error("Bubbled up exception ", commandValidationFailed.rootCause);
         displayMessages.displayError(commandValidationFailed.details);
         isExceptionHandled = true;
     }

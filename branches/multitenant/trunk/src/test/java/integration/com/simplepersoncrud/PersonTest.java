@@ -7,7 +7,7 @@ import com.librarymanagement.domain.MemberBuilder;
 import com.librarymanagement.presentation.dto.MemberDto;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
-import com.simplepersoncrud.application.commands.UnRegisterCommand;
+import com.simplepersoncrud.application.commands.UnRegisterPeopleCommand;
 import com.simplepersoncrud.domain.IPersonRepository;
 import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.error.PersonCreationException;
@@ -85,7 +85,7 @@ public class PersonTest extends AbstractTestFacilitator {
     public void testDeletePersonDetails() throws PersonCreationException {
         Long actualId = (Long) commandBus.send(new PersonRegistrationCommand(("Sudarshan")));
 
-        commandBus.send(new UnRegisterCommand(Sets.newHashSet(actualId)));
+        commandBus.send(new UnRegisterPeopleCommand(Sets.newHashSet(actualId)));
 
         Assert.isNull(personRepository.getPersonWithId(actualId));
     }
@@ -104,14 +104,4 @@ public class PersonTest extends AbstractTestFacilitator {
         Assert.notEmpty(actualPeopleDetails);
     }
 
-    @Test
-    public void testUpcomingBirthDays(){
-        Member member = memberBuilder.createMember("Su", "Sree", DateTime.now()).build();
-
-        Long memberId = crudDao.add(member);
-        List<MemberDto> memberDtos = libraryFinder.upcomingBirthDays();
-        Assert.notEmpty(memberDtos);
-        Assert.notNull(memberDtos.get(0).dateOfBirth);
-        Assert.isTrue(memberDtos.get(0).dateOfBirth.getMonthOfYear()== DateTime.now().getMonthOfYear());
-    }
 }

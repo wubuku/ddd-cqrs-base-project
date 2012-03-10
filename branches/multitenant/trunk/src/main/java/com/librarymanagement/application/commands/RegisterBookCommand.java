@@ -38,7 +38,7 @@ public class RegisterBookCommand implements ICommand{
     public void validate() {
         Preconditions.checkNotNull(name);
         Preconditions.checkNotNull(isbn);
-        Preconditions.checkNotNull(authors);
+//        Preconditions.checkNotNull(authors);
     }
 
     @Override

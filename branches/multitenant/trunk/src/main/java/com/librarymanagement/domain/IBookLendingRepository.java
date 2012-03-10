@@ -2,6 +2,8 @@ package com.librarymanagement.domain;
 
 import org.nthdimenzion.ddd.domain.annotations.DomainRepository;
 
+import java.util.List;
+
 @DomainRepository
 public interface IBookLendingRepository {
 
@@ -13,4 +15,5 @@ public interface IBookLendingRepository {
 
     BookLending getBookLendingFromId(Long id);
 
+    List<BookLending> findAllBooksWithMember(Member member);
 }
