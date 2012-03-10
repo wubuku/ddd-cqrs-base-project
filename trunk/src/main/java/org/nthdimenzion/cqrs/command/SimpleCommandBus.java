@@ -25,7 +25,7 @@ public class SimpleCommandBus implements ICommandBus {
     @Qualifier("exceptionEventBus")
     private IEventBus exceptionEventBus;
 
-    private CommandValidationFailed commandValidationFailed = new CommandValidationFailed();
+    private CommandValidationFailed commandValidationFailed = null;
 
     @Autowired
     private List<ICommandInterceptor> commandInterceptors;
@@ -112,6 +112,7 @@ public class SimpleCommandBus implements ICommandBus {
             command.validate();
         } catch (Exception exception) {
             String exceptionDetails = exception.getMessage();
+            commandValidationFailed = new CommandValidationFailed(exception);
             if (UtilValidator.isNotEmpty(exceptionDetails)) {
                 commandValidationFailed.details = exceptionDetails;
             }

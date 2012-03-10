@@ -1,13 +1,17 @@
 package com.librarymanagement.application.commands.handlers;
 
+import com.google.common.collect.ImmutableList;
 import com.librarymanagement.application.commands.*;
 import com.librarymanagement.domain.*;
+import com.librarymanagement.domain.error.MemberAlreadyBorrowedBookException;
 import com.librarymanagement.domain.error.NotEnoughCopiesException;
 import org.nthdimenzion.cqrs.command.AbstractCommandHandler;
 import org.nthdimenzion.cqrs.command.annotations.CommandHandler;
 import org.nthdimenzion.crud.ICrud;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @CommandHandler
@@ -22,10 +26,14 @@ public class BookCommandHandler extends AbstractCommandHandler {
     @Autowired
     private ICrud crudDao;
 
-    public Long registerBook(RegisterBookCommand purchaseBookCommand) {
+    @Autowired
+    private IBookLendingRepository bookLendingRepository;
+
+    public Long registerBook(RegisterBookCommand purchaseBookCommand) throws IOException {
         Book book = bookBuilder.createBook(purchaseBookCommand.name, purchaseBookCommand.isbn, purchaseBookCommand.cost).withAuthors(purchaseBookCommand.authors).purchaseCopies(purchaseBookCommand.copies).build();
         Long bookId = bookRepository.registerBook(book);
         return bookId;
+
     }
 
     public Book updateBook(UpdateBookCommand updateBookCommand) {
@@ -35,12 +43,13 @@ public class BookCommandHandler extends AbstractCommandHandler {
         return book;
     }
 
-    public Boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopiesException {
+    public Boolean issueBook(IssueBooksCommand bookIssueCommand) throws NotEnoughCopiesException, MemberAlreadyBorrowedBookException {
         Set<BookId> bookIds = bookIssueCommand.bookIds;
         Member member = crudDao.find(Member.class, bookIssueCommand.memberId);
         for (BookId bookId : bookIds) {
+            List<BookLending> booksAlreadyWithMember = bookLendingRepository.findAllBooksWithMember(member);
             Book book = bookRepository.geBookWithUid(bookId);
-            book.lend(member.getId());
+            book.lend(member.getId(), ImmutableList.copyOf(booksAlreadyWithMember));
             bookRepository.lend(book);
         }
         return success;

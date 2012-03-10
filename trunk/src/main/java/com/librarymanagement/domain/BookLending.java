@@ -80,4 +80,8 @@ public class BookLending extends BaseAggregateRoot {
     public void bookReturned(){
         lendingInterval = lendingInterval.complete();
     }
+    
+    public boolean isForSameMemberAndBook(Long memberId, BookId bookId){
+        return book.getBookId().equals(bookId) && member.getId().equals(memberId);
+    }
 }

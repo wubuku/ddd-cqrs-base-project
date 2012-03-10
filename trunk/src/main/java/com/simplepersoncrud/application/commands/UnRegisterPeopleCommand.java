@@ -9,10 +9,10 @@ import org.nthdimenzion.object.utils.UtilValidator;
 import java.util.Set;
 
 @Command
-public class UnRegisterCommand implements ICommand{
+public class UnRegisterPeopleCommand implements ICommand{
     private Set<Long> peopleToBeDeleted = Sets.newHashSet();
 
-    public UnRegisterCommand(Set<Long> peopleToBeDeleted) {
+    public UnRegisterPeopleCommand(Set<Long> peopleToBeDeleted) {
         this.peopleToBeDeleted= peopleToBeDeleted;
     }
 

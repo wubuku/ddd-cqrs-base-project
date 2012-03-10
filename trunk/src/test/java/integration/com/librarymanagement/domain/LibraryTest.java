@@ -3,6 +3,7 @@ package com.librarymanagement.domain;
 import com.google.common.collect.Sets;
 import com.librarymanagement.application.commands.*;
 import com.librarymanagement.presentation.dto.LibrarySummaryDto;
+import com.librarymanagement.presentation.dto.MemberDto;
 import com.librarymanagement.presentation.queries.BookQueries;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
 import org.joda.money.CurrencyUnit;
@@ -44,7 +45,7 @@ public class LibraryTest extends AbstractTestFacilitator {
     @Test
     public void testRegisterBook() {
         systemUser.uses(new TestUserDetails());
-        Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).withAuthors("Sudarshan").purchaseCopies(10).build();
+        Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).purchaseCopies(10).build();
 //        Book eventSourcing = bookBuilder.createBook("Event Sourcing", "008", Money.of(CurrencyUnit.USD, 2000)).withAuthors("Greg Young").withCopies(2).build();
 
         Long id = bookRepository.registerBook(javaPersistence);
@@ -94,6 +95,22 @@ public class LibraryTest extends AbstractTestFacilitator {
         Long memberId = registerTestMember();
 
         assertNotNull(memberId);
+    }
+
+    @Test
+    public void testUpcomingBirthDays() {
+        Member member = memberBuilder.createMember("Sudarshan", "S", new DateTime().withDate(1983,11,14)).withMiddleName("Hello").build();
+        crudDao.add(member);
+        hibernateTemplate.flush();
+
+        List<MemberDto> willBeDisplayed = bookFinder.upcomingBirthDays(new DateTime().withDate(1983,11,10).toDate());
+
+        List<MemberDto> willNotBeDisplayed =  bookFinder.upcomingBirthDays(new DateTime().withDate(1983, 11, 20).toDate());
+
+        System.out.println(willNotBeDisplayed);
+
+        assertNotNull(willBeDisplayed);
+        assertTrue(willNotBeDisplayed.size()==0);
     }
 
     @Test
@@ -147,6 +164,27 @@ public class LibraryTest extends AbstractTestFacilitator {
         Assert.notNull(bookLending);
         Assert.isTrue(0 == book.getAvailableCopies());
         Assert.isTrue(1 == book.getTotalCopies());
+    }
+
+
+    @Test
+    public void testIssueOfAlreadyIssuedBook() {
+        Long memberId = registerTestMember();
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
+        purchaseBookCommand.setCopies(5);
+        Long bookId = (Long) commandBus.send(purchaseBookCommand);
+        Book book = bookRepository.getBookFromId(bookId);
+
+        IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
+        commandBus.send(bookIssueCommand);
+        hibernateTemplate.flush();
+
+        commandBus.send(bookIssueCommand);
+        hibernateTemplate.flush();
+
+        Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
+        Assert.isTrue(4 == book.getAvailableCopies());
+        Assert.isTrue(5 == book.getTotalCopies());
     }
 
     @Test
@@ -225,6 +263,27 @@ public class LibraryTest extends AbstractTestFacilitator {
         Assert.isTrue(result.getAvailableCopies()==0);
         Assert.isTrue(result.getTotalCopies()==0);
     }
+
+
+    @Test
+    public void testAllBooksWithMember() {
+        Long memberId = registerTestMember();
+        RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();
+        Long bookId = (Long) commandBus.send(purchaseBookCommand);
+        Book book = bookRepository.getBookFromId(bookId);
+
+        IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
+        commandBus.send(bookIssueCommand);
+        hibernateTemplate.flush();
+
+        List<BookLending> bookLendings = bookLendingRepository.findAllBooksWithMember((Member)crudDao.find(Member.class,memberId));
+        Assert.notNull(bookLendings);
+        BookLending bookLending = bookLendings.get(0);
+        book = bookLending.getBook();
+        Assert.isTrue(0 == book.getAvailableCopies());
+        Assert.isTrue(1 == book.getTotalCopies());
+    }
+
 
     private Book registerBook() {
         RegisterBookCommand purchaseBookCommand = createRegisterBookCommand();

@@ -2,7 +2,7 @@ package com.simplepersoncrud.application.commands.handlers;
 
 import com.simplepersoncrud.application.commands.PersonNameChangeCommand;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
-import com.simplepersoncrud.application.commands.UnRegisterCommand;
+import com.simplepersoncrud.application.commands.UnRegisterPeopleCommand;
 import com.simplepersoncrud.domain.PersonFactory;
 import com.simplepersoncrud.domain.SimplePerson;
 import com.simplepersoncrud.domain.error.PersonCreationException;
@@ -45,7 +45,7 @@ public class PersonCommandHandler extends AbstractCommandHandler{
         return personRepository.changeNameFor(person);
     }
 
-    public Boolean handleUnRegistration(UnRegisterCommand deletePersonCommand) {
+    public Boolean handleUnRegistration(UnRegisterPeopleCommand deletePersonCommand) {
         logger.debug("handle(handleUnRegistration) ");
         for (Long personToBeDeletedId : deletePersonCommand.getPeopleToBeDeleted()) {
             personRepository.unRegisterPerson(personToBeDeletedId);

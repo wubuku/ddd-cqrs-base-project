@@ -3,7 +3,7 @@ package com.simplepersoncrud.presentation.composer;
 import com.google.common.collect.Sets;
 import com.simplepersoncrud.application.commands.PersonNameChangeCommand;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
-import com.simplepersoncrud.application.commands.UnRegisterCommand;
+import com.simplepersoncrud.application.commands.UnRegisterPeopleCommand;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import org.nthdimenzion.presentation.annotations.Composer;
@@ -76,7 +76,7 @@ public class PersonRegistrationComposer extends AbstractZkComposer {
     public void unRegisterPerson(Long personId) {
         logger.debug("Entry into deregisterPerson " + personId);
         Set<Long> personTpBeDeleted = Sets.newHashSet(personId);
-        UnRegisterCommand deletePersonCommand = new UnRegisterCommand(personTpBeDeleted);
+        UnRegisterPeopleCommand deletePersonCommand = new UnRegisterPeopleCommand(personTpBeDeleted);
         if (isSuccess(sendCommand(deletePersonCommand)))
             navigation.redirect("personPanel");
     }

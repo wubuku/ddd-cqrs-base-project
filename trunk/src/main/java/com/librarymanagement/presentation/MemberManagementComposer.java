@@ -2,6 +2,8 @@ package com.librarymanagement.presentation;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.librarymanagement.domain.BookLending;
+import com.librarymanagement.domain.IBookLendingRepository;
 import com.librarymanagement.domain.Member;
 import org.nthdimenzion.crud.ICrud;
 import org.nthdimenzion.object.utils.UtilValidator;
@@ -19,6 +21,9 @@ public class MemberManagementComposer extends AbstractZkComposer {
 
     @Autowired
     private ICrud crudDao;
+
+    @Autowired
+    private IBookLendingRepository bookLendingRepository;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -47,8 +52,24 @@ public class MemberManagementComposer extends AbstractZkComposer {
 
     public void unRegisterMembers(List<Member> unRegisteredMembers) {
         for (Member unRegisteredMember : unRegisteredMembers) {
+            if(isMemberHavingBooks(unRegisteredMember)){
+                displayErrorMessage();
+            }else{
             crudDao.deactivate(unRegisteredMember);
+            displayMessages.showSuccess("Member unregistered successfully");
+            }
         }
+    }
+
+    private void displayErrorMessage() {
+        displayMessages.clearMessage();
+        displayMessages.displayError("Member cannot be unregistered,because he/she has not returned all books");
+    }
+
+    private boolean isMemberHavingBooks(Member unRegisteredMember) {
+        List<BookLending> bookLendings = bookLendingRepository.findAllBooksWithMember(unRegisteredMember);
+        boolean isMemberHavingBooks = UtilValidator.isNotEmpty(bookLendings);
+        return isMemberHavingBooks;
     }
 }
 

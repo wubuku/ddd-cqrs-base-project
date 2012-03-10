@@ -4,6 +4,7 @@ package com.librarymanagement.presentation.queries;
 import com.librarymanagement.presentation.dto.MemberDto;
 import org.nthdimenzion.cqrs.query.annotations.Finder;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface ILibraryFinder {
 
     Integer findCountOfMembersWhoHaveBorrowedBooks();
 
-    List<MemberDto> upcomingBirthDays();
+    List<MemberDto> upcomingBirthDays(Date today);
 
     List<Map<String,?>> findAllBooksWithMember(Long memberId);
 

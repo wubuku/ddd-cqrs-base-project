@@ -3,7 +3,7 @@ package com.simplepersoncrud.presentation.composer;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.simplepersoncrud.application.commands.UnRegisterCommand;
+import com.simplepersoncrud.application.commands.UnRegisterPeopleCommand;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PeopleSummaryDto;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
@@ -53,7 +53,7 @@ public class PersonComposer extends AbstractZkComposer {
             for (PersonDetailsDto personDetailsDto : peopleDetailsDto) {
                 unRegisteredPeople.add(personDetailsDto.getId());
             }
-            UnRegisterCommand unRegisterCommand = new UnRegisterCommand(unRegisteredPeople);
+            UnRegisterPeopleCommand unRegisterCommand = new UnRegisterPeopleCommand(unRegisteredPeople);
             sendCommand(unRegisterCommand);
             displayMessages.displaySuccess();
         }
