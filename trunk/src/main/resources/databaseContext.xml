@@ -2,18 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cloud="http://schema.cloudfoundry.org/spring"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd">
 
-
-	<bean id="dataSourceRef" class="${jdbc.datasource}">
-		<!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
-		<property name="url" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-	</bean>
 
     <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
 
@@ -59,5 +54,17 @@
     <tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<tx:annotation-driven proxy-target-class="true" />
+
+    <beans profile="cloud">
+        <cloud:data-source id="dataSourceRef" />
+    </beans>
+
+    <beans profile="local">
+        <bean id="dataSourceRef" class="${jdbc.datasource}">
+            <property name="url" value="${jdbc.url}" />
+            <property name="user" value="${jdbc.username}" />
+            <property name="password" value="${jdbc.password}" />
+        </bean>
+    </beans>
 
 </beans>

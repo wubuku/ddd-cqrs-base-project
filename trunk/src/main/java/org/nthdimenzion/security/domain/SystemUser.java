@@ -28,7 +28,7 @@ public class SystemUser implements UserDetails,INamed{
     }
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return userDetails.getAuthorities();
     }
 

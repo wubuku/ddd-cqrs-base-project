@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
@@ -51,11 +50,10 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
 
     @Before
     public void setUpForEachTest(){
-        System.out.println("###################");
     UserDetails userDetails = new TestUserDetails();
     systemUser.uses(userDetails);
     presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
-    TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken(new GrantedAuthorityImpl[]{new GrantedAuthorityImpl("ROLE_SUPERADMIN")});
+    TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken("ROLE_SUPERADMIN");
     SecurityContextHolder.getContext().setAuthentication(token);
     }
 
