@@ -7,6 +7,12 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
       .autoSize{position:absolute;width:100%;height:100%}
       .loginWrapper{position:absolute;width:100%}
    </style>
+   <zscript>
+   import org.nthdimenzion.ddd.infrastructure.spring.IApplicationContext;
+   import org.zkoss.zkplus.spring.SpringUtil;
+   IApplicationContext applicationContext = (IApplicationContext)SpringUtil.getBean("applicationSetup");
+   boolean isMultiTenant = applicationContext.isProfile ("multitenant");
+   </zscript>
    <n:body class="login">
       <window contentSclass="login">
          <image src="/org/images/login_bg.png" sclass="autoSize" />
@@ -15,6 +21,7 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                <!--<image sclass="logo" />-->
                <div align="center"> 
                   <label value="${customMessage}" style="color: #f00; font-size: 12px; font-weight: bold; text-align: center;" if="${!empty SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                   <label value="Example Application for CQRS/DDD Base Project" />
                </div>
                <n:form id="loginForm" name="loginForm" action="j_spring_security_check" method="POST">
                   <div align="center" width="100%" height="1px">
@@ -30,16 +37,19 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                   </n:input>
                   <label value="Password" style="margin:10px 10px 10px 0px" />
                   <n:input type="password" name="j_password" width="200px" />
+                  <div width="100%" if="${isMultiTenant}">
+                    <label value="Tenant ID" />
+                     <n:input name="tenantId" width="200px" id="tenantId" value="001" />
+                  </div>
                   <div>
                      <n:input class="signIn" type="submit" value="Login" />
                   </div>
-                  <!--<a href="#" onClick='Executions.sendRedirect("/forgot-password.zul");'>Forgotten your password?</a>-->
                   <div sclass="help">
-                  </div>
-                  <div zclass="footer" style="maring-top:10px">
-                     <n:p>Powered by NthDimenzion Solutions</n:p>
-                  </div>
-                   <n:input name="tenantId" width="200px" id="tenantId" value="001"/>
+                                    </div>
+                                    <div zclass="footer" style="maring-top:10px">
+                                       <n:p>Powered by NthDimenzion Solutions</n:p>
+                                    </div>
+                  <!--<a href="#" onClick='Executions.sendRedirect("/forgot-password.zul");'>Forgotten your password?</a>-->
                </n:form>
             </div>
          </div>

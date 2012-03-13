@@ -45,7 +45,7 @@
         </bean>
     </beans>
 
-    <beans profile="standalone">
+    <beans profile="standalone,cloud">
         <bean id="userValidationService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
             <property name="dataSource"  ref="dataSourceRef"/>
             <property name="enableGroups" value="true"/>

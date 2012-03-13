@@ -15,22 +15,22 @@ pagetitle.setValue("Buy or Sell copies");
 
 ]]></zscript>
     <window id="findBookForTransaction"  title="Details of the book you want to buy or sell" border="normal" self="@{define(content)}" apply="${bookTransactionComposer}">
+   <hlayout spacing="20px" sclass="form" >
         <vlayout>
             <hlayout>
-                <label value="Book Name "/>
+                <label value="Book Name " sclass="name"/>
                 <label value="@{bookTransactionComposer.bookDto.name}"/>
             </hlayout>
-
             <hlayout>
-                <label value="ISBN "/>
+                <label value="ISBN " sclass="name"/>
                  <label value="@{dto.isbn}"/>
              </hlayout>
             <hlayout>
-                <label value="Available Copies "/>
+                <label value="Available Copies " sclass="name"/>
                  <label value="@{bookTransactionComposer.bookDto.availableCopies,load-after='buyBtn.onClick,sellBtn.onClick'}"/>
              </hlayout>
             <hlayout>
-                <label value="Total Copies "/>
+                <label value="Total Copies " sclass="name"/>
                  <label value="@{bookTransactionComposer.bookDto.totalCopies,load-after='buyBtn.onClick,sellBtn.onClick'}"/>
              </hlayout>
 
@@ -51,8 +51,8 @@ pagetitle.setValue("Buy or Sell copies");
                 <button id="buyBtn" label="Buy Copies" onClick="bookTransactionComposer.buyCopies(noOfCopies.value)"/>
                 <button id="sellBtn" label="Sell Copies" onClick="bookTransactionComposer.sellCopies(noOfCopies.value)" visible="false"/>
             </hlayout>
-
         </vlayout>
+        </hlayout>
     </window>
 
     <vbox self="@{define(left)}">

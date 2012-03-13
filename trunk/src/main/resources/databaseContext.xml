@@ -55,16 +55,16 @@
 	
 	<tx:annotation-driven proxy-target-class="true" />
 
+    <bean id="dataSourceRef" class="${jdbc.datasource}">
+        <property name="url" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
     <beans profile="cloud">
         <cloud:data-source id="dataSourceRef" />
     </beans>
 
-    <beans profile="local">
-        <bean id="dataSourceRef" class="${jdbc.datasource}">
-            <property name="url" value="${jdbc.url}" />
-            <property name="user" value="${jdbc.username}" />
-            <property name="password" value="${jdbc.password}" />
-        </bean>
-    </beans>
+
 
 </beans>

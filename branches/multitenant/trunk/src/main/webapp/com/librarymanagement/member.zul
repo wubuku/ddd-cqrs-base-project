@@ -21,12 +21,12 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
 ]]></zscript>
     <window id="memberDetails"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
         <vlayout>
-            <panel title="List of Registered Members" closable="true" collapsible="true">
+            <panel title="List of Registered Members,Double Click to select" closable="true" collapsible="true">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
                     <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10">
                         <listhead>
-                            <listheader>ID</listheader>
+                            <!--<listheader>ID</listheader>-->
                             <listheader>Name</listheader>
                             <listheader>Date Of Birth</listheader>
                         </listhead>
@@ -34,9 +34,9 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                             <attribute name="onDoubleClick">
                                 memberManagementComposer.selectMember(self.value.id,"registerMember");
                              </attribute>
-                            <listcell>
-								<label value="@{member.id}"></label>
-							</listcell>
+                            <!--<listcell>-->
+								<!--<label value="@{member.id}"></label>-->
+							<!--</listcell>-->
 							<listcell>
 								<label value="@{member.name}"></label>
 							</listcell>

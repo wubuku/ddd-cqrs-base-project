@@ -24,35 +24,62 @@ String findMostActiveBook = libraryFinder.findMostActiveBook();
 
 
 ]]></zscript>
+
     <window id="bookPanel"  title="Book Panel" border="normal" self="@{define(content)}">
-        <div style="width:90%;height:90%">
+        <div style="width:100%;height:100%" >
             <panel id="libraryDetails" title="Quick view of tasks you can do" closable="true" collapsible="true">
                 <panelchildren>
-                    <vlayout>
-                        <hlayout>
-                            <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
+                <div align="center" >
+                <hlayout spacing="20px" sclass="form" >
+                 <vlayout spacing="10px">
+                      <hlayout spacing="6px">
+                            <a id="bookList" label="Goto Book List"  onClick='navigation.redirect("bookList")'/>
+                             <image src="/org/images/bookLists.png" sclass="autoSize" />
+                            <separator></separator>
+                             <separator></separator>
+                              <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
                             <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
+                             <image src="/org/images/Addbook.png" sclass="autoSize" />
                         </hlayout>
-                        <hlayout>
+                         <hlayout spacing="6px">
                             <a id="removeBook" label="Scrap Book" />
+                             <image src="/org/images/EditBook.png" sclass="autoSize" />
+                             <separator></separator>
+                             <separator></separator>
+                              <separator></separator>
+                               <separator></separator>
+                             <separator></separator>
+                              <separator></separator>
+                               <separator></separator>
                             <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
+                             <image src="/org/images/Hp notepad2 pencil.png" sclass="autoSize" />
                         </hlayout>
 
-                        <hlayout>
+                        <hlayout spacing="6px">
                             <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
+                             <image src="/org/images/transferbook.png" sclass="autoSize" />
                         </hlayout>
-
-
-                        <hlayout>
+                        <hlayout spacing="6px">
                             <label value="Most Active Book "/>
                             <label value= "${findMostActiveBook}" />
                         </hlayout>
-
-                        <hlayout>
+                        <hlayout spacing="6px">
                             <label value="Most Active Member "/>
                             <label value= "@{mostActiveMember.fullName}" />
                         </hlayout>
                     </vlayout>
+                    </hlayout>
+                    </div>
                 </panelchildren>
             </panel>
         </div>

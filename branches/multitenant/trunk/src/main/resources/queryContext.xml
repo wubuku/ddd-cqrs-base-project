@@ -16,7 +16,7 @@
         </bean>
     </beans>
 
-    <beans profile="standalone">
+    <beans profile="standalone,cloud">
         <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
             <property name="dataSource" ref="dataSourceRef"/>
             <property name="typeHandlersPackage" value="org.nthdimenzion.ddd.domain.sharedkernel"/>

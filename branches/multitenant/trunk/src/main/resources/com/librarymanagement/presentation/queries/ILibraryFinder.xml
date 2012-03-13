@@ -15,7 +15,7 @@
             AMOUNT as amount,
             CURRENCY_CODE as currencyCode,
             uid as bookId
-      FROM book
+      FROM BOOK
       where id = #{bookId}
     </select>
 
@@ -30,7 +30,7 @@
           total_copies as totalCopies,
           AMOUNT as amount,
           CURRENCY_CODE
-    FROM book
+    FROM BOOK
     where ENTITY_STATUS = 0
     order by available_copies desc,id desc;
   </select>
@@ -44,7 +44,7 @@
              bl.from_date as issueDate,
             AMOUNT as amount,
             CURRENCY_CODE as currencyCode
-      FROM book as b,book_lending as bl
+      FROM BOOK as b,BOOK_LENDING as bl
       where b.ENTITY_STATUS = 0
       and bl.member = #{memberId}
       and bl.book = b.id
@@ -55,34 +55,33 @@
 
     <select id="findBookCountInLibrary" resultType="java.lang.Integer">
       SELECT IFNULL(count(*),0)
-      FROM book
+      FROM BOOK
       where ENTITY_STATUS = 0
   </select>
 
 
     <select id="findCountOfMembersWhoHaveBorrowedBooks" resultType="java.lang.Integer">
         SELECT IFNULL(COUNT(DISTINCT member),0)
-        FROM   book_lending
+        FROM   BOOK_LENDING
    </select>
 
     <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
     SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.id as id
     FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
     WHERE member.ENTITY_STATUS = 0
-    and month(person.DATE_OF_BIRTH)= month(#{today})
-    and person.DATE_OF_BIRTH >= #{today}
+    and month(person.DATE_OF_BIRTH)= month(now())
     </select>
 
     <select id="findBookLendings" resultType="hashMap">
     SELECT id,book,member,completion_comments,from_date,thru_date
-    FROM book_lending
+    FROM BOOK_LENDING
     </select>
 
 
     <select id="findMostActiveBook" resultType="String">
-    SELECT NAME FROM book WHERE id = (
+    SELECT NAME FROM BOOK WHERE id = (
     SELECT book
-    FROM book_lending
+    FROM BOOK_LENDING
     GROUP BY book
     ORDER BY COUNT(book) DESC
     LIMIT 1);
@@ -90,9 +89,9 @@
 
     <select id="findMostActiveMember" resultType="com.librarymanagement.presentation.dto.MemberDto">
     SELECT first_name as firstName ,middle_name as middleName ,last_name as lastName
-    FROM person WHERE id = (
+    FROM PERSON WHERE id = (
         SELECT member
-        FROM book_lending
+        FROM BOOK_LENDING
         GROUP BY member
         ORDER BY COUNT(member) DESC
     LIMIT 1);

@@ -17,11 +17,11 @@ subpagetitle.setValue("Double click on the book to buy or sell copies of the boo
 ]]></zscript>
     <window id="findBookForTransaction"  title="Book List" border="normal" self="@{define(content)}" apply="${bookListComposer}">
         <vlayout>
-            <panel title="All books registered in the library" closable="true" collapsible="true">
+            <panel title="All books registered in the library, Double click on the book you want to buy or sell" closable="true" collapsible="true">
                 <panelchildren>
-                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10">
+                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10" tooltiptext="Double click on the book you want to buy or sell">
                         <listhead>
-                            <listheader>ID</listheader>
+                            <!--<listheader>ID</listheader>-->
                             <listheader>Name</listheader>
                             <listheader>ISBN</listheader>
                             <listheader>Authors</listheader>
@@ -32,9 +32,9 @@ subpagetitle.setValue("Double click on the book to buy or sell copies of the boo
                                 bookListComposer.selectBook(self.value,"bookTransactions");
                             </attribute>
 
-                            <listcell>
-								<label value="@{book.id}"></label>
-							</listcell>
+                            <!--<listcell>-->
+								<!--<label value="@{book.id}"></label>-->
+							<!--</listcell>-->
 							<listcell>
 								<label value="@{book.name}"></label>
 							</listcell>

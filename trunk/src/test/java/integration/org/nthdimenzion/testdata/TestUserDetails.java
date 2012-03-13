@@ -2,7 +2,6 @@ package org.nthdimenzion.testdata;
 
 import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -57,7 +56,7 @@ public class TestUserDetails implements UserDetails {
 
     public void grantAuthorities(Collection<String> authorities) {
         for (String authority : authorities) {
-            grantedAuthorities.add(new GrantedAuthorityImpl(authority));
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority));
         }
     }
 
@@ -67,7 +66,7 @@ public class TestUserDetails implements UserDetails {
 
     public void revokeAuthorities(Collection<String> authorities){
          for (String authority : authorities) {
-            grantedAuthorities.remove(new GrantedAuthorityImpl(authority));
+            grantedAuthorities.remove(new SimpleGrantedAuthority(authority));
         }
     }
 }

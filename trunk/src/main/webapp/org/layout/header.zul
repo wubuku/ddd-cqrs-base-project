@@ -11,6 +11,8 @@ import org.zkoss.zk.ui.Execution;
 UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
 
 ]]></zscript>
+<?page id="indexPage" title="Sample example Application for CQRS/DDD Base Project" cacheable="true"
+	language="xul/html"?>
 <div sclass="top">
    <n:div class="logoCont">
 			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->

@@ -56,6 +56,9 @@ public class BookTransactionComposer extends AbstractZkComposer {
     }
 
     public void buyCopies(Integer noOfCopies){
+        if(isNegative(noOfCopies)){
+            return;
+        }
         PurchaseBookCopiesCommand purchaseBookCopiesCommand = new PurchaseBookCopiesCommand(new BookId((String)bookDto.get("bookId")),returnDefaultIfNull(noOfCopies,1));
         Book result = (Book) sendCommand(purchaseBookCopiesCommand);
         bookDto = getBookDto();
@@ -64,7 +67,14 @@ public class BookTransactionComposer extends AbstractZkComposer {
        }
     }
 
+    private boolean isNegative(Integer noOfCopies) {
+        return noOfCopies < 0;
+    }
+
     public void sellCopies(Integer noOfCopies){
+        if(isNegative(noOfCopies)){
+            return;
+        }
         SellBookCopiesCommand sellBookCopiesCommand = new SellBookCopiesCommand(new BookId((String)bookDto.get("bookId")),returnDefaultIfNull(noOfCopies,1));
         Book result = (Book) sendCommand(sellBookCopiesCommand);
         bookDto = getBookDto();

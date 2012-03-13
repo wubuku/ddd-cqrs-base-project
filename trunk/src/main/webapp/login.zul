@@ -3,6 +3,8 @@ xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:n="http://www.zkoss.org/2005/zk/native"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?page id="indexPage" title="Sample example Application for CQRS/DDD Base Project" cacheable="false"
+	language="xul/html"?>
    <style>
       .autoSize{position:absolute;width:100%;height:100%}
       .loginWrapper{position:absolute;width:100%}
@@ -15,6 +17,7 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                <!--<image sclass="logo" />-->
                <div align="center"> 
                   <label value="${customMessage}" style="color: #f00; font-size: 12px; font-weight: bold; text-align: center;" if="${!empty SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                  <label value="Sample example Application for CQRS/DDD Base Project" />
                </div>
                <n:form id="loginForm" name="loginForm" action="j_spring_security_check" method="POST">
                   <div align="center" width="100%" height="1px">
