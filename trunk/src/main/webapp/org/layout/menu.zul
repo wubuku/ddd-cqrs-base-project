@@ -1,12 +1,24 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-    <div>
-    <tabbox id="mainTabBox" onSelect='sessionScope.put("bookmark",self.selectedTab.id)'>
+  <div  id="menu">
+   <tabbox id="mainTabBox" onSelect='sessionScope.put("bookmark",self.selectedTab.id)'>
 		<tabs zclass="e-tabs">
-			<tab label="Person Home" onClick='navigation.redirect("personPanel")' zclass="e-tab"/>
-			<tab label="Library Home" onClick='navigation.redirect("libraryPanel")' zclass="e-tab"/>
+	    <tab  hoverImage="/org/images/index.jpg" id="dashBoadrdTab1"/> 
+	    <tab id="dashBoadrdTab2" label="Home"  onClick='navigation.redirect("personPanel");' if="false" zclass="e-tab"/>
+		<tab id="dashBoadrdTab3" label="Person Home" onClick='navigation.redirect("personPanel");' if="false" zclass="e-tab"/>
+		<tab id="dashBoadrdTab4" label="Library Control Panel" onClick='navigation.redirect("libraryPanel");' zclass="e-tab" selected="true"/>
 		</tabs>
 	</tabbox>
     </div>
+   	<zscript>
+	Tab tab = (Tab) menu.getFellowIfAny((String) sessionScope.get("bookmark"));
+	if (tab != null)
+		tab.setSelected(true);
+	</zscript>
  </zk>
+ 
+ 
+ 
+ 
+

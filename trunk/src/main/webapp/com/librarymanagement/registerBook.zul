@@ -10,22 +10,26 @@ pagetitle.setValue("Register a Book");
 subpagetitle.setValue("Enter/Edit details of the Book you wish to Register into the Library");
 ]]></zscript>
     <window id="registerBook" apply="${registerBookComposer}" title="Register Book" border="normal" width="100%" self="@{define(content)}" height="100%">
-     <vlayout>
-        <hbox>
-            <label id = "bookId" value="@{bookDto.id}" visible="false"/>
-        </hbox>
-        <hlayout>
-            <label id = "lblBookName" value="Book Name"/>
+     <panel  title="Quick view to register Book" closable="true" collapsible="true">
+                <panelchildren>
+                <div align="center" >
+     <hlayout spacing="20px" sclass="form" >
+                 <vlayout spacing="10px">
+                      <hlayout spacing="6px">
+            <label id = "bookId" value="@{bookDto.id}" sclass="name" visible="false"/>
+       </hlayout>
+        <hlayout spacing="6px">
+            <label id = "lblBookName" sclass="name" value="Name" />
             <label zclass="labelReq" value="*"/>
             <textbox id = "txtBookName" value="@{bookDto.name,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" constraint="no empty" cols="40"/>
         </hlayout>
-        <hlayout>
-            <label id = "lblIsbn" value="ISBN"/>
-            <label zclass="labelReq" value="*"/>
-            <textbox id = "txtIsbn" value="@{bookDto.isbn,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" constraint="no empty"  cols="40"/>
+          <hlayout spacing="6px">
+            <label id = "lblIsbn" value="ISBN" sclass="name"/>
+            <label zclass="labelReq"  value="*"/>
+            <textbox id = "txtIsbn" value="@{bookDto.isbn,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" cols="40"/>
         </hlayout>
-         <hlayout>
-            <label id = "lblAuthors" value="Authors"/>
+          <hlayout spacing="6px">
+            <label id = "lblAuthors" sclass="name" value="Authors"/>
             <textbox id = "txtAuthors" value="@{bookDto.authors}" rows="4" cols="40"/>
         </hlayout>
        <!-- <hlayout>
@@ -33,12 +37,15 @@ subpagetitle.setValue("Enter/Edit details of the Book you wish to Register into 
             <label zclass="labelReq" value="*"/>
             <spinner id="copies" value="@{bookDto.copies}" constraint="no negative" />
         </hlayout>-->
-        <hbox>
+        <hlayout spacing="6px">
             <button id = "purchaseBookBtn" label="Register Book" onClick="registerBookComposer.registerBook()" visible="@{registerBookComposer.registerBookView}"/>
             <button id = "updateBookBtn" label="Done Editing" onClick="registerBookComposer.updateBook()" visible="@{registerBookComposer.updateView}"/>
-        </hbox>
+        </hlayout>
      </vlayout>
-
+     </hlayout>
+     </div>
+     </panelchildren>
+     </panel>
     </window>
          <vbox self="@{define(left)}">
             <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
