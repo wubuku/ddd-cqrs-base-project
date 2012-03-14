@@ -395,6 +395,24 @@
         </resources>
 
         <plugins>
+            <!-- Cloud Foundry Start -->
+            <plugin>
+                <groupId>org.cloudfoundry</groupId>
+                <artifactId>cf-maven-plugin</artifactId>
+                <version>1.0.0.M1</version>
+                <configuration>
+                    <server>mycloudfoundry</server>
+                    <target>http://api.cloudfoundry.com</target>
+                    <url>baseproject.cloudfoundry.com</url>
+                    <memory>512</memory>
+                    <appname>BaseProject</appname>
+                    <services>my-sql-instance</services>
+                    <url>baseproject.cloudfoundry.com</url>
+                    <warfile>target/MultiTenantBaseProject.war</warfile>
+                </configuration>
+            </plugin>
+            <!-- Cloud Foundry End -->
+
             <!--  Facilitates downloading source and javadoc in Eclipse -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -550,7 +568,7 @@
             <properties>
                 <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
                 <default.jdbc.url>jdbc:mysql://localhost:3306/tenantdefaultprod</default.jdbc.url>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
     </profiles>
@@ -567,4 +585,11 @@
         </plugins>
     </reporting>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repository.springframework.maven.milestone</id>
+            <name>Spring Framework Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
