@@ -1,7 +1,7 @@
 package com.simplepersoncrud.testdata;
 
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
-
+ 
 public class DummyDisplayMessages implements IDisplayMessages<Object> {
 
     public String message;
