@@ -9,6 +9,7 @@ public class DummyDisplayMessages implements IDisplayMessages<Object> {
     @Override
     public void showSuccessInPopUp(String message) {
     this.message = message;
+System.out.println("Hello");
     }
 
     @Override
