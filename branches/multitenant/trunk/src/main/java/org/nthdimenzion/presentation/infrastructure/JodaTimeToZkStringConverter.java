@@ -1,4 +1,3 @@
-
 package org.nthdimenzion.presentation.infrastructure;
 
 import org.joda.time.DateTime;
@@ -8,13 +7,13 @@ import org.zkoss.zkplus.databind.TypeConverter;
 
 import java.util.Date;
 
-public class JodaTimeZkConverter implements TypeConverter {
+public class JodaTimeToZkStringConverter implements TypeConverter {
     @Override
     public Object coerceToUi(Object val, Component comp) {
         if (val == null)
             return val;
         if (val instanceof DateTime) {
-            return ((DateTime) val).toDate();
+            return ((DateTime) val).toString("dd-MMM-yyyy");
         }
         throw new UiException("Converter expects a Date/DateTime object");
     }

@@ -4,7 +4,7 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:n="http://www.zkoss.org/2005/zk/native"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-    <div sclass="wrapper" id="wrapper">
+    <div sclass="wrapper" id="wrapper" style="overflow:auto;">
         <div sclass="top">
             <include src="/org/layout/header.zul"/>
         </div>
@@ -26,14 +26,14 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
 
 	    <borderlayout width="100%" height="510px" id="a">
 	        <west width="15%" title="Related Tasks" collapsible="true">
-	            <div self="@{insert(left)}" />
+	            <div self="@{insert(left)}" style="overflow:auto;"/>
 	        </west>
 	        <center>
-	            <div self="@{insert(content)}" id="center" sclass="mid"/>
+	            <div self="@{insert(content)}" id="center" sclass="mid" style="overflow:auto;"/>
 	        </center>
 
 	    </borderlayout>
-	        <div sclass="footer">
+	        <div sclass="footer" style="overflow:auto;">
         		<div sclass="cBox">
         			<div sclass="copyrights">Developed by NthDimenzion Solutions Pvt Ltd.</div>
         			<div sclass="fr" />

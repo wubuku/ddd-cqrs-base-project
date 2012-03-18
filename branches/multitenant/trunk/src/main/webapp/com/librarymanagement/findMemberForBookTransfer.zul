@@ -40,7 +40,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
 								<label value="@{member.fullName}"></label>
 							</listcell>
 							<listcell>
-								<datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+								<label value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeToZkStringConverter'}" />
 							</listcell>
                         </listitem>
                     </listbox >

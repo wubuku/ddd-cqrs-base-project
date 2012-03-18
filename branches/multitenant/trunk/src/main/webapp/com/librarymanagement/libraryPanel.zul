@@ -53,7 +53,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
                             <row self="@{each=member}" value="@{member}">
                                 <label value="@{member.id}"/>
                                 <label value="@{member.fullName}"/>
-                                <datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+                                <label value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeToZkStringConverter'}" />
                             </row>
                         </rows>
                     </grid>
