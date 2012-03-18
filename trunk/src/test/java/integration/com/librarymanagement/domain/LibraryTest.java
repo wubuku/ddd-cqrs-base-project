@@ -45,7 +45,7 @@ public class LibraryTest extends AbstractTestFacilitator {
     @Test
     public void testRegisterBook() {
         systemUser.uses(new TestUserDetails());
-        Book javaPersistence = bookBuilder.createBook("Java Persistence", "007", Money.of(CurrencyUnit.USD, 1000)).purchaseCopies(10).build();
+        Book javaPersistence = bookBuilder.createBook("Java Persistence", "Java Persistence", Money.of(CurrencyUnit.USD, 1000)).purchaseCopies(10).withAuthors("Java Persistence").build();
 //        Book eventSourcing = bookBuilder.createBook("Event Sourcing", "008", Money.of(CurrencyUnit.USD, 2000)).withAuthors("Greg Young").withCopies(2).build();
 
         Long id = bookRepository.registerBook(javaPersistence);

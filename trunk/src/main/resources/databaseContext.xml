@@ -32,7 +32,7 @@
 
     <bean
             class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-            id="sessionFactory">
+            id="sessionFactoryTemplate" abstract="true">
         <property name="dataSource" ref="dataSourceRef"></property>
         <property name="entityInterceptor" ref="autoColumnsPopulator"/>
         <property name="namingStrategy" ref="namingStrategy"></property>
@@ -127,11 +127,19 @@
             <property name="user" value="${jdbc.username}"/>
             <property name="password" value="${jdbc.password}"/>
         </bean>
+
+        <bean
+                class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+                id="sessionFactory" parent="sessionFactoryTemplate"/>
     </beans>
 
 
     <beans profile="cloud">
         <cloud:data-source id="dataSourceRef"/>
+
+        <bean
+                class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+                id="sessionFactory" parent="sessionFactoryTemplate"/>
     </beans>
 
 

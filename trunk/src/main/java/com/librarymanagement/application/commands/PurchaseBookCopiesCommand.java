@@ -19,6 +19,6 @@ public class PurchaseBookCopiesCommand implements ICommand{
     public void validate() {
         Preconditions.checkNotNull(bookId);
         Preconditions.checkNotNull(noOfCopiesToPurchase);
-        Preconditions.checkArgument(noOfCopiesToPurchase >0,"Number of copies purchased cannot be Zero");
+        Preconditions.checkArgument(noOfCopiesToPurchase >0,"How did you manage to purchase "+ noOfCopiesToPurchase + " copies ?");
     }
 }
