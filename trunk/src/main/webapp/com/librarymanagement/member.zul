@@ -54,7 +54,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
     </window>
 
     <vbox self="@{define(left)}">
-            <a id="Home" label="Member Home" onClick='navigation.redirect("member")'/>
+            <a id="Home" label="Member Home" onClick='navigation.redirect("memberPanel")'/>
             <a id="registerMember" label="Register Member" onClick='navigation.navigateToDefaultContainer("registerMember",null)'/>
         </vbox>
 </zk>
