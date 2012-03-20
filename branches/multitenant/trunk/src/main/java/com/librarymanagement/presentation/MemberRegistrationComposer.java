@@ -24,8 +24,8 @@ public class MemberRegistrationComposer extends AbstractZkComposer {
         super.doAfterCompose(comp);
         initializePage();
         String memberId = getParam("memberId");
-        if(UtilValidator.isNotEmpty(memberId)){
-        Long memberIdentifier = Long.valueOf(memberId);
+        if (UtilValidator.isNotEmpty(memberId)) {
+            Long memberIdentifier = Long.valueOf(memberId);
             member = crudDao.find(Member.class, memberIdentifier);
             isUpdateView = true;
         }
@@ -46,14 +46,26 @@ public class MemberRegistrationComposer extends AbstractZkComposer {
         return !isUpdateView();
     }
 
-    public void registerMember(){
-        Long id = crudDao.add(member);
-        navigation.redirect("member");
+    public void registerMember() {
+        Long id = null;
+        try{
+        id = crudDao.add(member);
+        }catch (Exception ex){
+            raiseException(ex);
+        }
+        if (isSuccess(id))
+            navigation.redirect("member");
+
+
     }
 
     public void updaterMember() {
+        try{
         crudDao.update(member);
         displayMessages.displaySuccess();
+        }catch (Exception ex){
+            raiseException(ex);
+        }
     }
 
 }
