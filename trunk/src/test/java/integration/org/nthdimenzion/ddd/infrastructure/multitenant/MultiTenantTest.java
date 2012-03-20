@@ -6,15 +6,11 @@ import org.nthdimenzion.ddd.domain.ITenantAware;
 import org.nthdimenzion.ddd.domain.multitenant.Tenant;
 import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

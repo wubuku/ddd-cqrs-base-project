@@ -69,7 +69,8 @@
     SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.id as id
     FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
     WHERE member.ENTITY_STATUS = 0
-    and month(person.DATE_OF_BIRTH)= month(now())
+    and month(person.DATE_OF_BIRTH)= month(#{today})
+    and day(person.DATE_OF_BIRTH) >= day(#{today})
     </select>
 
     <select id="findBookLendings" resultType="hashMap">

@@ -46,6 +46,10 @@ public class MemberManagementComposer extends AbstractZkComposer {
     }
 
     public void selectMember(Long memberId,String pageId) {
+        navigation.redirect(pageId, ImmutableMap.of("memberId", memberId.toString()));
+    }
+
+    public void selectMemberForBookTransfer(Long memberId,String pageId) {
         navigation.navigateToDefaultContainer(pageId, ImmutableMap.of("memberId", memberId));
     }
 

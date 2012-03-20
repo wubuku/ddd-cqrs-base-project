@@ -31,7 +31,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                         </listhead>
                         <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
                             <attribute name="onDoubleClick">
-                                memberManagementComposer.selectMember(self.value.id,"transferBook");
+                                memberManagementComposer.selectMemberForBookTransfer(self.value.id,"transferBook");
                              </attribute>
                             <listcell>
 								<label value="@{member.id}"></label>

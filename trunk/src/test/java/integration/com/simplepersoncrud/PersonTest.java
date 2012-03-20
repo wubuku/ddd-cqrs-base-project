@@ -2,9 +2,7 @@ package com.simplepersoncrud;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.librarymanagement.domain.Member;
 import com.librarymanagement.domain.MemberBuilder;
-import com.librarymanagement.presentation.dto.MemberDto;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
 import com.simplepersoncrud.application.commands.PersonRegistrationCommand;
 import com.simplepersoncrud.application.commands.UnRegisterPeopleCommand;
@@ -14,7 +12,6 @@ import com.simplepersoncrud.domain.error.PersonCreationException;
 import com.simplepersoncrud.presentation.IPersonFinder;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import com.simplepersoncrud.testdata.DummyDisplayMessages;
-import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.nthdimenzion.ddd.infrastructure.exception.DisplayableException;

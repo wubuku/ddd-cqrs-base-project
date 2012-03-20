@@ -38,7 +38,7 @@ public class BookTransactionComposer extends AbstractZkComposer {
         super.doAfterCompose(comp);
         String id = getParam("bookId");
         if (UtilValidator.isNotEmpty(id)) {
-            bookId = Long.valueOf(getParam("bookId"));
+            bookId = Long.valueOf(id);
             bookDto = getBookDto();
         }
         comp.setAttribute("dto", bookDto);

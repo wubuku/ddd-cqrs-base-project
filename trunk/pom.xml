@@ -400,10 +400,13 @@
                 <configuration>
                     <server>mycloudfoundry</server>
                     <target>http://api.cloudfoundry.com</target>
+                    <!--<url>easylibrary.cloudfoundry.com</url>-->
                     <url>baseproject.cloudfoundry.com</url>
                     <memory>512</memory>
+                    <!--<appname>easylibrary</appname>-->
                     <appname>BaseProject</appname>
                     <services>my-sql-instance</services>
+                    <!--<url>easylibrary.cloudfoundry.com</url>-->
                     <url>baseproject.cloudfoundry.com</url>
                     <warfile>target/MultiTenantBaseProject.war</warfile>
                 </configuration>

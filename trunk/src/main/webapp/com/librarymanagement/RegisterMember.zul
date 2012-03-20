@@ -1,3 +1,4 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
 <zk xmlns="http://www.zkoss.org/2005/zul"
 xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -18,19 +19,24 @@ subpagetitle.setValue("You can Register a member here");
             <!--<label id = "lblPersonId" value="Person Id" visible="@{personRegistrationComposer.isUpdateView}"/-->
             <label id = "personId" value="@{dto.id}" visible="false"/>
        </hlayout>
+          <hlayout spacing="6px">
+           <label id = "lblMemberId" sclass="name" value="Member Id"/>
+           <label zclass="labelReq" value="*"/>
+           <textbox id = "txtMemberId" value="@{member.memberId,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"  maxlength="10"/>
+         </hlayout>
          <hlayout spacing="6px">
             <label id = "lblMemberFirstName" sclass="name" value="First Name"/>
             <label zclass="labelReq" value="*"/>
-            <textbox id = "txtMemberFirstName" value="@{member.firstName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"/>
+            <textbox id = "txtMemberFirstName" value="@{member.firstName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"  maxlength="40"/>
         </hlayout>
           <hlayout spacing="6px">
             <label id = "lblMemberMiddleName" sclass="name" value="Middle Name"/>
-            <textbox id = "txtMemberMiddleName" value="@{member.middleName}"/>
+            <textbox id = "txtMemberMiddleName" value="@{member.middleName}"  maxlength="40"/>
         </hlayout>
           <hlayout spacing="6px">
             <label id = "lblMemberLastName" sclass="name" value="Last Name"/>
             <label zclass="labelReq" value="*"/>
-            <textbox id = "txtMemberLastName" value="@{member.lastName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  constraint="no empty"/>
+            <textbox id = "txtMemberLastName" value="@{member.lastName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  constraint="no empty"  maxlength="40"/>
         </hlayout>
          <hlayout spacing="6px">
             <label id = "lblDateOfBirth" sclass="name" value="Date Of Birth"/>
@@ -47,4 +53,8 @@ subpagetitle.setValue("You can Register a member here");
      </panelchildren>
      </panel>
     </window>
+    <vbox self="@{define(left)}">
+                <a id="Home" label="Member Home" onClick='navigation.redirect("memberPanel")'/>
+                <a id="Member List" label="Member List" onClick='navigation.redirect("member")'/>
+            </vbox>
 </zk>
