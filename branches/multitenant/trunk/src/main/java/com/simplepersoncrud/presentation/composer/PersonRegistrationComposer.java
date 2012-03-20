@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 
 import java.util.Set;
 
@@ -32,7 +31,7 @@ public class PersonRegistrationComposer extends AbstractZkComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         initializePage();
-        Long personId = (Long) Executions.getCurrent().getArg().get("personId");
+        Long personId = getParam("personId");
         if (personId != null) {
             personDetailsDto = personFinder.findPersonDetails(personId);
             personRegistrationBtnLbl = "Update Registration Details";

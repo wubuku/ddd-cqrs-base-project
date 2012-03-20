@@ -67,9 +67,13 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
         return UtilMisc.populate(source, clazz, modelMapper);
     }
 
-    protected final String getParam(String paramId) {
+    protected final <T> T getParam(String paramId) {
         logger.debug("ParamId " + paramId);
-        return Executions.getCurrent().getParameter(paramId);
+        T paramValue = (T) Executions.getCurrent().getParameter(paramId);
+        if(paramValue==null){
+            paramValue = (T)Executions.getCurrent().getArg().get(paramId);
+        }
+        return paramValue;
 
     }
 }

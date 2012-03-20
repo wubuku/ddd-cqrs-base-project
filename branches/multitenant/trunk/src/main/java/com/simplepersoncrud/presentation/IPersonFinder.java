@@ -3,7 +3,6 @@ package com.simplepersoncrud.presentation;
 import com.simplepersoncrud.presentation.dto.PeopleSummaryDto;
 import com.simplepersoncrud.presentation.dto.PersonDetailsDto;
 import org.nthdimenzion.cqrs.query.annotations.Finder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

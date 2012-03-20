@@ -17,14 +17,13 @@ import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.List;
 
 @AggregateRoot
 @PPT
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"ISBN"})})
 public class Book extends BaseAggregateRoot implements INamed{
     private String name;
     private String isbn;

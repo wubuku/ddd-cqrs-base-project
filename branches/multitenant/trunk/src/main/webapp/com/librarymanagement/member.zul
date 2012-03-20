@@ -27,6 +27,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                     <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10">
                         <listhead>
                             <!--<listheader>ID</listheader>-->
+                            <listheader>Id</listheader>
                             <listheader>Name</listheader>
                             <listheader>Date Of Birth</listheader>
                         </listhead>
@@ -37,6 +38,9 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                             <!--<listcell>-->
 								<!--<label value="@{member.id}"></label>-->
 							<!--</listcell>-->
+							<listcell>
+                            	<label value="@{member.memberId}"></label>
+                            </listcell>
 							<listcell>
 								<label value="@{member.name}"></label>
 							</listcell>
@@ -55,6 +59,6 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
 
     <vbox self="@{define(left)}">
             <a id="Home" label="Member Home" onClick='navigation.redirect("memberPanel")'/>
-            <a id="registerMember" label="Register Member" onClick='navigation.navigateToDefaultContainer("registerMember",null)'/>
+            <a id="registerMember" label="Register Member" onClick='navigation.redirect("registerMember")'/>
         </vbox>
 </zk>

@@ -2,11 +2,11 @@ package com.librarymanagement.presentation;
 
 import com.librarymanagement.domain.Member;
 import org.nthdimenzion.crud.ICrud;
+import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 
 @Composer
 public class MemberRegistrationComposer extends AbstractZkComposer {
@@ -23,9 +23,10 @@ public class MemberRegistrationComposer extends AbstractZkComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         initializePage();
-        Long memberId = (Long)Executions.getCurrent().getArg().get("memberId");
-        if(memberId!=null){
-            member = crudDao.find(Member.class, memberId);
+        String memberId = getParam("memberId");
+        if(UtilValidator.isNotEmpty(memberId)){
+        Long memberIdentifier = Long.valueOf(memberId);
+            member = crudDao.find(Member.class, memberIdentifier);
             isUpdateView = true;
         }
         comp.setAttribute("member", member);
