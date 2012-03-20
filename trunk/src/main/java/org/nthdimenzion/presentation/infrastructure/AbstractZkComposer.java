@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
+import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.object.utils.UtilMisc;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.slf4j.Logger;
@@ -28,6 +30,11 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
 
     @Autowired
     protected Navigation navigation;
+
+
+    @Autowired
+    @Qualifier("exceptionEventBus")
+    protected IEventBus exceptionEventBus;
 
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -75,5 +82,9 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
         }
         return paramValue;
 
+    }
+
+    protected final void raiseException(Throwable exception){
+        exceptionEventBus.raise(OperationFailed.createDefaultDisplayableException(exception));
     }
 }
