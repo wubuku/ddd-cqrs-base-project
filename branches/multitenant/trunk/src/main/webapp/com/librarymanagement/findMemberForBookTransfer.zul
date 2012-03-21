@@ -15,8 +15,6 @@ import com.librarymanagement.presentation.MemberManagementComposer;
 pagetitle.setValue("Select a member who needs to borrow or return a book");
 
 
-MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberManagementComposer",MemberManagementComposer.class) ;
-
 ]]></zscript>
     <window id="findMember"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
         <vlayout>
@@ -31,7 +29,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                         </listhead>
                         <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
                             <attribute name="onDoubleClick">
-                                memberManagementComposer.selectMemberForBookTransfer(self.value.id,"transferBook");
+                                memberManagementComposer.selectMemberForBookTransfer(self.value.id,"membersHoldingBook");
                              </attribute>
                             <listcell>
 								<label value="@{member.id}"></label>

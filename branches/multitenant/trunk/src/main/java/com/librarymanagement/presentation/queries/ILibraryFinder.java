@@ -28,4 +28,8 @@ public interface ILibraryFinder {
     String findMostActiveBook();
 
     MemberDto findMostActiveMember();
+
+    List<MemberDto> findMembersHoldingBook(Long bookId);
+
+
 }
