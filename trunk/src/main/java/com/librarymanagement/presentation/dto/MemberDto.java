@@ -5,7 +5,7 @@ import org.nthdimenzion.object.utils.StringUtils;
 
 public class MemberDto {
 
-    public Long id;
+    public String id;
     public String firstName;
     public String middleName;
     public String lastName;
@@ -43,11 +43,11 @@ public class MemberDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

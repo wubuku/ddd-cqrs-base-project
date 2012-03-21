@@ -66,7 +66,7 @@
    </select>
 
     <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
-    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.member_id as id
+    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.MEMBER_ID as id
     FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
     WHERE member.ENTITY_STATUS = 0
     and month(person.DATE_OF_BIRTH)= month(#{today})
