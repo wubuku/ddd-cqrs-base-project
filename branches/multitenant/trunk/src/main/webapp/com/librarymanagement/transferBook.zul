@@ -17,7 +17,7 @@ subpagetitle.setValue("Select a book and then issue or return the book as desire
         <vlayout height="100%">
             <hbox>
                 <label value="Member Name "/>
-                <label value="@{transferBookComposer.memberName}"/>
+                <label value="@{transferBookComposer.memberName}" style="color:green; font-weight:bold"/>
             </hbox>
             <panel title="List of All available books, Select one or more books that need to issued">
                 <panelchildren>
