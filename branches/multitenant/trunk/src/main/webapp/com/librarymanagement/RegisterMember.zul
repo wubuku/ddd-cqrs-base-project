@@ -10,7 +10,7 @@ pagetitle.setValue("Register a Member");
 subpagetitle.setValue("You can Register a member here");
 ]]></zscript>
     <window id="memberRegistration" apply="${memberRegistrationComposer}" title="Member Registration Details" border="normal" width="100%" self="@{define(content)}" height="100%">
-     <panel id="libraryDetails" title="Quick view to register a member here" closable="true" collapsible="true">
+     <panel id="libraryDetails" title="Quick view to register a member here">
                 <panelchildren>
                 <div align="center" >
      <vlayout spacing="10px" sclass="form">
@@ -47,6 +47,7 @@ subpagetitle.setValue("You can Register a member here");
     </window>
     <vbox self="@{define(left)}">
                 <a id="Home" label="Member Home" onClick='navigation.redirect("memberPanel")'/>
-                <a id="Member List" label="Member List" onClick='navigation.redirect("member")'/>
+                <a id="MemberList" label="Member List" onClick='navigation.redirect("member")'/>
+                <a id="unregisterMember" label="UnRegister Member" onClick='navigation.redirect("unregisterMember")'/>
             </vbox>
 </zk>
