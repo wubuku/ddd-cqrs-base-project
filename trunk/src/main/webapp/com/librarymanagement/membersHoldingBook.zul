@@ -13,8 +13,14 @@ import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constants;
 pagetitle.setValue("Member Details Management");
 ]]></zscript>
+
+
     <window id="memberDetailsWithBook"  title="Member Details" border="normal" self="@{define(content)}" apply="${membersHoldingBooksComposer}">
         <vlayout>
+        <hbox>
+                        <label value="Book Name " />
+                        <label value="@{membersHoldingBooksComposer.book.name}" style="color:green; font-weight:bold"/>
+                    </hbox>
             <panel title="List of Members,Holding this book">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{membersHoldingBooksComposer.isNoRecordsFound}" />

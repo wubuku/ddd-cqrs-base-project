@@ -1,6 +1,7 @@
 package com.librarymanagement.presentation;
 
 import com.google.common.collect.Lists;
+import com.librarymanagement.infrastructure.repositories.hibernate.BookRepository;
 import com.librarymanagement.presentation.dto.MemberDto;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
 import org.nthdimenzion.object.utils.UtilValidator;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Composer
 public class MembersHoldingBooksComposer extends AbstractZkComposer {
@@ -19,12 +21,18 @@ public class MembersHoldingBooksComposer extends AbstractZkComposer {
     @Autowired
     private ILibraryFinder libraryFinder;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     private String bookId = null;
+
+    private Map<String,?> book;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         bookId = getParam("bookId");
+        book = libraryFinder.findBookWithId(Long.valueOf(bookId));
         membersHoldingBook = getMembersHoldingBook(Long.valueOf(bookId));
     }
 
@@ -35,6 +43,10 @@ public class MembersHoldingBooksComposer extends AbstractZkComposer {
 
     public boolean isNoRecordsFound() {
         return UtilValidator.isEmpty(membersHoldingBook);
+    }
+
+    public Map<String,?> getBook(){
+        return book;
     }
 
     public boolean isRecordsFound(){
