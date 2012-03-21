@@ -3,7 +3,7 @@
 xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./memberDetails"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./unRegisterMembers"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zscript><![CDATA[
 import org.nthdimenzion.presentation.infrastructure.Navigation;
@@ -12,32 +12,23 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constants;
 import com.librarymanagement.presentation.MemberManagementComposer;
-pagetitle.setValue("Member Details Management");
-subpagetitle.setValue("Double click on member to view details");
+pagetitle.setValue("Unregister Member");
+subpagetitle.setValue("Select the member you want to un register and then hit the un register Button");
 
-
-MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberManagementComposer",MemberManagementComposer.class) ;
 
 ]]></zscript>
-    <window id="memberDetails"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
+    <window id="unRegisterMembers"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
         <vlayout>
-            <panel title="List of Registered Members,Double Click on member to update its details">
+            <panel title="List of Registered Members,Select Members and hit un register to un register them.">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
-                    <listbox  id="memberDetailsList" model="@{memberManagementComposer.members}" mold="paging" pageSize="10">
+                    <listbox  id="memberDetailsList" multiple="true" checkmark="true" model="@{memberManagementComposer.members,load-after='unRegisterMembersBtn.onClick'}"                             mold="paging" pageSize="10">
                         <listhead>
-                            <!--<listheader>ID</listheader>-->
                             <listheader>Id</listheader>
                             <listheader>Name</listheader>
                             <listheader>Date Of Birth</listheader>
                         </listhead>
-                        <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click on member to update its details">
-                            <attribute name="onDoubleClick">
-                                memberManagementComposer.selectMember(self.value.id,"registerMember");
-                             </attribute>
-                            <!--<listcell>-->
-								<!--<label value="@{member.id}"></label>-->
-							<!--</listcell>-->
+                        <listitem self="@{each='member'}" value="@{member}">
 							<listcell>
                             	<label value="@{member.memberId}"></label>
                             </listcell>
@@ -53,12 +44,13 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
             </panel>
         <hlayout>
         </hlayout>
+        <button id = "unRegisterMembersBtn" label="UnRegister Members" onClick="memberManagementComposer.unRegisterMembers(ViewUtil.getSelectedItems(memberDetailsList))" visible="@{memberManagementComposer.recordsFound}"/>
         </vlayout>
     </window>
 
     <vbox self="@{define(left)}">
             <a id="Home" label="Member Home" onClick='navigation.redirect("memberPanel")'/>
+             <a id="MemberList" label="Member List" onClick='navigation.redirect("member")'/>
             <a id="registerMember" label="Register Member" onClick='navigation.redirect("registerMember")'/>
-            <a id="unregisterMember" label="UnRegister Member" onClick='navigation.redirect("unregisterMember")'/>
         </vbox>
 </zk>

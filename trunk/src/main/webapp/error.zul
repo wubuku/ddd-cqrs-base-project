@@ -2,16 +2,20 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-	<window id="errWin" title="Error" width="500px;" height="200px">
+	<window id="errWin" title="Error" width="500px;" height="200px" >
 		<zscript>
 			Throwable excp = requestScope.get("javax.servlet.error.exception");
+
 		</zscript>
 		<div style="margin:20px;">
 			<label value="Ooops you caught us with our pant down :(, We are working hard on this problem and will resolve it soon, Please move on to the login page till then" style="color:red;" />
-			<hbox
-				style="margin-left:auto; margin-right:auto; text-align: center;">
-				    <button label="Goto Sign In Page"	onClick='Executions.sendRedirect("/login.zul")' />
-			</hbox>
 		</div>
+		<div style="margin:20px;">
+
+        			<label value="Will redirect to login page automagically in 6 seconds" style="color:red;" />
+
+        		</div>
+		<timer id="timer" delay="6000" repeats="false"
+            onTimer='Executions.sendRedirect("/login.zul")' />
 	</window>
 </zk>

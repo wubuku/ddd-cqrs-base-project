@@ -12,6 +12,7 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
    import org.zkoss.zkplus.spring.SpringUtil;
    IApplicationContext applicationContext = (IApplicationContext)SpringUtil.getBean("applicationSetup");
    boolean isMultiTenant = applicationContext.isProfile ("multitenant");
+
    </zscript>
    <n:body class="login">
       <window contentSclass="login">
