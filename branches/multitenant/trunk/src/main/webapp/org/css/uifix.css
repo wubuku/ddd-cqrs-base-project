@@ -96,3 +96,15 @@ div.soapNoteContR{border:none}
 	.z-grid>.z-grid-body{overflow-x:hidden}
 	.grid>.z-listbox>.z-listbox-body{height:auto !important;overflow-x:hidden}
 }
+
+.form .name {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    } 
+
+.form .nameCol2 {
+        display: block;
+        margin-left:0px;
+        text-align: center;
+}

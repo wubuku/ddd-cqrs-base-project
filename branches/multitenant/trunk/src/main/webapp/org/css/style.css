@@ -1215,6 +1215,7 @@ table .z-label {
 }
 
 .z-combobox-rounded-inp, .z-bandbox-rounded-inp, .z-datebox-rounded-inp, .z-timebox-rounded-inp, .z-spinner-rounded-inp, .z-combobox-inp, .z-bandbox-inp, .z-datebox-inp, .z-timebox-inp, .z-spinner-inp {
+padding-left: 8px;
  width: 86% !important;
  background:url("") repeat-x scroll 0 0 #FFFFFF;
 }
@@ -1800,6 +1801,19 @@ tr.z-row .z-detail-outer {
     background: url(../images/toolbar-sprite.png) -123px 0;
     margin: 0 0 3px 0;
 }
+
+.form .name {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    } 
+
+.form .nameCol2 {
+        display: block;
+        margin-left:0px;
+        text-align: center;
+}
+
 .clearBtn{
     background: url(../images/comboclearbtn.png) no-repeat;
     margin: 0 0 3px 0;
@@ -1832,4 +1846,7 @@ moz-use-text-color -moz-use-text-color #86A4BE;
 }
 
 th: 17px;
+}
+
+x;
 }
