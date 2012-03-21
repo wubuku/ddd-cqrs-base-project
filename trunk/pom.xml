@@ -55,6 +55,12 @@
             <version>3.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-security</artifactId>
+            <version>3.0</version>
+        </dependency>
+
         <!-- Zkoss dependecies end -->
 
         <!-- Logging dependecies start -->
