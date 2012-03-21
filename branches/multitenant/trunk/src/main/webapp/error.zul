@@ -4,7 +4,13 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 	<window id="errWin" title="Error" width="500px;" height="200px" >
 		<zscript>
+		import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+			 protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 			Throwable excp = requestScope.get("javax.servlet.error.exception");
+
+			logger.error("Error at UI",excp);
 
 		</zscript>
 		<div style="margin:20px;">
