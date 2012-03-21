@@ -14,23 +14,22 @@ subpagetitle.setValue("Enter/Edit details of the Book you wish to Register into 
                 <panelchildren>
                 <div align="center" >
      <hlayout spacing="20px" sclass="form" >
-                 <vlayout spacing="10px">
-                      <hlayout spacing="6px">
+     <vlayout spacing="10px" sclass="form">
+       <hlayout spacing="6px">
             <label id = "bookId" value="@{bookDto.id}" sclass="name" visible="false"/>
        </hlayout>
         <hlayout spacing="8px">
-            <label id = "lblBookName" sclass="name" value="Name" />
-            <label zclass="labelReq" value="*"/>
-            <textbox id = "txtBookName" maxlength="40" value="@{bookDto.name,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" constraint="no empty" cols="40"/>
+            <label id = "lblBookName" sclass="name" value="Book Name" mold="required"/>
+            <textbox id = "txtBookName" maxlength="40" value="@{bookDto.name,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" constraint="no empty" cols="39"/>
         </hlayout>
           <hlayout spacing="6px">
-            <label id = "lblIsbn" value="ISBN" sclass="name"/>
-            <label zclass="labelReq"  value="*"/>
-            <textbox id = "txtIsbn" maxlength="20" value="@{bookDto.isbn,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" cols="40" constraint="no empty"/>
+            <label id = "lblIsbn" value="ISBN" sclass="name" mold="required"/>
+            <textbox id = "txtIsbn" maxlength="20" value="@{bookDto.isbn,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" cols="39" constraint="no empty"/>
         </hlayout>
+        
           <hlayout spacing="6px">
             <label id = "lblAuthors" sclass="name" value="Authors"/>
-            <textbox id = "txtAuthors" maxlength="100" value="@{bookDto.authors,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" rows="4" cols="40"/>
+            <textbox id = "txtAuthors" maxlength="100" value="@{bookDto.authors,save-when='purchaseBookBtn.onClick,updateBookBtn.onClick'}" rows="4" cols="36"/>
         </hlayout>
        <!-- <hlayout>
             <label id = "lblCopies" value="Copies"/>
