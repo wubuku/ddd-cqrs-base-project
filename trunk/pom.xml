@@ -508,6 +508,10 @@
                             <name>logback.configurationFile</name>
                             <value>\WEB-INF\logback.xml</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>jetty.port</name>
+                            <value>8087</value>
+                        </systemProperty>
                     </systemProperties>
                 </configuration>
             </plugin>
