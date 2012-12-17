@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.librarymanagement.presentation.queries.ILibraryFinder">
+
+
+    <select id="findBookWithId" resultType="hashMap">
+      SELECT id as id,
+            name as name,
+            isbn as isbn,
+            authors as authors,
+            available_copies as availableCopies,
+            total_copies as totalCopies,
+            AMOUNT as amount,
+            CURRENCY_CODE as currencyCode,
+            uid as bookId
+      FROM BOOK
+      where id = #{bookId}
+    </select>
+
+
+    <select id="findAllBooks" resultType="hashMap">
+    SELECT uid,
+          id,
+          name,
+          isbn,
+          authors,
+          available_copies as availableCopies,
+          total_copies as totalCopies,
+          AMOUNT as amount,
+          CURRENCY_CODE
+    FROM BOOK
+    where ENTITY_STATUS = 0
+    order by available_copies desc,id desc;
+  </select>
+
+    <select id="findAllBooksWithMember" resultType="hashMap">
+      SELECT b.uid as uid,
+             b.id as id,
+             b.name as name,
+             b.isbn as isbn,
+             b.authors as authors,
+             bl.from_date as issueDate,
+            AMOUNT as amount,
+            CURRENCY_CODE as currencyCode
+      FROM BOOK as b,BOOK_LENDING as bl
+      where b.ENTITY_STATUS = 0
+      and bl.member = #{memberId}
+      and bl.book = b.id
+      and bl.thru_date is null
+      order by bl.id desc
+    </select>
+
+
+    <select id="findBookCountInLibrary" resultType="java.lang.Integer">
+      SELECT IFNULL(count(*),0)
+      FROM BOOK
+      where ENTITY_STATUS = 0
+  </select>
+
+
+    <select id="findCountOfMembersWhoHaveBorrowedBooks" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(DISTINCT member),0)
+        FROM   BOOK_LENDING
+   </select>
+
+    <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
+    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.id as id
+    FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
+    WHERE member.ENTITY_STATUS = 0
+    and month(person.DATE_OF_BIRTH)= month(now())
+    </select>
+
+    <select id="findBookLendings" resultType="hashMap">
+    SELECT id,book,member,completion_comments,from_date,thru_date
+    FROM BOOK_LENDING
+    </select>
+
+
+    <select id="findMostActiveBook" resultType="String">
+    SELECT NAME FROM BOOK WHERE id = (
+    SELECT book
+    FROM BOOK_LENDING
+    GROUP BY book
+    ORDER BY COUNT(book) DESC
+    LIMIT 1);
+    </select>
+
+    <select id="findMostActiveMember" resultType="com.librarymanagement.presentation.dto.MemberDto">
+    SELECT first_name as firstName ,middle_name as middleName ,last_name as lastName
+    FROM PERSON WHERE id = (
+        SELECT member
+        FROM BOOK_LENDING
+        GROUP BY member
+        ORDER BY COUNT(member) DESC
+    LIMIT 1);
+    </select>
+</mapper>

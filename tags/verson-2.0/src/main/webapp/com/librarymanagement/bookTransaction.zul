@@ -1,0 +1,64 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./findBookForTransaction"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.nthdimenzion.presentation.util.ViewUtil;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+pagetitle.setValue("Buy or Sell copies");
+
+]]></zscript>
+    <window id="findBookForTransaction"  title="Details of the book you want to buy or sell" border="normal" self="@{define(content)}" apply="${bookTransactionComposer}">
+   <hlayout spacing="20px" sclass="form" >
+        <vlayout>
+            <hlayout>
+                <label value="Book Name " sclass="name"/>
+                <label value="@{bookTransactionComposer.bookDto.name}"/>
+            </hlayout>
+            <hlayout>
+                <label value="ISBN " sclass="name"/>
+                 <label value="@{dto.isbn}"/>
+             </hlayout>
+            <hlayout>
+                <label value="Available Copies " sclass="name"/>
+                 <label value="@{bookTransactionComposer.bookDto.availableCopies,load-after='buyBtn.onClick,sellBtn.onClick'}"/>
+             </hlayout>
+            <hlayout>
+                <label value="Total Copies " sclass="name"/>
+                 <label value="@{bookTransactionComposer.bookDto.totalCopies,load-after='buyBtn.onClick,sellBtn.onClick'}"/>
+             </hlayout>
+
+
+            <label value="What do you want to do here ?"/>
+            <radiogroup id="transactionType" onCheck="bookTransactionComposer.selectTransaction(self.selectedItem.value)"></radiogroup>
+            <hlayout>
+                <radio label="Buy Copies" radiogroup="transactionType" checked="true" value="0"/>
+                <radio label="Sell Copies" radiogroup="transactionType" value="1"/>
+            </hlayout>
+
+            <hlayout>
+                <label value="No of Copies "/>
+                <spinner id="noOfCopies" width="25%" constraint="no negative, no zero" value="1"/>
+            </hlayout>
+
+            <hlayout>
+                <button id="buyBtn" label="Buy Copies" onClick="bookTransactionComposer.buyCopies(noOfCopies.value)"/>
+                <button id="sellBtn" label="Sell Copies" onClick="bookTransactionComposer.sellCopies(noOfCopies.value)" visible="false"/>
+            </hlayout>
+        </vlayout>
+        </hlayout>
+    </window>
+
+    <vbox self="@{define(left)}">
+            <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+            <a id="bookList" label="List of Books" onClick='navigation.redirect("bookList")'/>
+            <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
+            <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
+    </vbox>
+</zk>

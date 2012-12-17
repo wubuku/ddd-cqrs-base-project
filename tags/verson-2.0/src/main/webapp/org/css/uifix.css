@@ -1,0 +1,98 @@
+body{padding:0}
+.z-a,.patDet .z-label,.z-button-os,div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt,.grid thead td a{font:11px normal Tahoma,Geneva,sans-serif}
+.z-tabpanel{border-color:#C9D2D7;}
+.panelTop,.z-panel-header{border:none}
+.e-tab-seld .e-tab-text{font-size:11px;padding-right:11px !important}
+.z-panel-header{border-top:solid 1px #C9D2D7;}
+.panelFoot{border:1px solid #C9D2D7;padding:4px 8px}
+.top{border-bottom:0;}
+.z-panel-children{border:none}
+.z-panel-children .panelCont{border:none}
+.panelCont select{font-size:12px;padding:0}
+.z-panel-icon{background-position:0 -313px;float:left}
+.z-tab-ver-seld{background-position:0 0;}
+.z-tabs-ver .z-tabs-ver-cnt{border-right:none;padding:0}
+.z-tabbox-ver .z-tabpanels-ver{background-color:#fff;border:none;padding:1%;}
+.addBtn{background-position:5px -154px}.delBtn{background-position:5px -174px}
+.linkBtn a{padding-left:7px}
+.linkBtnOn .addBtn{background-position:5px -151px;}
+.linkBtnOn .addBtn,.linkBtnOn .lookupBtn{padding-left:20px}
+
+/*.z-panel{border:1px solid #ddd;}*/
+.z-panel>.z-panel-body{border:1px solid #ddd;}
+.z-panel-icon{height:14px}
+
+.z-combobox-rounded-inp, .z-bandbox-rounded-inp, .z-datebox-rounded-inp, .z-timebox-rounded-inp, .z-spinner-rounded-inp, .z-combobox-inp, .z-bandbox-inp, .z-datebox-inp, .z-timebox-inp, .z-spinner-inp{font:11px normal Tahoma,Geneva,sans-serif}
+
+/*.z-tabbox .panelFoot{border-width:0 1px;padding:0;}*/
+.z-tabs{border-bottom:0}
+.z-tabbox .z-tabs .z-tabs-header{border-bottom:solid 4px #757575;padding:4px 4px 0;}
+.z-tabbox .z-tabs{padding:0;}
+div.z-listbox-header th.z-listheader{border-color:#e5e5e5;border-width:0 1px 0 0;padding-left:3px}
+.panelHeadTop,div.z-listbox,.z-tabbox .panelFoot{border-color:#C9D2D7}
+.panelHeadTop a,.z-panel-header{color:#333;font-weight:bold;font-size:11px}
+div.z-listbox{border-width:0 1px;width:auto !important}
+.apptDt{margin-right:5px}
+.patDetCont .patDet {min-height:30px;}
+.lagendCont .lagends span span{background:transparent;padding:0;width:auto}
+.leftMenuLi,.menuLeft{border-color:#ccc #a2a2a2}.menuLeft{border-bottom:none}
+.grayBox{min-height:103%;height:auto !important}
+.grayBox .patDetCont{background-color:transparent;border:none;padding:0}/**/
+.z-hbox td,.z-hbox table{border-color:#ddd !important;border-width:0px}
+.z-hbox{width:100%}
+
+/*.z-hbox td,.z-hbox table{border:none !important}
+.z-hbox{border:1px solid #ddd !important;width:100%}
+.z-hbox>tbody>tr>td>table>tbody>tr>td.z-hbox-sep{background-color:#ddd}
+.z-hbox>tbody>tr>td>table>tbody>tr>td{padding:1px}*/
+
+.z-listbox{clear:both;}
+tr.z-listbox-odd{background-color:#F3F3F3}
+/*.grayBox .z-listbox{border:solid 1px #ccc;border-width:0 0 1px}
+.grayBox .z-listbox{border:none}
+.grayBox .z-listbox .z-listbox-body{border:solid 1px #ccc;border-width:0 0px 1px}*/
+.grayBox .z-panel-body{border-bottom:solid 1px #ccc;}
+.grayBox .z-vbox td{text-align:left}
+.z-tabs-ver-scroll,div.z-grid{border:none}
+.z-tabbox-ver{background-color:#fff;}
+.z-radio input,.z-checkbox input{margin-right:4px;vertical-align:middle}
+.z-radio label,.z-checkbox label{line-height:18px;padding-right:10px}
+.panelCont div.chkBox input, .panelCont div.chkBox label{line-height:normal}
+
+.divStyle{width:20%}
+.selected,.unSelected{width:auto !important}
+.divStyle table{width:100%}
+.panelCont div.z-grid{margin:0}
+.z-grid table,.z-window-embedded-cnt-noborder table{border-collapse:collapse;}
+.z-grid>table,.z-window-embedded-cnt-noborder>table/*,.z-window-embedded table*/{table-layout:fixed}
+.z-column-over{background:none}
+div.z-grid-header th.z-column{border-color:#e5e5e5}
+
+.z-window-embedded-cnt-noborder>table{width:100%}
+
+.z-listfoot{border-bottom:solid 1px #ccc;}
+.z-paging{padding:2px 0;display:block}
+.z-timebox-rounded, .z-spinner-rounded, .z-timebox, .z-spinner{display:block}
+.z-paging-info{top:2px}
+.pagination .z-paging .z-paging-info{display:none}
+.z-timebox{position:relative}
+.z-timebox-btn {position:absolute;right:0;top:0}
+.z-timebox .z-timebox-btn{border-right:solid 1px #bcd;}
+textarea.z-textbox{width:99%}
+.soapNoteContR>table,.soapNoteContR>div>table{border-collapse:separate;width:97%}
+td.soapNoteContR{border:solid 1px #e5e5e5;padding-bottom:5px}
+div.soapNoteContR{border:none}
+.z-overflow-hidden .z-combobox-rounded-inp,.z-overflow-hidden .z-bandbox-rounded-inp,.z-overflow-hidden .z-datebox-rounded-inp,.z-overflow-hidden .z-timebox-rounded-inp,.z-overflow-hidden .z-spinner-rounded-inp,.z-overflow-hidden .z-combobox-inp,.z-overflow-hidden .z-bandbox-inp,.z-overflow-hidden .z-datebox-inp,.z-overflow-hidden .z-timebox-inp,.z-overflow-hidden .z-spinner-inp{width:85% !important}
+.z-panel-children>.z-button-os,.z-hbox table td>.z-button-os,.z-hbox table td>.chkBox,.z-hbox table td>.z-checkbox{margin:5px}
+
+.z-window-highlighted .z-window-highlighted-hl,.z-window-highlighted .z-window-highlighted-hr{background:none}
+.z-window-highlighted-shadow{border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px}
+.z-window-highlighted-header{border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px 5px 0 0;padding:8px 0 6px 10px;width:auto !important}
+.z-window-highlighted-close{margin:-6px 2px 0 0}
+
+.safari>div>table{width:100%}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.z-button-os{padding:2px 4px}
+	.z-grid>.z-grid-body{overflow-x:hidden}
+	.grid>.z-listbox>.z-listbox-body{height:auto !important;overflow-x:hidden}
+}

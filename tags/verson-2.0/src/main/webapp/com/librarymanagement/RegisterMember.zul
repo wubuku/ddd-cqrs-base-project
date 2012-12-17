@@ -1,0 +1,50 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./memberRegistration"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+pagetitle.setValue("Register a Member");
+subpagetitle.setValue("You can Register a member here");
+]]></zscript>
+    <window id="memberRegistration" apply="${memberRegistrationComposer}" title="Member Registration Details" border="normal" width="100%" self="@{define(content)}" height="100%">
+     <panel id="libraryDetails" title="Quick view to register a member here" closable="true" collapsible="true">
+                <panelchildren>
+                <div align="center" >
+      <hlayout spacing="20px" sclass="form" >
+                 <vlayout spacing="10px">
+                      <hlayout spacing="6px">
+            <!--<label id = "lblPersonId" value="Person Id" visible="@{personRegistrationComposer.isUpdateView}"/-->
+            <label id = "personId" value="@{dto.id}" visible="false"/>
+       </hlayout>
+         <hlayout spacing="6px">
+            <label id = "lblMemberFirstName" sclass="name" value="First Name"/>
+            <label zclass="labelReq" value="*"/>
+            <textbox id = "txtMemberFirstName" value="@{member.firstName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"/>
+        </hlayout>
+          <hlayout spacing="6px">
+            <label id = "lblMemberMiddleName" sclass="name" value="Middle Name"/>
+            <textbox id = "txtMemberMiddleName" value="@{member.middleName}"/>
+        </hlayout>
+          <hlayout spacing="6px">
+            <label id = "lblMemberLastName" sclass="name" value="Last Name"/>
+            <label zclass="labelReq" value="*"/>
+            <textbox id = "txtMemberLastName" value="@{member.lastName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  constraint="no empty"/>
+        </hlayout>
+         <hlayout spacing="6px">
+            <label id = "lblDateOfBirth" sclass="name" value="Date Of Birth"/>
+            <label zclass="labelReq" value="*"/>
+            <datebox id="dateOfBirth"  value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter',save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty,no future" />
+        </hlayout>
+         <hlayout spacing="6px">
+            <button id = "registerMemberBtn" label="Register Member" onClick="memberRegistrationComposer.registerMember()" visible="@{memberRegistrationComposer.registerMemberView}"/>
+            <button id = "updaterMemberBtn" label="Done Editing" onClick="memberRegistrationComposer.updaterMember()" visible="@{memberRegistrationComposer.updateView}"/>
+        </hlayout>
+     </vlayout>
+     </hlayout>
+     </div>
+     </panelchildren>
+     </panel>
+    </window>
+</zk>

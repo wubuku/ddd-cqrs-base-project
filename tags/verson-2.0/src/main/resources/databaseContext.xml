@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cloud="http://schema.cloudfoundry.org/spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd">
+
+
+    <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
+
+	<bean
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+		id="sessionFactory">
+		<property name="dataSource" ref="dataSourceRef"></property>
+		<property name="entityInterceptor" ref="autoColumnsPopulator"/>
+		<property name="namingStrategy" ref="namingStrategy"></property>
+				<property name="packagesToScan">
+			<list>
+                <value>org.nthdimenzion.ddd.domain</value>
+                <value>org.nthdimenzion.security.domain</value>
+				<value>com.simplepersoncrud.domain</value>
+                <value>com.librarymanagement.domain</value>
+			</list>
+		</property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
+                <prop key="bytecode.provider">cglib</prop>
+                <prop key="hibernate.hbm2ddl.import_files">common.sql,librarymanagement.sql</prop>
+            </props>
+        </property>
+		
+	</bean>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"></constructor-arg>
+        <constructor-arg name="allowCreate" value="true"></constructor-arg>
+    </bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="namingStrategy" class="org.nthdimenzion.ddd.infrastructure.hibernate.CustomNamingStrategy" />
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<tx:annotation-driven proxy-target-class="true" />
+
+    <bean id="dataSourceRef" class="${jdbc.datasource}">
+        <property name="url" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <beans profile="cloud">
+        <cloud:data-source id="dataSourceRef" />
+    </beans>
+
+
+
+</beans>

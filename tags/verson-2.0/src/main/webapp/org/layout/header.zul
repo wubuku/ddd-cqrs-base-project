@@ -1,0 +1,27 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:n="http://www.zkoss.org/2005/zk/native"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<zscript><![CDATA[
+import org.springframework.security.core.userdetails.UserDetails;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.nthdimenzion.security.domain.SystemUser;
+import javax.servlet.ServletContext;
+import org.zkoss.zk.ui.Execution;
+UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
+
+]]></zscript>
+<?page id="indexPage" title="Sample example Application for CQRS/DDD Base Project" cacheable="true"
+	language="xul/html"?>
+<div sclass="top">
+   <n:div class="logoCont">
+			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
+	</n:div>
+	<div sclass="loggedIn">
+	    <a href="/" zclass="signout">Log Off</a>
+	    <h:br></h:br>
+        <label value="Logged In "/>
+        <label value="${userDetails.username}"/>
+	</div>
+</div>
+</zk>
