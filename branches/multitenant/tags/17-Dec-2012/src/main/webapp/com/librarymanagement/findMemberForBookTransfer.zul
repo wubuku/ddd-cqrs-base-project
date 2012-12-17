@@ -1,0 +1,54 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./findMember"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.nthdimenzion.presentation.util.ViewUtil;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constanots;
+import com.librarymanagement.presentation.MemberManagementComposer;
+pagetitle.setValue("Select a member who needs to borrow or return a book");
+]]></zscript>
+    <window id="findMember"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
+        <vlayout>
+            <panel title="Double click on the member who wishes to borrow or return a book">
+                <panelchildren>
+                    <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
+                    <listbox  id="memberDetailsList" multiple="true" model="@{memberManagementComposer.members}" mold="paging" pageSize="10">
+                        <listhead>
+                            <listheader>Id</listheader>
+                            <listheader>Name</listheader>
+                            <listheader>Date Of Birth</listheader>
+                        </listhead>
+                        <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
+                            <attribute name="onDoubleClick">
+                                memberManagementComposer.selectMemberForBookTransfer(self.value.id,"transferBook");
+                             </attribute>
+                            <listcell>
+								<label value="@{member.id}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{member.fullName}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeToZkStringConverter'}" />
+							</listcell>
+                        </listitem>
+                    </listbox >
+                </panelchildren>
+            </panel>
+        </vlayout>
+    </window>
+
+    <vbox self="@{define(left)}">
+        <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+        <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
+        <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
+        <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
+    </vbox>
+</zk>

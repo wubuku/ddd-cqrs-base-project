@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringModelInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="password" value="nthdimenzion"></property>
+        <property name="username" value="nthdimenzion.ceramid.ecosmos@gmail.com"></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.debug">false</prop>
+                <prop key="mail.smtp.host">smtp.gmail.com</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.port">25</prop>
+                <prop key="mail.smtp.timeout">60000</prop>
+            </props>
+        </property>
+    </bean>
+
+     <bean id="testMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="password" value="nthdimenzion"></property>
+        <property name="username" value="nthdimenzion.ceramid.ecosmos@gmail.com"></property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.debug">false</prop>
+                <prop key="mail.smtp.socketFactory.port">3465</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.port">3025</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityEngine" class=" org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
+        </property>
+    </bean>
+
+    <util:map id="defaultMailSettings" key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="RecipientEmailAddress" value="sudarshan89@gmail.com"/>
+        <entry key="SenderEmailAddress" value="ceramid.admin@gmail.com"/>
+        <entry key="Subject" value="Default Test Mail"/>
+        <entry key="TemplatePath" value="org/presentation/templates/email/defaultMailTemplate.vm"/>
+    </util:map>
+
+    <bean id= "defaultMailService" class="org.nthdimenzion.util.DefaultMailService">
+        <qualifier value="defaultMailService"/>
+        <constructor-arg name="javaMailSender" ref="mailSender"/>
+        <constructor-arg name="velocityEngine" ref="velocityEngine"/>
+        <constructor-arg name="mailSettings" ref="defaultMailSettings"/>
+    </bean>
+
+    <bean id= "testMailService" class="org.nthdimenzion.util.DefaultMailService">
+        <qualifier value="testMailService"/>
+        <constructor-arg name="javaMailSender" ref="testMailSender"/>
+        <constructor-arg name="velocityEngine" ref="velocityEngine"/>
+        <constructor-arg name="mailSettings" ref="defaultMailSettings"/>
+    </bean>
+
+
+</beans>

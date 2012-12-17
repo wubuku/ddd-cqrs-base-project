@@ -1,0 +1,43 @@
+<?page title="DDD/CQRS Base Project" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./wrapper"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:n="http://www.zkoss.org/2005/zk/native"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <div sclass="wrapper" id="wrapper" style="overflow:auto;">
+        <div sclass="top">
+            <include src="/org/layout/header.zul"/>
+        </div>
+        <div sclass="tabs clr">
+            <include src="/org/layout/menu.zul"/>
+        </div>
+        <div sclass="pgTtl">
+		<n:h2 class="practices fl">
+			<span>
+				<label id="pagetitle" style="font-size:14px;color:#008872;line-height:30px;font-weight:bold" />
+				<n:br></n:br>
+				<label id="subpagetitle" style="font-size:12px;" />
+			</span>
+		</n:h2>
+		<n:h1 style="width:100%;text-align:center">
+			<label value="${requestScope.message}" id="successMsg" style="font-size:14px;color:#00AA00;line-height:40px;font-weight:bold" />
+		</n:h1>
+	    </div>
+
+	    <borderlayout width="100%" height="510px" id="a">
+	        <west width="15%" title="Related Tasks">
+	            <div self="@{insert(left)}" style="overflow:auto;"/>
+	        </west>
+	        <center>
+	            <div self="@{insert(content)}" id="center" sclass="mid" style="overflow:auto;"/>
+	        </center>
+
+	    </borderlayout>
+	        <div sclass="footer" style="overflow:auto;">
+        		<div sclass="cBox">
+        			<div sclass="copyrights">Developed by NthDimenzion Solutions Pvt Ltd.</div>
+        			<div sclass="fr" />
+        		</div>
+        	</div>
+	</div>
+</zk>
