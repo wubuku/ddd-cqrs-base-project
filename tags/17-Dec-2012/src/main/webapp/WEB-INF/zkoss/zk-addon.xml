@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-addon>
+	<addon-name>baseProject</addon-name>
+	<language-name>xul/html</language-name>
+	<stylesheet href="/org/css/style.css" type="text/css" />
+	<stylesheet href="/org/css/uifix.css" type="text/css" />
+	<component>
+		<extends>groupbox</extends>
+		<component-name>groupbox</component-name>
+		<property>
+			<property-name>closable</property-name>
+			<property-value>false</property-value>
+		</property>
+	</component>
+
+	<!--<component>
+		<extends>window</extends>
+		<component-name>window</component-name>
+		<component-class>com.ecosmos.view.component.DetachEventPostingWindow</component-class>
+		<property>
+			<property-name>contentStyle</property-name>
+			<property-value>overflow:auto</property-value>
+		</property>
+	</component>-->
+
+	<component>
+		<extends>listcell</extends>
+		<component-name>listcell</component-name>
+		<property>
+			<property-name>style</property-name>
+			<property-value>border:1px solid #e5e5e5;border-width: 1px 1px 0 0;</property-value>
+		</property>
+	</component>
+
+	<component>
+		<extends>listheader</extends>
+		<component-name>listheader</component-name>
+		<property>
+			<property-name>style</property-name>
+			<property-value>border:1px solid #e5e5e5;border-width: 0 1px 1px 0;</property-value>
+		</property>
+	</component>
+
+	<component>
+		<extends>panel</extends>
+		<component-name>panel</component-name>
+		<property>
+			<property-name>border</property-name>
+			<property-value>normal</property-value>
+		</property>
+	</component>
+
+<!--	<component>
+		<component-name>phonebox</component-name>
+		<component-class>com.ecosmos.zkoss.ext.Phonebox</component-class>
+		<extends>textbox</extends>
+	</component>-->
+	
+	<!--<component>
+		<component-name>zipcodebox</component-name>
+		<component-class>com.ecosmos.zkoss.ext.Zipcodebox</component-class>
+		<extends>textbox</extends>
+	</component>
+	
+	<component>
+		<component-name>ssnbox</component-name>
+		<component-class>com.ecosmos.zkoss.ext.SSNBox</component-class>
+		<extends>textbox</extends>
+	</component>
+
+	<component>
+		<component-name>lookup</component-name>
+		<component-class>com.ecosmos.view.component.LookupBox</component-class>
+		<extends>bandbox</extends>
+	</component>
+
+	<component>
+		<component-name>enumeration</component-name>
+		<component-class>com.ecosmos.view.component.EnumerationDropdown</component-class>
+		<extends>combobox</extends>
+	</component>
+
+	<component>
+		<component-name>name</component-name>
+		<component-class>com.ecosmos.view.component.NameLabel</component-class>
+		<extends>label</extends>
+	</component>
+	
+	<component>
+		<component-name>role</component-name>
+		<component-class>com.ecosmos.view.component.RoleLabel</component-class>
+		<extends>label</extends>
+	</component>
+	
+	<component>
+		<component-name>email</component-name>
+		<component-class>com.ecosmos.view.component.EmailTextbox</component-class>
+		<extends>textbox</extends>
+	</component>
+-->
+	<component>
+		<extends>panel</extends>
+		<component-name>panel</component-name>
+	</component>
+
+
+	<component>
+		<extends>datebox</extends>
+		<component-name>datebox</component-name>
+		<property>
+			<property-name>format</property-name>
+			<property-value>MM/dd/yyyy</property-value>
+		</property>
+		<property>
+			<property-name>lenient</property-name>
+			<property-value>false</property-value>
+		</property>
+	</component>
+
+	<!--<component>
+		<component-name>suggest</component-name>
+		<component-class>com.ecosmos.view.component.AutoSuggestionBox
+		</component-class>
+		<extends>lookup</extends>
+	</component>
+	-->
+
+	<component>
+		<extends>doublebox</extends>
+		<component-name>doublebox</component-name>
+		<property>
+			<property-name>format</property-name>
+			<property-value>#,##0.##</property-value>
+		</property>
+	</component>
+
+	<component>
+		<extends>decimalbox</extends>
+		<component-name>decimalbox</component-name>
+		<property>
+			<property-name>format</property-name>
+			<property-value>#,##0.##</property-value>
+		</property>
+	</component>
+	<component>
+		<component-name>label</component-name>
+		<component-class>org.zkoss.zul.Label</component-class>
+		<widget-class>zul.wgt.Label</widget-class>
+		<text-as>value</text-as>
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/label.js</mold-uri>
+		</mold>
+		<mold>
+			<mold-name>required</mold-name>
+			<mold-uri>mold/reqlabel.js</mold-uri>
+		</mold>
+	</component>
+
+
+</language-addon>

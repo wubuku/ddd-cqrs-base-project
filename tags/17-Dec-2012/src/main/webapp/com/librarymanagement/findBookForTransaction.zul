@@ -1,0 +1,63 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./findBookForTransaction"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.nthdimenzion.presentation.util.ViewUtil;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+pagetitle.setValue("Select a book and then buy and sell copies of it");
+subpagetitle.setValue("Double click on the book to buy or sell copies of the book");
+
+]]></zscript>
+    <window id="findBookForTransaction"  title="Book List" border="normal" self="@{define(content)}" apply="${bookListComposer}">
+        <vlayout>
+            <panel title="All books registered in the library, Double click on the book you want to buy or sell">
+                <panelchildren>
+                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10" tooltiptext="Double click on the book you want to buy or sell">
+                        <listhead>
+                            <!--<listheader>ID</listheader>-->
+                            <listheader>Name</listheader>
+                            <listheader>ISBN</listheader>
+                            <listheader>Authors</listheader>
+                            <listheader>Available Copies</listheader>
+                        </listhead>
+                        <listitem self="@{each='book'}" value="@{book}">
+                            <attribute name="onDoubleClick">
+                                bookListComposer.selectBook(self.value,"bookTransactions");
+                            </attribute>
+
+                            <!--<listcell>-->
+								<!--<label value="@{book.id}"></label>-->
+							<!--</listcell>-->
+							<listcell>
+								<label value="@{book.name}"></label>
+							</listcell>
+							<listcell>
+								<label value="@{book.isbn}"></label>
+							</listcell>
+                            <listcell>
+                                <label value="@{book.authors}"></label>
+                            </listcell>
+                            <listcell>
+                                <label value="@{book.availableCopies}"></label>
+                            </listcell>
+                        </listitem>
+                    </listbox>
+                </panelchildren>
+            </panel>
+        </vlayout>
+    </window>
+
+    <vbox self="@{define(left)}">
+            <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+            <a id="bookList" label="List of Books" onClick='navigation.redirect("bookList")'/>
+            <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
+            <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
+    </vbox>
+</zk>

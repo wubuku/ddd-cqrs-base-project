@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./unRegisterPeople"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+import org.nthdimenzion.presentation.util.ViewUtil;
+
+pagetitle.setValue("UnRegister People");
+subpagetitle.setValue("Select one or more people and unregister them.");
+Navigation navigation = SpringUtil.getBean("navigation",Navigation.class) ;
+]]></zscript>
+    <window id="unRegisterPeople"  apply="${personComposer}" title="Un Register People" border="normal" width="100%" self="@{define(content)}" height="100%">
+    <panel title="People Details">
+        <panelchildren>
+        <vbox width="100%">
+            <listbox model="@{personComposer.peopleDetails,load-after='unRegisterPeopleBtn.onClick'}" vflex="true" width="100%" id="peopleDetails" checkmark="true" multiple="true" mold="paging" pageSize="10" pagingPosition="bottom">
+                <listhead>
+                    <listheader>Id</listheader>
+                    <listheader>Name</listheader>
+                </listhead>
+                <listitem self="@{each=person}" value="@{person}">
+                    <listcell label="@{person.id}" />
+                    <listcell label="@{person.name}" />
+                </listitem>
+            </listbox>
+            <button label="Un Register People" onClick="personComposer.unregisterPeople(ViewUtil.getSelectedItems(peopleDetails))" id="unRegisterPeopleBtn"/>
+        </vbox>
+     </panelchildren>
+    </panel>
+    </window>
+</zk>

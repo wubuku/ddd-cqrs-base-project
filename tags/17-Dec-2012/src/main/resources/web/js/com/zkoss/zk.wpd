@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="com.zkoss" language="xul/html" depends="zul,zk.fmt">
+	<script src="js/jquery.ui.core.js" jsdoc="true"/>
+	<script src="js/jquery.ui.widget.js" jsdoc="true"/>
+	<script src="js/jquery.ui.position.js" jsdoc="true"/>
+	<script src="js/jquery.ui.autocomplete.js" jsdoc="true"/>
+	<widget name="AutoCompletion"/>
+</package>
