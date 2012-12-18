@@ -8,11 +8,13 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 @DomainRepositoryImpl
+@Transactional
 public class BookLendingRepository extends GenericHibernateRepository<BookLending,Long> implements IBookLendingRepository{
 
     protected BookLendingRepository(){
@@ -20,8 +22,8 @@ public class BookLendingRepository extends GenericHibernateRepository<BookLendin
     }
 
     @Autowired
-    public BookLendingRepository(HibernateTemplate hibernateTemplate) {
-        super(hibernateTemplate);
+    public BookLendingRepository(IHibernateDaoOperations hibernateDaoOperations) {
+        super(hibernateDaoOperations);
     }
 
     @Override
@@ -36,11 +38,12 @@ public class BookLendingRepository extends GenericHibernateRepository<BookLendin
 
     @Override
     public BookLending findOpenBookLending(Book book, Member member) {
+
         DetachedCriteria criteria = DetachedCriteria.forClass(BookLending.class);
         criteria.add(Restrictions.eq("book", book));
         criteria.add(Restrictions.eq("member", member));
         criteria.add(Restrictions.isNull("lendingInterval.thruDate"));
-        BookLending bookLending = UtilValidator.isNotEmpty(hibernateTemplate.findByCriteria(criteria)) ? (BookLending)hibernateTemplate.findByCriteria(criteria).get(0): null;
+        BookLending bookLending = UtilValidator.isNotEmpty(hibernateDaoOperations.findByCriteria(criteria)) ? (BookLending)hibernateDaoOperations.findByCriteria(criteria).get(0): null;
         return bookLending;
     }
 
