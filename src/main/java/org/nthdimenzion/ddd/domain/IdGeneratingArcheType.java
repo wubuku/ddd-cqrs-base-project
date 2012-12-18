@@ -19,7 +19,7 @@ public abstract class IdGeneratingArcheType extends BaseArchetype {
         return id;
     }
 
-    public void setId(Long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 

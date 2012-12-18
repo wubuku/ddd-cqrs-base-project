@@ -42,16 +42,18 @@ public class SecurityGroup extends BaseAggregateRoot {
         this.securityPermissions = securityPermissions;
     }
 
-    public void add(SecurityPermission securityPermission) {
+    public SecurityGroup add(SecurityPermission securityPermission) {
         this.securityPermissions.add(securityPermission);
+        return this;
     }
 
-    public void addAll(Set<SecurityPermission> securityPermissions) {
+    public SecurityGroup addAll(Set<SecurityPermission> securityPermissions) {
         if (UtilValidator.isNotEmpty(securityPermissions)) {
             for (SecurityPermission securityPermission : securityPermissions) {
                 add(securityPermission);
             }
         }
+        return this;
     }
 
     @Embedded
