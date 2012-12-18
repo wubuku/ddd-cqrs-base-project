@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.nthdimenzion.testdata.TestUserDetails;
 import org.nthdimenzion.testinfrastructure.AbstractTestFacilitator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
@@ -49,9 +50,9 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         Long id = bookRepository.registerBook(javaPersistence);
 //        bookRepository.registerBook(eventSourcing);
-        hibernateTemplate.flush();
-        hibernateTemplate.evict(javaPersistence);
-//        hibernateTemplate.evict(eventSourcing);
+        hibernateDaoOperations.flush();
+        hibernateDaoOperations.evict(javaPersistence);
+//        hibernateDaoOperations.evict(eventSourcing);
 
         List<Map<String, ?>> books = bookFinder.findAllBooks();
 
@@ -67,7 +68,7 @@ public class LibraryTest extends AbstractTestFacilitator {
     @Test
     public void testFindBookCount() {
         registerBook();
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         LibrarySummaryDto librarySummary = bookQueries.getLibrarySummary();
 
@@ -82,9 +83,9 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         crudDao.add(member);
         crudDao.add(member1);
-        hibernateTemplate.flush();
-        hibernateTemplate.evict(member);
-        hibernateTemplate.evict(member1);
+        hibernateDaoOperations.flush();
+        hibernateDaoOperations.evict(member);
+        hibernateDaoOperations.evict(member1);
 
         assertNotNull(crudDao.getAll(Member.class));
     }
@@ -141,7 +142,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
         Assert.notNull(bookLending);
@@ -159,7 +160,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
 
@@ -180,7 +181,7 @@ public class LibraryTest extends AbstractTestFacilitator {
         ReturnBooksCommand bookReturnCommand = new ReturnBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookReturnCommand);
 
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
         List bookLendings = bookFinder.findBookLendings(memberId, bookId);
         Map<String, ?> firstBookLending = (Map<String, ?>) bookLendings.get(0);
         BookLending bookLending = bookLendingRepository.getBookLendingFromId((Long) firstBookLending.get("id"));

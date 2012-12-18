@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.crud.ICrud;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
 import org.nthdimenzion.security.domain.SystemUser;
@@ -44,7 +45,7 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
     protected SystemUser systemUser;
 
     @Autowired
-    protected HibernateTemplate hibernateTemplate;
+    protected IHibernateDaoOperations hibernateDaoOperations;
 
     protected IDisplayMessages displayMessages = new DummyDisplayMessages();
 
