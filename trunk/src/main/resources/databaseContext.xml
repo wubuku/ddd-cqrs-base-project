@@ -13,10 +13,9 @@
     <bean class="org.nthdimenzion.ddd.infrastructure.hibernate.AutoColumnsPopulator" id="autoColumnsPopulator"/>
 
 	<bean
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-		id="sessionFactory">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" id="sessionFactory">
 		<property name="dataSource" ref="dataSourceRef"></property>
-		<property name="entityInterceptor" ref="autoColumnsPopulator"/>
+		<!--<property name="entityInterceptor" ref="autoColumnsPopulator"/>-->
 		<property name="namingStrategy" ref="namingStrategy"></property>
 				<property name="packagesToScan">
 			<list>
@@ -44,8 +43,7 @@
         <constructor-arg name="allowCreate" value="true"></constructor-arg>
     </bean>
 	
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
@@ -61,9 +59,11 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
+<!--
     <beans profile="cloud">
         <cloud:data-source id="dataSourceRef" />
     </beans>
+-->
 
 
 

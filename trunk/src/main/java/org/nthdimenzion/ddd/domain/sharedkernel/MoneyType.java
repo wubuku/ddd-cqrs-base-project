@@ -2,7 +2,7 @@ package org.nthdimenzion.ddd.domain.sharedkernel;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.BigDecimalType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.Type;

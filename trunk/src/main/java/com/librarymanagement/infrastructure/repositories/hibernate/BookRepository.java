@@ -6,10 +6,12 @@ import com.librarymanagement.domain.IBookRepository;
 import org.hibernate.criterion.DetachedCriteria;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 @DomainRepositoryImpl
+@Transactional
 public class BookRepository extends GenericHibernateRepository<Book, Long> implements IBookRepository {
 
     protected BookRepository(){
@@ -17,8 +19,8 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     }
 
     @Autowired
-    public BookRepository(HibernateTemplate hibernateTemplate) {
-        super(hibernateTemplate);
+    public BookRepository(IHibernateDaoOperations hibernateDaoOperations) {
+        super(hibernateDaoOperations);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class BookRepository extends GenericHibernateRepository<Book, Long> imple
     @Override
     public Book geBookWithUid(BookId bookId) {
         DetachedCriteria bookFromUid = criteriaForUid("bookId",Book.class,bookId);
-        Book book = (Book) hibernateTemplate.findByCriteria(bookFromUid).get(0);
+        Book book = (Book) hibernateDaoOperations.findByCriteria(bookFromUid).get(0);
         return updateBookWithDependencies(book);
     }
 

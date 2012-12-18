@@ -82,12 +82,7 @@ public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
 
     @Override
     public void confirm(String message, String title, int buttons, String icon, EventListener eventListener) {
-        try {
             Messagebox.show(message, title, buttons, icon, eventListener);
-        } catch (InterruptedException e) {
-            logger.warn("Error in display messages",e);
-
-        }
     }
 
     @Override

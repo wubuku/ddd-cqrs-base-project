@@ -57,14 +57,14 @@ public final class Interval implements Serializable {
      }
 
     @Column
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @NotNull
     DateTime getFromDate() {
         return fromDate;
     }
 
     @Column
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     DateTime getThruDate() {
         return thruDate;
     }
