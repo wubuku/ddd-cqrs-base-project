@@ -7,6 +7,7 @@ import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.security.domain.error.HomePageAlreadyExistsForUser;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -39,16 +40,18 @@ public class UserLogin extends BaseAggregateRoot {
         this.securityGroups = securityGroups;
     }
 
-    public void add(SecurityGroup securityGroup) {
+    public UserLogin add(SecurityGroup securityGroup) {
         this.securityGroups.add(securityGroup);
+        return this;
     }
 
-    public void addAll(Set<SecurityGroup> securityGroups) {
+    public UserLogin addAll(Set<SecurityGroup> securityGroups) {
         if (UtilValidator.isNotEmpty(securityGroups)) {
             for (SecurityGroup securityGroup : securityGroups) {
                 add(securityGroup);
             }
         }
+        return this;
     }
 
     public void assignHomePage(HomePageDetails homePageDetails) throws HomePageAlreadyExistsForUser {

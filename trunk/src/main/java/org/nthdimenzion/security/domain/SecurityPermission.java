@@ -1,6 +1,7 @@
 package org.nthdimenzion.security.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.annotations.Immutable;
 import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
@@ -10,7 +11,8 @@ import javax.persistence.Entity;
 
 @ValueObject
 @Entity
-public class SecurityPermission extends IdGeneratingArcheType {
+@Immutable
+class SecurityPermission extends IdGeneratingArcheType {
 
     private String permissionId;
     private String description;

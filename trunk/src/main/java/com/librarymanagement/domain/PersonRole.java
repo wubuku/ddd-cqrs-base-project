@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 @Role
 @MappedSuperclass
-public abstract class PersonRole extends IdGeneratingArcheType {
+abstract class PersonRole extends IdGeneratingArcheType {
 
     private Person person;
 

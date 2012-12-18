@@ -38,7 +38,7 @@ public final class Person extends IdGeneratingArcheType implements INamed {
 
     @NotNull
     public String getFirstName() {
-        return nullSafeCopy(firstName);
+        return firstName;
     }
 
     void setFirstName(String firstName) {
@@ -46,7 +46,7 @@ public final class Person extends IdGeneratingArcheType implements INamed {
     }
 
     public String getMiddleName() {
-        return nullSafeCopy(middleName);
+        return middleName;
     }
 
     void setMiddleName(String middleName) {
@@ -55,7 +55,7 @@ public final class Person extends IdGeneratingArcheType implements INamed {
 
     @NotNull
     public String getLastName() {
-        return nullSafeCopy(lastName);
+        return lastName;
     }
 
     void setLastName(String lastName) {
