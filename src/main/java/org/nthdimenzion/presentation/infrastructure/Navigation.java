@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
@@ -44,6 +45,14 @@ public class Navigation {
         Executions.getCurrent().sendRedirect(url);
     }
 
+    public void redirectToNewBrowserWindow(String viewName) {
+        redirectToNewBrowserWindow(viewName, Collections.<String, String>emptyMap());
+}
+
+    public void redirectToNewBrowserWindow(String viewName, Map<String, String> args) {
+        String url = buildUrl(viewName, args);
+        Executions.getCurrent().sendRedirect(url, "_");
+    }
     String buildUrl(String viewName, Map<String, ?> args) {
         StringBuilder arguments = new StringBuilder();
         String url = viewResolver.resolveViewName(viewName);
@@ -107,5 +116,14 @@ public class Navigation {
             throw new RuntimeException(e);
         }
         return window;
+    }
+    public void forward(String viewName, Map<String, ?> params){
+        try {
+            String url = buildUrl(viewName, Collections.<String, String>emptyMap());
+            Executions.getCurrent().forward(null,url,params, Execution.OVERWRITE_URI);
+        } catch (IOException e) {
+            logger.error("",e);
+            throw new IllegalArgumentException("Cannot forward request to supplied url",e);
+        }
     }
 }
