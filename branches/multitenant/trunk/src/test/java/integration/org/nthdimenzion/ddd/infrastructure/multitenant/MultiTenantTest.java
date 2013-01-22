@@ -29,10 +29,10 @@ public class MultiTenantTest extends AbstractTestFacilitator {
     public void testDataSourceCreationForTenantOne() throws SQLException {
         ITenantAware tenantOne = new Tenant("001");
 
-        Map<Object, Object> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSources();
-        DataSource dataSource = (DataSource) tenantIdToDataSourceMap.get(tenantOne.getTenantId());
+        Map<Object, DataSourceHolder> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSourceHolders();
+        DataSource dataSource = tenantIdToDataSourceMap.get(tenantOne.getTenantId()).dataSource;
 
-        assertNotNull(tenantIdToDataSourceMap.get(tenantOne.getTenantId()));
+        assertNotNull(dataSource);
         assertEquals("jdbc:mysql://localhost:3306/TenantOne", dataSource.getConnection().getMetaData().getURL());
         assertEquals("root@localhost", dataSource.getConnection().getMetaData().getUserName());
 
@@ -42,8 +42,8 @@ public class MultiTenantTest extends AbstractTestFacilitator {
     public void testDataSourceCreationForTenantTwo() throws SQLException {
         ITenantAware tenantTwo = new Tenant("002");
 
-        Map<Object, Object> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSources();
-        DataSource dataSource = (DataSource) tenantIdToDataSourceMap.get(tenantTwo.getTenantId());
+        Map<Object, DataSourceHolder> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSourceHolders();
+        DataSource dataSource = tenantIdToDataSourceMap.get(tenantTwo.getTenantId()).dataSource;
 
         assertNotNull(dataSource);
         assertEquals("jdbc:mysql://localhost:3306/TenantTwo", dataSource.getConnection().getMetaData().getURL());
@@ -71,7 +71,7 @@ public class MultiTenantTest extends AbstractTestFacilitator {
 
     @Test
     public void testGetAllConfiguredTenantsDetails() {
-        Map<Object, Object> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSources();
+        Map<Object, DataSourceHolder> tenantIdToDataSourceMap = dataSourceFactory.fetchConfiguredTenantDataSourceHolders();
 
         assertNotNull(tenantIdToDataSourceMap);
         assertEquals(5,tenantIdToDataSourceMap.size());

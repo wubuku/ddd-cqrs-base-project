@@ -22,9 +22,13 @@ import java.util.Map;
 public class DataSourceFactory extends NamedParameterJdbcDaoSupport implements ITenantAwareDataSourceFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(DataSourceFactory.class);
-    Map<Object, Object> tenantIdToDataSourceMap = null;
+    public static final String DEFAULT_TENANT = "DEFAULT";
+    static Map<Object, DataSourceHolder> tenantIdToDataSourceHolderMap = null;
+    static Map<Object, DataSource> tenantIdToDataSourceMap = null;
 
-    DataSource createDataSource(ITenantAware tenant) {
+    private DataSource defaultDataSource;
+
+    private DataSourceHolder createDataSourceHolder(ITenantAware tenant) {
         logger.debug("Going to create a brand new datasource for tenant " + tenant.getTenantId());
         Preconditions.checkNotNull(tenant);
         MysqlDataSource dataSource = new MysqlDataSource();
@@ -32,7 +36,9 @@ public class DataSourceFactory extends NamedParameterJdbcDaoSupport implements I
         dataSource.setUrl(customisationDetails.getJdbcUrl());
         dataSource.setUser(customisationDetails.getJdbcUsername());
         dataSource.setPassword(customisationDetails.getJdbcPassword());
-        return dataSource;
+        DataSourceHolder dataSourceHolder = new DataSourceHolder(dataSource, customisationDetails.getJdbcUsername(),
+                customisationDetails.getJdbcPassword());
+        return dataSourceHolder;
     }
 
     TenantCustomisationDetails getCustomisationDetails(ITenantAware tenant) {
@@ -44,8 +50,10 @@ public class DataSourceFactory extends NamedParameterJdbcDaoSupport implements I
     }
 
     @Override
-    public Map<Object, Object> initialiseConfiguredTenantDataSources() {
-        Map<Object, Object> tenantIdToDataSourceMap = Maps.newHashMap();
+    public Map<Object, DataSourceHolder> initialiseConfiguredTenantDataSources() {
+        Preconditions.checkNotNull(defaultDataSource);
+        Map<Object, DataSourceHolder> tenantIdToDataSourceHolderMap = Maps.newHashMap();
+        Map<Object, DataSource> tenantIdToDataSourceMap = Maps.newHashMap();
         JdbcTemplate jdbcTemplate = getJdbcTemplate();
         List<Tenant> allConfiguredTenants = jdbcTemplate.query("select * from tenant", new RowMapper<Tenant>() {
             @Override
@@ -55,22 +63,43 @@ public class DataSourceFactory extends NamedParameterJdbcDaoSupport implements I
             }
         });
         for (Tenant tenant : allConfiguredTenants) {
-            tenantIdToDataSourceMap.put(tenant.getTenantId(), createDataSource(tenant));
+            DataSourceHolder dataSourceHolder = createDataSourceHolder(tenant);
+            tenantIdToDataSourceHolderMap.put(tenant.getTenantId(), dataSourceHolder);
+            tenantIdToDataSourceMap.put(tenant.getTenantId(), dataSourceHolder.dataSource);
         }
+        DataSourceHolder defaultDataSourceHolder = new DataSourceHolder(defaultDataSource, "root", "");
+        tenantIdToDataSourceHolderMap.put(DEFAULT_TENANT, defaultDataSourceHolder);
+        tenantIdToDataSourceMap.put(DEFAULT_TENANT, defaultDataSource);
+        this.tenantIdToDataSourceHolderMap = tenantIdToDataSourceHolderMap;
         this.tenantIdToDataSourceMap = tenantIdToDataSourceMap;
-        return tenantIdToDataSourceMap;
+        return tenantIdToDataSourceHolderMap;
     }
 
     @Override
-    public Map<Object, Object> fetchConfiguredTenantDataSources() {
-        if (UtilValidator.isNotEmpty(this.tenantIdToDataSourceMap)) {
+    public Map<Object, DataSourceHolder> fetchConfiguredTenantDataSourceHolders() {
+        if (UtilValidator.isNotEmpty(this.tenantIdToDataSourceHolderMap)) {
             logger.debug("Picking data from cache");
-            return tenantIdToDataSourceMap;
+            return tenantIdToDataSourceHolderMap;
         } else {
             logger.debug("initialiseConfiguredTenantDataSources");
             return initialiseConfiguredTenantDataSources();
         }
     }
 
+    @Override
+    public Map<Object, DataSource> fetchConfiguredTenantDataSource() {
+        return tenantIdToDataSourceMap;
+    }
 
+
+    public static DataSourceHolder determineDataSourceForTenant(String tenantId) {
+        if (tenantIdToDataSourceHolderMap.get(tenantId) == null) {
+            tenantId = DEFAULT_TENANT;
+        }
+        return tenantIdToDataSourceHolderMap.get(tenantId);
+    }
+
+    public void setDefaultDataSource(DataSource defaultDataSource) {
+        this.defaultDataSource = defaultDataSource;
+    }
 }

@@ -52,6 +52,7 @@ public final class TenantIdFilter implements Filter {
         }
 
         // If found, set the Tenant ID in the security context
+        /*tenantId = "001";*/
         if (null != tenantId) {
             TenantIdHolder.setTenantId(tenantId);
             logger.info("Tenant context set with Tenant ID: " + tenantId);

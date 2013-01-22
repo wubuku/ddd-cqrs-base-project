@@ -8,7 +8,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 
 
-public final class ZkDisplayMessages implements IDisplayMessages<EventListener> {
+public class ZkDisplayMessages implements IDisplayMessages<EventListener> {
 
 
     public static final String STYLE = "font-size:14px;color:%s;line-height:40px;font-weight:bold";
@@ -82,12 +82,7 @@ public final class ZkDisplayMessages implements IDisplayMessages<EventListener> 
 
     @Override
     public void confirm(String message, String title, int buttons, String icon, EventListener eventListener) {
-        try {
             Messagebox.show(message, title, buttons, icon, eventListener);
-        } catch (InterruptedException e) {
-            logger.warn("Error in display messages",e);
-
-        }
     }
 
     @Override

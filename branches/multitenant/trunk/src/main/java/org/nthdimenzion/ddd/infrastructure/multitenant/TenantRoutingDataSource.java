@@ -2,17 +2,20 @@ package org.nthdimenzion.ddd.infrastructure.multitenant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 public class TenantRoutingDataSource extends AbstractRoutingDataSource {
 
-    private final Map<Object, Object> tenantIdToDataSourceMap;
+    private final Map tenantIdToDataSourceMap;
     private static final Logger logger = LoggerFactory.getLogger(TenantRoutingDataSource.class);
 
+    @Autowired
     public TenantRoutingDataSource(ITenantAwareDataSourceFactory tenantAwareDataSourceFactory){
-        tenantIdToDataSourceMap = tenantAwareDataSourceFactory.fetchConfiguredTenantDataSources();
+        tenantIdToDataSourceMap = tenantAwareDataSourceFactory.fetchConfiguredTenantDataSource();
         setTargetDataSources(tenantIdToDataSourceMap);
     }
 

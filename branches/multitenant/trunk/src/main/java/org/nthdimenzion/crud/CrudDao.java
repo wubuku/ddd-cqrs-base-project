@@ -4,11 +4,11 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.nthdimenzion.ddd.domain.BaseArchetype;
 import org.nthdimenzion.ddd.domain.LifeCycle;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,59 +19,60 @@ import java.util.List;
 import java.util.Set;
 
 @Component
+@Transactional
 public class CrudDao implements ICrud {
 
 	private final static Logger logger = LoggerFactory.getLogger(CrudDao.class);
-    private HibernateTemplate hibernateTemplate;
+    private IHibernateDaoOperations hibernateDaoOperations;
 
     protected CrudDao(){
 
     }
 
     @Autowired
-    public CrudDao(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
+    public CrudDao(IHibernateDaoOperations hibernateDaoOperations) {
+        this.hibernateDaoOperations = hibernateDaoOperations;
     }
 	
 	@Override
     @Transactional
 	public Long add(BaseArchetype e) {
-		return (Long) hibernateTemplate.save(e);
+		return (Long) hibernateDaoOperations.save(e);
 	}
 
 	@Override
     @Transactional
 	public <E> void remove(E e) {
-		hibernateTemplate.delete(e);
+		hibernateDaoOperations.delete(e);
 	}
 
 	@Override
     @Transactional
 	public <E> E update(E e) {
-		hibernateTemplate.saveOrUpdate(e);
+		hibernateDaoOperations.saveOrUpdate(e);
         return e;
 	}
 
 	@Override
 	public <E> E find(Class clazz,Serializable pk) {
-		return (E) hibernateTemplate.get(clazz,pk);
+		return (E) hibernateDaoOperations.get(clazz,pk);
 	}
 
     @Override
 	public <T> List<T> findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
-	return hibernateTemplate.findByCriteria(criteria, firstResult, maxResults);
+	return hibernateDaoOperations.findByCriteria(criteria, firstResult, maxResults);
 	}
 
     @Override
 	public <T> List<T> findByCriteria(DetachedCriteria criteria) {
-	return hibernateTemplate.findByCriteria(criteria);
+	return hibernateDaoOperations.findByCriteria(criteria);
 	}
 
 
     @Override
 	@SuppressWarnings("unchecked")
 	public <T> T findByUniqueKey(DetachedCriteria criteria) {
-	return (T) hibernateTemplate.findByCriteria(criteria).get(0);
+	return (T) hibernateDaoOperations.findByCriteria(criteria).get(0);
 	}
 
 
@@ -79,7 +80,7 @@ public class CrudDao implements ICrud {
 	public <T> List<T> getAll(Class<T> klass) {
     DetachedCriteria query = DetachedCriteria.forClass(klass);
     query.add(Property.forName("lifeCycle.entityStatus").eq(LifeCycle.EntityStatus.ACTIVE));
-	return hibernateTemplate.findByCriteria(query);
+	return hibernateDaoOperations.findByCriteria(query);
     }
 
     @Override

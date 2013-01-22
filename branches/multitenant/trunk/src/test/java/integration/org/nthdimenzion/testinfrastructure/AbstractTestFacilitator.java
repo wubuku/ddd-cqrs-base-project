@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.nthdimenzion.cqrs.command.ICommandBus;
 import org.nthdimenzion.crud.ICrud;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.nthdimenzion.ddd.infrastructure.multitenant.TenantIdHolder;
 import org.nthdimenzion.presentation.exception.PresentationDecoratedExceptionHandler;
 import org.nthdimenzion.presentation.infrastructure.IDisplayMessages;
@@ -14,7 +15,6 @@ import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.nthdimenzion.testdata.TestUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,7 +48,7 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
     protected SystemUser systemUser;
 
     @Autowired
-    protected HibernateTemplate hibernateTemplate;
+    protected IHibernateDaoOperations hibernateDaoOperations;
 
     protected IDisplayMessages displayMessages = new DummyDisplayMessages();
 

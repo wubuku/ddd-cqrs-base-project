@@ -63,7 +63,7 @@ public final class Person extends IdGeneratingArcheType implements INamed {
     }
 
     @Column
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @NotNull
     public DateTime getDateOfBirth() {
         return dateOfBirth!=null ? new DateTime(dateOfBirth) : null;

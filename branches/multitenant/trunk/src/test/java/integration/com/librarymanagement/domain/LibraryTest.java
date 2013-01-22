@@ -50,9 +50,9 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         Long id = bookRepository.registerBook(javaPersistence);
 //        bookRepository.registerBook(eventSourcing);
-        hibernateTemplate.flush();
-        hibernateTemplate.evict(javaPersistence);
-//        hibernateTemplate.evict(eventSourcing);
+        hibernateDaoOperations.flush();
+        hibernateDaoOperations.evict(javaPersistence);
+//        hibernateDaoOperations.evict(eventSourcing);
 
         List<Map<String, ?>> books = bookFinder.findAllBooks();
 
@@ -68,7 +68,7 @@ public class LibraryTest extends AbstractTestFacilitator {
     @Test
     public void testFindBookCount() {
         registerBook();
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         LibrarySummaryDto librarySummary = bookQueries.getLibrarySummary();
 
@@ -83,9 +83,9 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         crudDao.add(member);
         crudDao.add(member1);
-        hibernateTemplate.flush();
-        hibernateTemplate.evict(member);
-        hibernateTemplate.evict(member1);
+        hibernateDaoOperations.flush();
+        hibernateDaoOperations.evict(member);
+        hibernateDaoOperations.evict(member1);
 
         assertNotNull(crudDao.getAll(Member.class));
     }
@@ -101,7 +101,7 @@ public class LibraryTest extends AbstractTestFacilitator {
     public void testUpcomingBirthDays() {
         Member member = memberBuilder.createMember("Sudarshan", "S", new DateTime().withDate(1983,11,14)).withMiddleName("Hello").build();
         crudDao.add(member);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         List<MemberDto> willBeDisplayed = bookFinder.upcomingBirthDays(new DateTime().withDate(1983,11,10).toDate());
 
@@ -158,7 +158,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
         Assert.notNull(bookLending);
@@ -177,10 +177,10 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         Assert.isTrue(presentationDecoratedExceptionHandler.isExceptionHandled());
         Assert.isTrue(4 == book.getAvailableCopies());
@@ -197,7 +197,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         BookLending bookLending = bookLendingRepository.findOpenBookLending(book, (Member)crudDao.find(Member.class,memberId));
 
@@ -218,7 +218,7 @@ public class LibraryTest extends AbstractTestFacilitator {
         ReturnBooksCommand bookReturnCommand = new ReturnBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookReturnCommand);
 
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
         List bookLendings = bookFinder.findBookLendings(memberId, bookId);
         Map<String, ?> firstBookLending = (Map<String, ?>) bookLendings.get(0);
         BookLending bookLending = bookLendingRepository.getBookLendingFromId((Long) firstBookLending.get("id"));
@@ -274,7 +274,7 @@ public class LibraryTest extends AbstractTestFacilitator {
 
         IssueBooksCommand bookIssueCommand = new IssueBooksCommand(Sets.newHashSet(book.getBookId()), memberId);
         commandBus.send(bookIssueCommand);
-        hibernateTemplate.flush();
+        hibernateDaoOperations.flush();
 
         List<BookLending> bookLendings = bookLendingRepository.findAllBooksWithMember((Member)crudDao.find(Member.class,memberId));
         Assert.notNull(bookLendings);
