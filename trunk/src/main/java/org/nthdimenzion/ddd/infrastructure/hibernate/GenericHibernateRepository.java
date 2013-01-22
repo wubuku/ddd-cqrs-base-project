@@ -6,13 +6,12 @@ import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
 public abstract class GenericHibernateRepository<E extends BaseAggregateRoot, K extends Serializable> {
-    protected final HibernateTemplate hibernateTemplate;
+    protected final IHibernateDaoOperations hibernateDaoOperations;
     private Class<E> clazz;
 
     @Autowired
@@ -20,29 +19,29 @@ public abstract class GenericHibernateRepository<E extends BaseAggregateRoot, K 
     protected IEventBus domainEventBus;
 
     @Autowired
-    public GenericHibernateRepository(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
+    public GenericHibernateRepository(IHibernateDaoOperations hibernateDaoOperations) {
+        this.hibernateDaoOperations = hibernateDaoOperations;
         this.clazz = ((Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
     protected GenericHibernateRepository() {
-        hibernateTemplate = null;
+        hibernateDaoOperations = null;
     }
 
     protected E get(K id) {
-        return hibernateTemplate.get(clazz, id);
+        return hibernateDaoOperations.get(clazz, id);
     }
 
     protected E load(K id) {
-        return hibernateTemplate.load(clazz, id);
+        return hibernateDaoOperations.load(clazz, id);
     }
 
     protected void delete(K id) {
-        hibernateTemplate.delete(get(id));
+        hibernateDaoOperations.delete(get(id));
     }
 
     protected E save(E entity) {
-        hibernateTemplate.saveOrUpdate(entity);
+        hibernateDaoOperations.saveOrUpdate(entity);
         return entity;
     }
 

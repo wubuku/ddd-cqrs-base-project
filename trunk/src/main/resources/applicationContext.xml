@@ -67,10 +67,5 @@
 
     <context:annotation-config/>
 
-    <!--
-        <bean id="errorRecorder" class="org.nthdimenzion.ddd.infrastructure.exception.PersistableErrorRecorder">
-            <constructor-arg name="errorDetailsRepository" ref="errorDetailsRepository"/>
-            <constructor-arg name="exceptionEventBus" ref="exceptionEventBus"/>
-        </bean>
-    -->
+
 </beans>

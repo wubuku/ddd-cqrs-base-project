@@ -6,30 +6,32 @@ import com.simplepersoncrud.domain.SimplePerson;
 import org.hibernate.criterion.DetachedCriteria;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
+import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 
 @DomainRepositoryImpl
-public class PersonRepository extends GenericHibernateRepository<SimplePerson, java.lang.Long> implements IPersonRepository {
+@Transactional
+public class PersonRepository extends GenericHibernateRepository<SimplePerson, Long> implements IPersonRepository {
 
     protected PersonRepository(){
 
     }
 
     @Autowired
-    public PersonRepository(HibernateTemplate hibernateTemplate) {
-        super(hibernateTemplate);
+    public PersonRepository(IHibernateDaoOperations hibernateDaoOperations) {
+        super(hibernateDaoOperations);
     }
 
     @Override
-    public void unRegisterPerson(java.lang.Long id) {
+    public void unRegisterPerson(Long id) {
         delete(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-    public java.lang.Long registerPerson(SimplePerson person) {
+    public Long registerPerson(SimplePerson person) {
         person = save(person);
         return person.getId();
     }
@@ -41,12 +43,12 @@ public class PersonRepository extends GenericHibernateRepository<SimplePerson, j
 
     public SimplePerson getPersonWithUid(PersonId personId) {
         DetachedCriteria personFromUid = criteriaForUid("personId",SimplePerson.class,personId);
-        SimplePerson person = (SimplePerson) hibernateTemplate.findByCriteria(personFromUid).get(0);
+        SimplePerson person = (SimplePerson) hibernateDaoOperations.findByCriteria(personFromUid).get(0);
         return updatePersonWithDependencies(person);
     }
 
     @Override
-    public SimplePerson getPersonWithId(java.lang.Long id) {
+    public SimplePerson getPersonWithId(Long id) {
         SimplePerson person = get(id);
         return updatePersonWithDependencies(person);
     }

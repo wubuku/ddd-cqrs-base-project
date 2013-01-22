@@ -1,10 +1,13 @@
 package org.nthdimenzion.ddd.infrastructure.multitenant;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 public interface ITenantAwareDataSourceFactory {
 
-    Map<Object,Object> initialiseConfiguredTenantDataSources();
+    Map<Object,DataSourceHolder> initialiseConfiguredTenantDataSources();
 
-    Map<Object, Object>  fetchConfiguredTenantDataSources();
+    Map<Object, DataSourceHolder> fetchConfiguredTenantDataSourceHolders();
+
+    Map<Object,DataSource> fetchConfiguredTenantDataSource();
 }

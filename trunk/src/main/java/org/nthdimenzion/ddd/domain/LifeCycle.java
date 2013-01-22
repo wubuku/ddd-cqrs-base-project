@@ -40,7 +40,7 @@ public final class LifeCycle {
         this.createdBy = createdBy;
     }
 
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime getCreatedTxTimestamp() {
         return createdTxTimestamp;
     }
@@ -57,7 +57,7 @@ public final class LifeCycle {
         this.updatedBy = updatedBy;
     }
 
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime getUpdatedTxTimestamp() {
         return updatedTxTimestamp;
     }
