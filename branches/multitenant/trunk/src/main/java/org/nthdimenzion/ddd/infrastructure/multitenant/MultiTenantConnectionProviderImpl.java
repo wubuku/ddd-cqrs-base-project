@@ -32,7 +32,7 @@ public class MultiTenantConnectionProviderImpl extends AbstractMultiTenantConnec
 
     @Override
     protected ConnectionProvider selectConnectionProvider(String tenantIdentifier) {
-        DataSourceHolder dataSourceHolder = DataSourceFactory.determineDataSourceForTenant(DataSourceFactory.DEFAULT_TENANT);
+        DataSourceHolder dataSourceHolder = DataSourceFactory.determineDataSourceForTenant(tenantIdentifier);
         properties.setProperty(Environment.USER,dataSourceHolder.user);
         properties.setProperty(Environment.PASS,dataSourceHolder.password);
         InjectedDataSourceConnectionProvider connectionProvider = new InjectedDataSourceConnectionProvider();
