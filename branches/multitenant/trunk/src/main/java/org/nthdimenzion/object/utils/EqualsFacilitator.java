@@ -8,7 +8,7 @@ public final class EqualsFacilitator {
         if (rhs == null || lhs == null)
             return false;
 
-        if (!rhs.getClass().equals(rhs.getClass()))
+        if (!rhs.getClass().equals(lhs.getClass()))
             return false;
 
         return true;
