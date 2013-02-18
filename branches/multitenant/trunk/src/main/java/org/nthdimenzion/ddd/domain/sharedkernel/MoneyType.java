@@ -52,14 +52,14 @@ public class MoneyType implements CompositeUserType {
             return;
         }
 
-        final Money money = (Money) component;
+        Money money = (Money) component;
         switch (propertyIndex) {
             case 0: {
-                money.withAmount((BigDecimal) value);
+                money = money.withAmount((BigDecimal) value);
                 break;
             }
             case 1: {
-                money.withCurrencyUnit(CurrencyUnit.getInstance((String) value));
+                money = money.withCurrencyUnit(CurrencyUnit.getInstance((String) value));
                 break;
             }
             default: {
