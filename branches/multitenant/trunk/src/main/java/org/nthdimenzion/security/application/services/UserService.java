@@ -23,6 +23,8 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        return systemUser.uses(userDetailsService.loadUserByUsername(username));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        systemUser.uses(userDetailsService.loadUserByUsername(username));
+        return new SystemUser(userDetails);
     }
 }

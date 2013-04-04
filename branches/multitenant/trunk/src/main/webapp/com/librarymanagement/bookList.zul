@@ -65,5 +65,6 @@ subpagetitle.setValue("Double click on the book to select");
             <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
             <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
             <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
+            <a id="hello" label="Hello" onClick='navigation.redirect("hello")'/>
     </vbox>
 </zk>
