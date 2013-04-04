@@ -1,0 +1,15 @@
+<script src="../../../org/scripts/angular.js" type="text/javascript"></script>
+<script src="hello.js" type="text/javascript"></script>
+
+
+<div ng-app='HelloAngular' ng-controller="AngularDemoController">
+    <a href="#/bye">Bye Bye</a>
+
+    <p ng-show="isServer"> Data coming from the sever  {{serverData}}   --- Click Button for client Data</p>
+
+    <p ng-hide="isServer">Hardcoded client Data -- Click Button for Server Data</p>
+
+    <button id="btn" type="button" ng-click="toggleClientServer()">{{label}}</button>
+
+    <div ng-view></div>
+</div>

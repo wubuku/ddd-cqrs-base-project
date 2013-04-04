@@ -1,0 +1,26 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:n="http://www.zkoss.org/2005/zk/native"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+    <zscript><![CDATA[
+        import org.nthdimenzion.presentation.infrastructure.Navigation;
+        import org.nthdimenzion.presentation.util.ViewUtil;
+        import org.zkoss.zkplus.spring.SpringUtil;
+        import org.zkoss.zk.ui.Component;
+        import org.nthdimenzion.object.utils.Constants;
+        pagetitle.setValue("List of all books in the library");
+        subpagetitle.setValue("Double click on the book to select");
+
+        ]]></zscript>
+
+    <div self="@{define(content)}" style="width:100%;height:100%">
+        <iframe id="iframe" src="hello.html"
+                width="100%" height="100%" style="border: 0px" scrolling="auto"/>
+       <!--<include src="hello.jsp"/>-->
+    </div>
+
+
+</zk>
+

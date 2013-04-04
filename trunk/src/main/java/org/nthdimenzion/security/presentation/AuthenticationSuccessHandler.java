@@ -61,6 +61,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         UserLogin userLogin = userLoginRepository.findUserLoginWithUserName(systemUser.getUsername());
         logger.debug("Entry onAuthenticationSuccess " +  " getDefaultTargetUrl() " + getDefaultTargetUrl() + " isAlwaysUseDefaultTargetUrl() " + isAlwaysUseDefaultTargetUrl() + " navigation " + navigation
         + "userDetails " + systemUser + " userLogin.getHomepageViewId()  " + userLogin.getHomepageViewId());
+        request.getSession().setAttribute("loggedInUser", systemUser);
         String homepageViewId = userLogin.getHomepageViewId();
         if(UtilValidator.isNotEmpty(homepageViewId)){
             String viewUrl = navigation.findViewUrl(homepageViewId);

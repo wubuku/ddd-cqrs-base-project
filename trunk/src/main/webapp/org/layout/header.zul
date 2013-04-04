@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.nthdimenzion.security.domain.SystemUser;
 
-UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
+//UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
+
+UserDetails userDetails = (UserDetails)Sessions.getCurrent().getAttribute("loggedInUser");
 ]]></zscript>
 <div sclass="top">
    <n:div class="logoCont">
@@ -15,9 +17,9 @@ UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
 	</n:div>
 	<div sclass="loggedIn">
 	    <a href="/" zclass="signout" label="Log Off">
-	     <!--<attribute name="onClick">-->
-              <!--session.invalidate();-->
-         <!--</attribute>-->
+	     <attribute name="onClick">
+             Sessions.getCurrent().invalidate();
+         </attribute>
 	    </a>
 	    <h:br></h:br>
         <label value="Logged In "/>

@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <zk.version>6.5.1</zk.version>
-        <org.springframework.version>3.2.0.RELEASE</org.springframework.version>
+        <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <org.springsecurity.version>3.1.2.RELEASE</org.springsecurity.version>
         <hibernate-core-version>4.1.9.Final</hibernate-core-version>
 
@@ -366,6 +366,27 @@
         <!-- Cloud end -->
 
 
+        <!--jackson -->
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-lgpl</artifactId>
+            <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+        <!--jackson -->
     </dependencies>
 
     <repositories>
@@ -470,6 +491,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
                     <scanIntervalSeconds>1000000000</scanIntervalSeconds>
                     <stopPort>9966</stopPort>
                     <stopKey>foo</stopKey>
@@ -526,8 +548,8 @@
             </activation>
             <properties>
                 <common.jdbc.url>jdbc:mysql://localhost:3306/common</common.jdbc.url>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
-                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+                <jdbc.url>jdbc:mysql://localhost:3306/tenant</jdbc.url>
+                <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
         <profile>

@@ -3,7 +3,7 @@ package org.nthdimenzion.security.domain;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepository;
 
 @DomainRepository
-public interface IUserRepository {
+public interface IUserLoginRepository {
 
     UserLogin findUserLoginWithUserName(String username);
 }

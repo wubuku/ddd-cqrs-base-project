@@ -4,6 +4,7 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:n="http://www.zkoss.org/2005/zk/native"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
     <div sclass="wrapper" id="wrapper" style="overflow:auto;">
         <div sclass="top">
             <include src="/org/layout/header.zul"/>
