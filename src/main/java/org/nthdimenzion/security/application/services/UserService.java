@@ -7,23 +7,24 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 @DomainService
 public class UserService implements UserDetailsService{
 
-    private JdbcDaoImpl jdbcDao;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private SystemUser systemUser;
 
     @Autowired
-    public UserService(JdbcDaoImpl jdbcDao) {
-    this.jdbcDao = jdbcDao;
+    public UserService(UserDetailsService userValidationService) {
+    this.userDetailsService = userValidationService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        return systemUser.uses(jdbcDao.loadUserByUsername(username));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        systemUser.uses(userDetailsService.loadUserByUsername(username));
+        return new SystemUser(userDetails);
     }
 }

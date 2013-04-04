@@ -3,6 +3,7 @@ package com.librarymanagement.domain;
 import com.google.common.collect.Lists;
 import com.librarymanagement.application.events.BookIssuedEvent;
 import com.librarymanagement.application.events.BookReturnedEvent;
+import com.librarymanagement.domain.error.MemberAlreadyBorrowedBookException;
 import com.librarymanagement.domain.error.NotEnoughCopiesException;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.annotations.Columns;
@@ -16,14 +17,14 @@ import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @AggregateRoot
 @PPT
 @Entity
-public class Book extends BaseAggregateRoot implements INamed, IRentable {
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"ISBN"})})
+public class Book extends BaseAggregateRoot implements INamed{
     private String name;
     private String isbn;
     private Integer availableCopies;
@@ -107,8 +108,8 @@ public class Book extends BaseAggregateRoot implements INamed, IRentable {
         this.totalCopies = totalCopies;
     }
 
-    @Override
-    public void lend(Long memberId) throws NotEnoughCopiesException {
+    public void lend(Long memberId, List<BookLending> booksAlreadyWithMember) throws NotEnoughCopiesException, MemberAlreadyBorrowedBookException {
+        checkIfMemberAlreadyHasBook(memberId,booksAlreadyWithMember) ;
         if (availableCopies <= 0) {
             throw new NotEnoughCopiesException(new ErrorDetails.Builder("100").args(Lists.<String>newArrayList(availableCopies.toString(), name)).build());
         }
@@ -116,7 +117,18 @@ public class Book extends BaseAggregateRoot implements INamed, IRentable {
         domainEventBus.raise(new BookIssuedEvent(bookId, memberId));
     }
 
-    @Override
+    private void checkIfMemberAlreadyHasBook(Long memberId, List<BookLending> booksAlreadyWithMember) throws MemberAlreadyBorrowedBookException {
+        for(BookLending bookLending : booksAlreadyWithMember){
+            if(memberHasBook(memberId, bookLending)) {
+                throw new MemberAlreadyBorrowedBookException(new ErrorDetails.Builder("101").args(Lists.<String>newArrayList(memberId.toString(), bookLending.getBook().getName())).build());
+            }
+        }
+    }
+
+    private boolean memberHasBook(Long memberId, BookLending bookLending) {
+        return bookLending.isForSameMemberAndBook(memberId, bookId);
+    }
+
     public void rentalExpiry(Long memberId) {
         availableCopies++;
         domainEventBus.raise(new BookReturnedEvent(bookId, memberId));

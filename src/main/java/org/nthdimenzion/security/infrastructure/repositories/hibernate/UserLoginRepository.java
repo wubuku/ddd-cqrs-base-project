@@ -5,21 +5,21 @@ import org.hibernate.criterion.Restrictions;
 import org.nthdimenzion.ddd.domain.annotations.DomainRepositoryImpl;
 import org.nthdimenzion.ddd.infrastructure.hibernate.GenericHibernateRepository;
 import org.nthdimenzion.ddd.infrastructure.hibernate.IHibernateDaoOperations;
-import org.nthdimenzion.security.domain.IUserRepository;
+import org.nthdimenzion.security.domain.IUserLoginRepository;
 import org.nthdimenzion.security.domain.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @DomainRepositoryImpl
 @Transactional
-public class UserLoginRepository  extends GenericHibernateRepository<UserLogin, Long> implements IUserRepository{
+public class UserLoginRepository extends GenericHibernateRepository<UserLogin, Long> implements IUserLoginRepository {
 
     protected UserLoginRepository(){
 
     }
 
     @Autowired
-    public UserLoginRepository (IHibernateDaoOperations hibernateDaoOperations) {
+    public UserLoginRepository(IHibernateDaoOperations hibernateDaoOperations) {
         super(hibernateDaoOperations);
     }
 

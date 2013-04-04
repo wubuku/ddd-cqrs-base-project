@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Component
-public class Navigation {
+public final class Navigation {
 
     private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
 

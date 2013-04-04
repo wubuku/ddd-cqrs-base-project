@@ -13,6 +13,8 @@ import org.nthdimenzion.object.utils.UtilValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @DomainRepositoryImpl
 @Transactional
 public class BookLendingRepository extends GenericHibernateRepository<BookLending,Long> implements IBookLendingRepository{
@@ -50,5 +52,14 @@ public class BookLendingRepository extends GenericHibernateRepository<BookLendin
     @Override
     public BookLending getBookLendingFromId(Long id) {
         return get(id);
+    }
+
+    @Override
+    public List<BookLending> findAllBooksWithMember(Member member){
+        DetachedCriteria criteria = DetachedCriteria.forClass(BookLending.class);
+        criteria.add(Restrictions.eq("member", member));
+        criteria.add(Restrictions.isNull("lendingInterval.thruDate"));
+        List<BookLending> openBookLendings = hibernateDaoOperations.findByCriteria(criteria);
+        return openBookLendings;
     }
 }

@@ -10,11 +10,7 @@ import org.zkoss.zul.Textbox;
 import java.sql.Clob;
 import java.sql.SQLException;
 
-/**
- * @author Sandeep Prusty
- * May 13, 2010
- */
-public class UtilDisplay {
+public final class UtilDisplay {
 
 	public static String camelcaseToUiString(String arg){
 	StringBuilder stringBuilder = new StringBuilder();

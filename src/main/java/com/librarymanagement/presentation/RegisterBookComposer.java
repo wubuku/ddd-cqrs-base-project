@@ -10,7 +10,6 @@ import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 
 import java.util.Map;
 
@@ -26,9 +25,9 @@ public class RegisterBookComposer extends AbstractZkComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         initializePage();
-        String id = Executions.getCurrent().getParameter("bookId");
+        String id = getParam("bookId");
         if (UtilValidator.isNotEmpty(id)) {
-            Long bookId = Long.valueOf(Executions.getCurrent().getParameter("bookId"));
+            Long bookId = Long.valueOf(id);
             bookDto = bookFinder.findBookWithId(bookId);
             isUpdateView = true;
         }
@@ -51,9 +50,9 @@ public class RegisterBookComposer extends AbstractZkComposer {
 
 
     public void registerBook() {
-        RegisterBookCommand purchaseBookCommand = new RegisterBookCommand();
-        populate(bookDto, purchaseBookCommand);
-        Long bookId = (Long) sendCommand(purchaseBookCommand);
+        RegisterBookCommand registerBookCommand = new RegisterBookCommand();
+        populate(bookDto, registerBookCommand);
+        Long bookId = (Long) sendCommand(registerBookCommand);
         if (isSuccess(bookId)) {
             displayMessages.displaySuccess();
             navigation.redirect("bookList");

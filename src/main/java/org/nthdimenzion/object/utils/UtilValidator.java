@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class UtilValidator {
+public final class UtilValidator {
 
 	public static final Pattern ALPHABETIC_PATTERN = Pattern.compile("[\\p{Alpha}]+");
 

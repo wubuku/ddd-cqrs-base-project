@@ -20,7 +20,7 @@ a:focus{-moz-outline-style: none;}
 }
 
 
-.loginCont form{background:url(../images/login_form_bg.png) no-repeat;margin:auto;padding:95px 60px 0;width:245px ; height: 500px}
+.loginCont form{background:url(../images/login_form_bg.png) no-repeat;margin:auto;padding:85px 60px 0;width:245px ; height: 500px}
 .loginCont form input{background:#f2f2f2;border:solid 1px #ccc;margin:5px 0;padding:3px 2px;width:100%;}
 .loginCont form input.chk,.loginCont form input.signIn,.loginCont form input.cancel{border:none;padding:0;width:auto}
 .loginCont div{margin:5px 0;padding-top:5px;}
@@ -1215,6 +1215,7 @@ table .z-label {
 }
 
 .z-combobox-rounded-inp, .z-bandbox-rounded-inp, .z-datebox-rounded-inp, .z-timebox-rounded-inp, .z-spinner-rounded-inp, .z-combobox-inp, .z-bandbox-inp, .z-datebox-inp, .z-timebox-inp, .z-spinner-inp {
+padding-left: 8px;
  width: 86% !important;
  background:url("") repeat-x scroll 0 0 #FFFFFF;
 }
@@ -1800,6 +1801,19 @@ tr.z-row .z-detail-outer {
     background: url(../images/toolbar-sprite.png) -123px 0;
     margin: 0 0 3px 0;
 }
+
+.form .name {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    } 
+
+.form .nameCol2 {
+        display: block;
+        margin-left:0px;
+        text-align: center;
+}
+
 .clearBtn{
     background: url(../images/comboclearbtn.png) no-repeat;
     margin: 0 0 3px 0;
@@ -1832,4 +1846,7 @@ moz-use-text-color -moz-use-text-color #86A4BE;
 }
 
 th: 17px;
+}
+
+x;
 }

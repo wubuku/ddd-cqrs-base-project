@@ -14,11 +14,11 @@ import org.nthdimenzion.testdata.SecurityDetailsMaker;
 import org.nthdimenzion.testdata.TestUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,6 +28,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath:/testContext.xml","classpath:/applicationContext.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Ignore
+@ActiveProfiles(profiles = "standalone")
 public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -38,7 +39,7 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
     @Qualifier("presentationDecoratedExceptionHandler")
     protected PresentationDecoratedExceptionHandler presentationDecoratedExceptionHandler;
 
-     @Autowired
+    @Autowired
     protected ICrud crudDao;
 
     @Autowired
@@ -49,13 +50,27 @@ public class AbstractTestFacilitator extends AbstractTransactionalJUnit4SpringCo
 
     protected IDisplayMessages displayMessages = new DummyDisplayMessages();
 
+    private static boolean isSetupPending = true;
+
     @Before
-    public void setUpForEachTest(){
-    UserDetails userDetails = new TestUserDetails();
-    systemUser.uses(userDetails);
-    presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
-    TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken("ROLE_SUPERADMIN");
-    SecurityContextHolder.getContext().setAuthentication(token);
+    public void setUpForEachTest() {
+        UserDetails userDetails = new TestUserDetails();
+        systemUser.uses(userDetails);
+        presentationDecoratedExceptionHandler.setDisplayMessages(displayMessages);
+        TestingAuthenticationToken token = SecurityDetailsMaker.makeTestingAuthenticationToken("ROLE_SUPERADMIN");
+        SecurityContextHolder.getContext().setAuthentication(token);
     }
+
+    public void cleanup() {
+    }
+
+    /*public static void setup(){
+        SimpleJdbcTemplate template = new SimpleJdbcTemplate(dataSource);
+        ClassPathResource resource = new ClassPathResource("/create-table.sql");
+        SimpleJdbcTestUtils.executeSqlScript(template, resource, true);
+    }
+*/
+
+
 
 }

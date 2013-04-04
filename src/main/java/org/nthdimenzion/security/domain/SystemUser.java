@@ -62,9 +62,9 @@ public class SystemUser implements UserDetails,INamed{
         return userDetails.isEnabled();
     }
 
-
     @Override
     public String getName() {
         return getUsername();
     }
+
 }

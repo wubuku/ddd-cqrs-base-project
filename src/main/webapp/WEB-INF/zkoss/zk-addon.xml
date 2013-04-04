@@ -142,7 +142,20 @@
 			<property-value>#,##0.##</property-value>
 		</property>
 	</component>
-	
+	<component>
+		<component-name>label</component-name>
+		<component-class>org.zkoss.zul.Label</component-class>
+		<widget-class>zul.wgt.Label</widget-class>
+		<text-as>value</text-as>
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/label.js</mold-uri>
+		</mold>
+		<mold>
+			<mold-name>required</mold-name>
+			<mold-uri>mold/reqlabel.js</mold-uri>
+		</mold>
+	</component>
 
 
 </language-addon>

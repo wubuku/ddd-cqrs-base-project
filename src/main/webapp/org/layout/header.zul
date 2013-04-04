@@ -6,19 +6,21 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.nthdimenzion.security.domain.SystemUser;
-import javax.servlet.ServletContext;
-import org.zkoss.zk.ui.Execution;
-UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
 
+//UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
+
+UserDetails userDetails = (UserDetails)Sessions.getCurrent().getAttribute("loggedInUser");
 ]]></zscript>
-<?page id="indexPage" title="Sample example Application for CQRS/DDD Base Project" cacheable="true"
-	language="xul/html"?>
 <div sclass="top">
    <n:div class="logoCont">
 			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
 	</n:div>
 	<div sclass="loggedIn">
-	    <a href="/" zclass="signout">Log Off</a>
+	    <a href="/" zclass="signout" label="Log Off">
+	     <attribute name="onClick">
+             Sessions.getCurrent().invalidate();
+         </attribute>
+	    </a>
 	    <h:br></h:br>
         <label value="Logged In "/>
         <label value="${userDetails.username}"/>

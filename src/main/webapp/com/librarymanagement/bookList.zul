@@ -17,11 +17,11 @@ subpagetitle.setValue("Double click on the book to select");
 ]]></zscript>
     <window id="bookList"  title="Book List" border="normal" self="@{define(content)}" apply="${bookListComposer}">
         <vlayout>
-            <panel title="Book List" closable="true" collapsible="true">
+            <panel title="Double click on the book you want to edit">
                 <panelchildren>
-                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10">
+                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10" tooltiptext="Double click on the book you want to edit">
                         <listhead>
-                            <listheader>ID</listheader>
+                            <!--<listheader>ID</listheader>-->
                             <listheader>Name</listheader>
                             <listheader>ISBN</listheader>
                             <!--<listheader>Authors</listheader>-->
@@ -33,9 +33,9 @@ subpagetitle.setValue("Double click on the book to select");
                                 bookListComposer.selectBook(self.value,"updateBook");
                             </attribute>
 
-                            <listcell>
+                            <!--<listcell>
 								<label value="@{book.id}"></label>
-							</listcell>
+							</listcell>-->
 							<listcell>
 								<label value="@{book.name}"></label>
 							</listcell>
@@ -65,5 +65,6 @@ subpagetitle.setValue("Double click on the book to select");
             <a id="registerBook" label="Register a new Book" onClick='navigation.redirect("registerBook")'/>
             <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
             <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
+            <a id="hello" label="Hello" onClick='navigation.redirect("hello")'/>
     </vbox>
 </zk>

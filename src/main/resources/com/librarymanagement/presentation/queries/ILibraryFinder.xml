@@ -66,10 +66,11 @@
    </select>
 
     <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
-    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.id as id
+    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.MEMBER_ID as id
     FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
     WHERE member.ENTITY_STATUS = 0
-    and month(person.DATE_OF_BIRTH)= month(now())
+    and month(person.DATE_OF_BIRTH)= month(#{today})
+    and day(person.DATE_OF_BIRTH) >= day(#{today})
     </select>
 
     <select id="findBookLendings" resultType="hashMap">
@@ -79,9 +80,11 @@
 
 
     <select id="findMostActiveBook" resultType="String">
-    SELECT NAME FROM BOOK WHERE id = (
+ SELECT NAME FROM BOOK WHERE id = (
     SELECT book
-    FROM BOOK_LENDING
+    FROM BOOK_LENDING bl,BOOK b
+    WHERE bl.book = b.ID
+    AND b.ENTITY_STATUS = 0
     GROUP BY book
     ORDER BY COUNT(book) DESC
     LIMIT 1);
@@ -91,9 +94,19 @@
     SELECT first_name as firstName ,middle_name as middleName ,last_name as lastName
     FROM PERSON WHERE id = (
         SELECT member
-        FROM BOOK_LENDING
+        FROM BOOK_LENDING bl,MEMBER m
+        WHERE bl.MEMBER = m.ID
+        AND m.ENTITY_STATUS = 0
         GROUP BY member
         ORDER BY COUNT(member) DESC
-    LIMIT 1);
+    LIMIT 1)
     </select>
+
+    <select id="findMembersHoldingBook" resultType="com.librarymanagement.presentation.dto.MemberDto">
+    SELECT m.member_id as id ,p.first_name as firstName ,p.middle_name as middleName ,p.last_name as lastName
+    FROM MEMBER m,PERSON p
+    WHERE m.id IN (SELECT MEMBER FROM BOOK_LENDING WHERE book = #{bookId} AND THRU_DATE IS NULL)
+    AND m.person=p.id;
+    </select>
+
 </mapper>

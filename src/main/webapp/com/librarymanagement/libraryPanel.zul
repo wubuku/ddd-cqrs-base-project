@@ -18,7 +18,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
 ]]></zscript>
     <window id="libraryPanel"  title="Library Management Home" border="normal" self="@{define(content)}" apply="${libraryHomeComposer}">
         <div style="width:49%;float:left">
-            <panel id="libraryDetails" title="Library Quick View" closable="true" collapsible="true">
+            <panel id="libraryDetails" title="Library Quick View">
                 <panelchildren>
                     <grid id="libraryDetailsGrid">
                         <columns>
@@ -41,7 +41,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
             </panel>
         </div>
          <div style="width:49%;float:right">
-            <panel id="memberBirthDayDetails" title="Upcoming BirthDays" closable="true" collapsible="true">
+            <panel id="memberBirthDayDetails" title="Upcoming BirthDays">
                 <panelchildren>
                     <grid id="memberBirthDayDetailsGrid" model="@{dto.memberDtos}">
                         <columns>
@@ -53,7 +53,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
                             <row self="@{each=member}" value="@{member}">
                                 <label value="@{member.id}"/>
                                 <label value="@{member.fullName}"/>
-                                <datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+                                <label value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeToZkStringConverter'}" />
                             </row>
                         </rows>
                     </grid>
@@ -64,7 +64,7 @@ subpagetitle.setValue("From here you can goto either the Book Control Panel or t
 
         <vbox self="@{define(left)}">
             <a id="bookControlPanel" label="Book Control Panel" onClick='navigation.redirect("bookPanel")'/>
-            <a id="memberControlPanel" label="Member Control Panel" onClick='navigation.redirect("member")'/>
+            <a id="memberControlPanel" label="Member Control Panel" onClick='navigation.redirect("memberPanel")'/>
         </vbox>
 
 
