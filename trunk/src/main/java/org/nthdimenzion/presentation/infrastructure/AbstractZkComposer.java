@@ -4,8 +4,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.ICommandBus;
+import org.nthdimenzion.ddd.infrastructure.IEventBus;
+import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.object.utils.UtilMisc;
 import org.nthdimenzion.presentation.annotations.Composer;
+import org.nthdimenzion.security.domain.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +32,18 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
     @Autowired
     protected Navigation navigation;
 
+    protected SystemUser loggedInUser;
+
+    @Autowired
+    @Qualifier("exceptionEventBus")
+    protected IEventBus exceptionEventBus;
+
     private final ModelMapper modelMapper = new ModelMapper();
 
     protected AbstractZkComposer() {
+        loggedInUser = (SystemUser) Executions.getCurrent().getSession().getAttribute("loggedInUser");
         modelMapper.getConfiguration().enableFieldMatching(true)
+
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
     }
 
@@ -67,9 +78,17 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
         return UtilMisc.populate(source, clazz, modelMapper);
     }
 
-    protected final String getParam(String paramId) {
+    protected final <T> T getParam(String paramId) {
         logger.debug("ParamId " + paramId);
-        return Executions.getCurrent().getParameter(paramId);
+        T paramValue = (T) Executions.getCurrent().getParameter(paramId);
+        if(paramValue==null){
+            paramValue = (T)Executions.getCurrent().getArg().get(paramId);
+        }
+        return paramValue;
 
+    }
+
+    protected final void raiseException(Throwable exception){
+        exceptionEventBus.raise(OperationFailed.createDefaultDisplayableException(exception));
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @DomainRepositoryImpl
 @Transactional
-public class PersonRepository extends GenericHibernateRepository<SimplePerson, java.lang.Long> implements IPersonRepository {
+public class PersonRepository extends GenericHibernateRepository<SimplePerson, Long> implements IPersonRepository {
 
     protected PersonRepository(){
 
@@ -25,13 +25,13 @@ public class PersonRepository extends GenericHibernateRepository<SimplePerson, j
     }
 
     @Override
-    public void unRegisterPerson(java.lang.Long id) {
+    public void unRegisterPerson(Long id) {
         delete(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-    public java.lang.Long registerPerson(SimplePerson person) {
+    public Long registerPerson(SimplePerson person) {
         person = save(person);
         return person.getId();
     }
@@ -48,7 +48,7 @@ public class PersonRepository extends GenericHibernateRepository<SimplePerson, j
     }
 
     @Override
-    public SimplePerson getPersonWithId(java.lang.Long id) {
+    public SimplePerson getPersonWithId(Long id) {
         SimplePerson person = get(id);
         return updatePersonWithDependencies(person);
     }

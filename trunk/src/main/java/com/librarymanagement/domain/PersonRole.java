@@ -15,6 +15,8 @@ abstract class PersonRole extends IdGeneratingArcheType {
 
     private Person person;
 
+
+
     protected PersonRole(){
         person = new Person();
     }

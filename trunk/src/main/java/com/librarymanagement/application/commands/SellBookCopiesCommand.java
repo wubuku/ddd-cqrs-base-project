@@ -19,6 +19,6 @@ public class SellBookCopiesCommand implements ICommand{
     public void validate() {
         Preconditions.checkNotNull(bookId);
         Preconditions.checkNotNull(noOfCopiesToSell);
-        Preconditions.checkArgument(noOfCopiesToSell>0,"Number of copies sold cannot be Zero");
+        Preconditions.checkArgument(noOfCopiesToSell>0,"How did you manage to sell " + noOfCopiesToSell + " copies ? ");
     }
 }

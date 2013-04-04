@@ -44,7 +44,6 @@ public class SimpleMapScope implements Scope {
     private final Map<String, Object> objectMap = Maps.newHashMap();
 
     public SimpleMapScope(){
-        System.out.println("SimpleMapScope");
     }
 
     @Override

@@ -1,0 +1,69 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/taskListingLayout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+xmlns:h="http://www.w3.org/1999/xhtml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./menberPanel"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zscript><![CDATA[
+import org.nthdimenzion.presentation.infrastructure.Navigation;
+import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zk.ui.Component;
+import org.nthdimenzion.object.utils.Constants;
+import com.librarymanagement.presentation.queries.ILibraryFinder;
+import com.librarymanagement.presentation.dto.MemberDto;
+
+pagetitle.setValue("Member Control Panel");
+subpagetitle.setValue("From here you can Manage all members in your library");
+
+ILibraryFinder libraryFinder = (ILibraryFinder)SpringUtil.getBean("ILibraryFinder",ILibraryFinder.class);
+
+MemberDto mostActiveMember = libraryFinder.findMostActiveMember();
+
+String findMostActiveBook = libraryFinder.findMostActiveBook();
+
+
+]]></zscript>
+
+    <window id="menberPanel"  title="Member Panel" border="normal" self="@{define(content)}">
+        <div style="width:100%;height:100%" >
+            <panel id="libraryDetails" title="Quick view of tasks you can do">
+                <panelchildren>
+                <div align="center" >
+                <hlayout spacing="20px" sclass="form" >
+                 <vlayout spacing="10px">
+                      <hlayout spacing="6px">
+                            <a id="memberList" label="Goto MemberList"  onClick='navigation.redirect("member")'/>
+                             <image src="/org/images/GotoMemberList.png" sclass="autoSize" />
+                            <separator></separator>
+                             <separator></separator>
+                              <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                               <separator></separator>
+                            <a id="registerMember" label="Create a new Member" onClick='navigation.redirect("registerMember")'/>
+                             <image src="/org/images/AddMembers.png" sclass="autoSize" />
+                        </hlayout>
+                         <!-- <hlayout spacing="6px">
+                            <a id="editBook" label="Edit a Member" onClick='navigation.redirect("findMemberForTransfer")'/>
+                             <image src="/org/images/EditMember.png" sclass="autoSize" />
+                        </hlayout> -->
+                        <hlayout spacing="6px">
+                            <a id="deleteBook" label="Delete a Member" onClick='navigation.redirect("unregisterMember")'/>
+                             <image src="/org/images/Delete Member.png" sclass="autoSize" />
+                        </hlayout>
+                    </vlayout>
+                    </hlayout>
+                    </div>
+                </panelchildren>
+            </panel>
+        </div>
+    </window>
+</zk>

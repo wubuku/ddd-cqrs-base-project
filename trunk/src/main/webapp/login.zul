@@ -3,12 +3,16 @@ xmlns:h="http://www.w3.org/1999/xhtml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:n="http://www.zkoss.org/2005/zk/native"
 xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-<?page id="indexPage" title="Sample example Application for CQRS/DDD Base Project" cacheable="false"
-	language="xul/html"?>
    <style>
       .autoSize{position:absolute;width:100%;height:100%}
       .loginWrapper{position:absolute;width:100%}
    </style>
+   <zscript>
+   import org.nthdimenzion.ddd.infrastructure.spring.IApplicationContext;
+   import org.zkoss.zkplus.spring.SpringUtil;
+   IApplicationContext applicationContext = (IApplicationContext)SpringUtil.getBean("applicationSetup");
+
+   </zscript>
    <n:body class="login">
       <window contentSclass="login">
          <image src="/org/images/login_bg.png" sclass="autoSize" />
@@ -17,7 +21,7 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                <!--<image sclass="logo" />-->
                <div align="center"> 
                   <label value="${customMessage}" style="color: #f00; font-size: 12px; font-weight: bold; text-align: center;" if="${!empty SPRING_SECURITY_LAST_EXCEPTION.message}" />
-                  <label value="Sample example Application for CQRS/DDD Base Project" />
+                   <n:a href  = "http://code.google.com/p/ddd-cqrs-base-project/" target="_blank">Example Application for CQRS/DDD Base Project</n:a>
                </div>
                <n:form id="loginForm" name="loginForm" action="j_spring_security_check" method="POST">
                   <div align="center" width="100%" height="1px">
@@ -36,12 +40,12 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                   <div>
                      <n:input class="signIn" type="submit" value="Login" />
                   </div>
-                  <!--<a href="#" onClick='Executions.sendRedirect("/forgot-password.zul");'>Forgotten your password?</a>-->
                   <div sclass="help">
-                  </div>
-                  <div zclass="footer" style="maring-top:10px">
-                     <n:p>Powered by NthDimenzion Solutions</n:p>
-                  </div>
+                                    </div>
+                                    <div zclass="footer" style="maring-top:10px">
+                                       <n:p>Powered by NthDimenzion Solutions</n:p>
+                                    </div>
+                  <!--<a href="#" onClick='Executions.sendRedirect("/forgot-password.zul");'>Forgotten your password?</a>-->
                </n:form>
             </div>
          </div>

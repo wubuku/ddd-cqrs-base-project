@@ -35,7 +35,7 @@ public final class Handler{
     }
 
     public Object invokeMethod(ICommand command) throws InvocationTargetException, IllegalAccessException {
-        return method.invoke(target,new Object[]{command});
+        return method.invoke(target,command);
     }
 }
 

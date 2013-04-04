@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Message" language="xul/html"?>
+<zk xmlns:h="http://www.zkoss.org/2005/zk/native" xmlns:a="http://www.zkoss.org/2005/zk/annotation">
+	<window border="none" width="300pt" closable="true" use="org.zkoss.zul.impl.MessageboxDlg"
+		zclass="popup_container" xmlns:w="http://www.zkoss.org/2005/zk/client">
+		<div sclass="popup_container"
+			style="position: fixed; z-index: 99999; padding: 0pt; margin: 0pt; min-width: 412px; max-width: 412px; top: 21.5px; left: 464px;">
+			<h:h2 class="popup_title">
+				<html id="title">${arg.title}</html>
+			</h:h2>
+			<div id="popupContent" sclass="popup_content_alert">
+				<div sclass="popup_message">
+					<label multiline="true" value="${arg.message}" sclass="word-wrap" width="100%">
+					</label>
+				</div>
+				<div sclass="popup_panel">
+					<hlayout style="text-align:center">
+						<button id="btn1" identity="${arg.OK}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.OK}" />
+						<button identity="${arg.CANCEL}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.CANCEL}" />
+						<button identity="${arg.YES}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.YES}" />
+						<button identity="${arg.NO}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.NO}" />
+						<button identity="${arg.RETRY}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.RETRY}" />
+						<button identity="${arg.ABORT}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.ABORT}" />
+						<button identity="${arg.IGNORE}" sclass="z-messagebox-btn"
+							use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.IGNORE}" />
+					</hlayout>
+				</div>
+			</div>
+		</div>
+		<zscript>
+			if(arg.get("icon")!=null){
+			if(arg.get("icon").contains("z-msgbox-question")){
+				popupContent.setSclass("popup_content_confirm");
+			}
+			}
+		</zscript>
+	</window>
+</zk>

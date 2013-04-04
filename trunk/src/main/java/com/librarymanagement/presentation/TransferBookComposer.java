@@ -15,7 +15,6 @@ import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.nthdimenzion.presentation.util.ViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Listbox;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public class TransferBookComposer extends AbstractZkComposer {
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
-        memberId = (Long) Executions.getCurrent().getArg().get("memberId");
+        memberId = getParam("memberId");
         member = crudDao.find(Member.class,memberId);
         allBooks = getAllBooks();
         booksWithMember = getBooksWithMember(memberId);

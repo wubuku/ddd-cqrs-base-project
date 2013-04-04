@@ -6,17 +6,30 @@ import org.nthdimenzion.ddd.domain.INamed;
 import org.nthdimenzion.ddd.domain.annotations.Role;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 @Role
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"MEMBERID"})})
 public class Member extends PersonRole implements ICrudEntity,INamed{
+    private String memberId;
+    
     public Member() {
     super();
     }
 
     public Member(Person person) {
         super(person);
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     @Override

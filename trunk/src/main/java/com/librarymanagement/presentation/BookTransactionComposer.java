@@ -38,7 +38,7 @@ public class BookTransactionComposer extends AbstractZkComposer {
         super.doAfterCompose(comp);
         String id = getParam("bookId");
         if (UtilValidator.isNotEmpty(id)) {
-            bookId = Long.valueOf(getParam("bookId"));
+            bookId = Long.valueOf(id);
             bookDto = getBookDto();
         }
         comp.setAttribute("dto", bookDto);
@@ -62,6 +62,10 @@ public class BookTransactionComposer extends AbstractZkComposer {
        if(isSuccess(result)){
            displayMessages.displaySuccess("Purchased Copies Successfully, now available count is " + bookDto.get("availableCopies"));
        }
+    }
+
+    private boolean isNegative(Integer noOfCopies) {
+        return noOfCopies < 0;
     }
 
     public void sellCopies(Integer noOfCopies){

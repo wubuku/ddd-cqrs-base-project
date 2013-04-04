@@ -13,14 +13,10 @@ import org.zkoss.zk.ui.Component;
 import org.nthdimenzion.object.utils.Constanots;
 import com.librarymanagement.presentation.MemberManagementComposer;
 pagetitle.setValue("Select a member who needs to borrow or return a book");
-
-
-MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberManagementComposer",MemberManagementComposer.class) ;
-
 ]]></zscript>
     <window id="findMember"  title="Member Details" border="normal" self="@{define(content)}" apply="${memberManagementComposer}">
         <vlayout>
-            <panel title="Double click on the member who wishes to borrow or return a book" closable="true" collapsible="true">
+            <panel title="Double click on the member who wishes to borrow or return a book">
                 <panelchildren>
                     <label id="searchResultLabel" value="No Record Found" visible="@{memberManagementComposer.isNoRecordsFound}" />
                     <listbox  id="memberDetailsList" multiple="true" model="@{memberManagementComposer.members}" mold="paging" pageSize="10">
@@ -31,7 +27,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
                         </listhead>
                         <listitem self="@{each='member'}" value="@{member}" tooltiptext="Double Click to select">
                             <attribute name="onDoubleClick">
-                                memberManagementComposer.selectMember(self.value.id,"transferBook");
+                                memberManagementComposer.selectMemberForBookTransfer(self.value.id,"transferBook");
                              </attribute>
                             <listcell>
 								<label value="@{member.id}"></label>
@@ -40,7 +36,7 @@ MemberManagementComposer memberManagementComposer = SpringUtil.getBean("memberMa
 								<label value="@{member.fullName}"></label>
 							</listcell>
 							<listcell>
-								<datebox value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter'}" disabled="true"/>
+								<label value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeToZkStringConverter'}" />
 							</listcell>
                         </listitem>
                     </listbox >

@@ -11,14 +11,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <zk.version>6.5.1</zk.version>
-        <org.springframework.version>3.2.0.RELEASE</org.springframework.version>
+        <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <org.springsecurity.version>3.1.2.RELEASE</org.springsecurity.version>
-        <hibernate-core-version>4.1.1.Final</hibernate-core-version>
+        <hibernate-core-version>4.1.9.Final</hibernate-core-version>
 
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.username>root</jdbc.username>
         <jdbc.password></jdbc.password>
-        <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jdbc.datasource>
+        <jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</jdbc.datasource>
         <hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
         <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
         <hibernate.show_sql>true</hibernate.show_sql>
@@ -58,6 +58,12 @@
                     <artifactId>google-collections</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkspring-security</artifactId>
+            <version>3.1.1</version>
         </dependency>
 
         <!-- Zkoss dependecies end -->
@@ -233,7 +239,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.0</version>
+            <version>2.1</version>
         </dependency>
 
         <dependency>
@@ -334,23 +340,6 @@
             <scope>runtime</scope>
         </dependency>
 
-<!--
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.4.GA</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
-            <scope>runtime</scope>
-        </dependency>
--->
-        <!-- Need to double check on this end -->
-
         <!-- Cloud start -->
         <dependency>
             <groupId>org.cloudfoundry</groupId>
@@ -360,6 +349,27 @@
         <!-- Cloud end -->
 
 
+        <!--jackson -->
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-lgpl</artifactId>
+            <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+        <!--jackson -->
     </dependencies>
 
     <repositories>
@@ -413,10 +423,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.0</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
 
@@ -464,6 +474,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
                     <scanIntervalSeconds>1000000000</scanIntervalSeconds>
                     <stopPort>9966</stopPort>
                     <stopKey>foo</stopKey>
@@ -519,12 +530,12 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <jdbc.url>jdbc:mysql://localhost:3306/BaseProject</jdbc.url>
+                <jdbc.url>jdbc:mysql://localhost:3306/baseproject</jdbc.url>
                 <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
+<!--
         <profile>
-
             <id>test</id>
             <properties>
                 <jdbc.url>jdbc:mysql://localhost:3306/BaseProjectTest</jdbc.url>
@@ -538,6 +549,7 @@
                 <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
+-->
     </profiles>
 
     <!-- To use the report goals in your POM or parent POM -->

@@ -10,6 +10,10 @@
 
   <logger name="com.simplepersoncrud" level="DEBUG" />
   <logger name="org.nthdimenzion" level="DEBUG" />
+   <logger name="java.sql" level="DEBUG" />
+  <logger name="org.apache.ibatis" level="DEBUG" />
+
+
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />

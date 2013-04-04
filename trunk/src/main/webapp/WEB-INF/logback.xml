@@ -10,6 +10,8 @@
 
   <logger name="com.simplepersoncrud" level="DEBUG" />
   <logger name="org.nthdimenzion" level="DEBUG" />
+  <logger name="org.springframework.jdbc" level="DEBUG" />
+  <logger name="org.apache.ibatis" level="DEBUG" />
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT" />

@@ -27,7 +27,7 @@ String findMostActiveBook = libraryFinder.findMostActiveBook();
 
     <window id="bookPanel"  title="Book Panel" border="normal" self="@{define(content)}">
         <div style="width:100%;height:100%" >
-            <panel id="libraryDetails" title="Quick view of tasks you can do" closable="true" collapsible="true">
+            <panel id="libraryDetails" title="Quick view of tasks you can do">
                 <panelchildren>
                 <div align="center" >
                 <hlayout spacing="20px" sclass="form" >
