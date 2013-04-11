@@ -3,12 +3,16 @@ package com.librarymanagement.domain;
 import org.joda.time.DateTime;
 import org.nthdimenzion.crud.ICrudEntity;
 import org.nthdimenzion.ddd.domain.INamed;
+import org.nthdimenzion.ddd.domain.Person;
+import org.nthdimenzion.ddd.domain.PersonRole;
 import org.nthdimenzion.ddd.domain.annotations.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import static org.nthdimenzion.ddd.domain.PersonRole.DomainRole.MEMBER;
 
 @Role
 @Entity
@@ -17,11 +21,11 @@ public class Member extends PersonRole implements ICrudEntity,INamed{
     private String memberId;
     
     public Member() {
-    super();
+    super(MEMBER);
     }
 
     public Member(Person person) {
-        super(person);
+        super(person,MEMBER);
     }
 
     public String getMemberId() {

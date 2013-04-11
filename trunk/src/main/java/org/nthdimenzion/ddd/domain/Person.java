@@ -1,4 +1,4 @@
-package com.librarymanagement.domain;
+package org.nthdimenzion.ddd.domain;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -25,13 +25,13 @@ public final class Person extends IdGeneratingArcheType implements INamed {
     Person() {
     }
 
-    Person(String firstName,String lastName, DateTime dateOfBirth) {
+    public Person(String firstName,String lastName, DateTime dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
-    Person(String firstName,String middleName,String lastName ,DateTime dateOfBirth) {
+    public Person(String firstName,String middleName,String lastName ,DateTime dateOfBirth) {
         this(firstName,lastName,dateOfBirth);
         this.middleName = middleName;
     }
@@ -49,7 +49,7 @@ public final class Person extends IdGeneratingArcheType implements INamed {
         return middleName;
     }
 
-    void setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 

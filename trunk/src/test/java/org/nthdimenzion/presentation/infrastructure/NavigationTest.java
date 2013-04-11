@@ -12,12 +12,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@ActiveProfiles({"standalone"})
 public class NavigationTest {
 
     @Test
     public void testRedirectUrl() {
-        Execution execution = mock(Execution.class);
         ResourceBundleViewResolver resolver = mock(ResourceBundleViewResolver.class);
         Navigation navigation = new Navigation(resolver);
         when(resolver.resolveViewName("test")).thenReturn("test.zul");
@@ -30,7 +28,6 @@ public class NavigationTest {
 
     @Test
     public void testRedirectUrlWithParams() {
-        Execution execution = mock(Execution.class);
         ResourceBundleViewResolver resolver = mock(ResourceBundleViewResolver.class);
         Navigation navigation = new Navigation(resolver);
         when(resolver.resolveViewName("test")).thenReturn("test.zul");

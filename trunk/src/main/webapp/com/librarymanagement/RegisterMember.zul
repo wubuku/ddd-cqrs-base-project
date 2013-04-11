@@ -26,7 +26,7 @@ subpagetitle.setValue("You can Register a member here");
         </hlayout>
           <hlayout spacing="6px">
             <label id = "lblMemberMiddleName" sclass="name" value="Middle Name"/>
-            <textbox id = "txtMemberMiddleName" value="@{member.middleName}"  maxlength="40"/>
+            <textbox id = "txtMemberMiddleName" value="@{member.middleName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  maxlength="40"/>
         </hlayout>
           <hlayout spacing="6px">
             <label id = "lblMemberLastName" sclass="name" value="Last Name" mold="required"/>

@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <zk.version>6.5.1</zk.version>
+        <zk.version>6.5.2</zk.version>
         <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <org.springsecurity.version>3.1.2.RELEASE</org.springsecurity.version>
         <hibernate-core-version>4.1.9.Final</hibernate-core-version>
@@ -531,7 +531,7 @@
             </activation>
             <properties>
                 <jdbc.url>jdbc:mysql://localhost:3306/baseproject</jdbc.url>
-                <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+                <hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
             </properties>
         </profile>
 <!--
