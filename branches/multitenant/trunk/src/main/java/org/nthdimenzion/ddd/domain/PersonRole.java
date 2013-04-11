@@ -1,43 +1,40 @@
-package com.librarymanagement.domain;
+package org.nthdimenzion.ddd.domain;
 
 import org.joda.time.DateTime;
-import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.Role;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Role
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PersonRole extends IdGeneratingArcheType {
 
     private Person person;
+    private DomainRole domainRole;
 
+    public static enum DomainRole {
+        MEMBER
+    }
 
+    private PersonRole(){
+        // Hibernate
+    }
 
-    protected PersonRole(){
+    protected PersonRole(DomainRole domainRole){
         person = new Person();
+        this.domainRole = domainRole;
     }
 
-    protected PersonRole(Person person) {
+    protected PersonRole(Person person,DomainRole domainRole) {
         this.person = person;
+        this.domainRole = domainRole;
     }
 
-    protected PersonRole(String firstName,String lastName, DateTime dateOfBirth) {
-        this.person.setFirstName(firstName);
-        this.person.setLastName(lastName);
-        this.person.setDateOfBirth(dateOfBirth);
-    }
-
-    protected PersonRole(String firstName,String middleName,String lastName ,DateTime dateOfBirth) {
-        this(firstName,lastName,dateOfBirth);
-        this.person.setMiddleName(middleName);
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
-    protected Person getPerson(){
+    public Person getPerson(){
         return person;
     }
 
@@ -81,5 +78,14 @@ public abstract class PersonRole extends IdGeneratingArcheType {
         person.setDateOfBirth(dateOfBirth);
     }
 
+    @Enumerated(EnumType.ORDINAL)
+    @NotNull
+    public DomainRole getDomainRole() {
+        return domainRole;
+    }
+
+    void setDomainRole(DomainRole domainRole) {
+        this.domainRole = domainRole;
+    }
 }
 
