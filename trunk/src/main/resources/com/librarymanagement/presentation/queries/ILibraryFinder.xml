@@ -66,11 +66,13 @@
    </select>
 
     <select id="upcomingBirthDays" resultType="com.librarymanagement.presentation.dto.MemberDto">
-    SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,person.DATE_OF_BIRTH AS dateOfBirth,member.MEMBER_ID as id
-    FROM MEMBER member LEFT OUTER JOIN PERSON person ON member.PERSON=person.ID
-    WHERE member.ENTITY_STATUS = 0
-    and month(person.DATE_OF_BIRTH)= month(#{today})
-    and day(person.DATE_OF_BIRTH) >= day(#{today})
+        SELECT  person.FIRST_NAME AS firstName, person.LAST_NAME AS lastName, person.MIDDLE_NAME AS middleName,
+        person.DATE_OF_BIRTH AS dateOfBirth,member.MEMBER_ID AS id
+        FROM MEMBER member JOIN PERSON_ROLE personrole ON member.id=personrole.ID
+        JOIN person person ON personrole.person = person.id
+        WHERE personrole.ENTITY_STATUS = 0
+        and month(person.DATE_OF_BIRTH)= month(#{today})
+        and day(person.DATE_OF_BIRTH) >= day(#{today})
     </select>
 
     <select id="findBookLendings" resultType="hashMap">
@@ -94,7 +96,7 @@
     SELECT first_name as firstName ,middle_name as middleName ,last_name as lastName
     FROM PERSON WHERE id = (
         SELECT member
-        FROM BOOK_LENDING bl,MEMBER m
+        FROM BOOK_LENDING bl,person_role m
         WHERE bl.MEMBER = m.ID
         AND m.ENTITY_STATUS = 0
         GROUP BY member
