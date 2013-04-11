@@ -2,15 +2,13 @@ package org.nthdimenzion.security.domain;
 
 import com.google.common.collect.Sets;
 import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
+import org.nthdimenzion.ddd.domain.PersonRole;
 import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.ddd.infrastructure.exception.ErrorDetails;
 import org.nthdimenzion.object.utils.UtilValidator;
 import org.nthdimenzion.security.domain.error.HomePageAlreadyExistsForUser;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @AggregateRoot
@@ -22,6 +20,7 @@ public class UserLogin extends BaseAggregateRoot {
     private Set<SecurityGroup> securityGroups = Sets.newHashSet();
     private Boolean isEnabled = Boolean.TRUE;
     private String homepageViewId;
+    private PersonRole personRole;
 
     protected UserLogin() {
     }
@@ -100,6 +99,15 @@ public class UserLogin extends BaseAggregateRoot {
 
     public void setHomepageViewId(String homepageViewId) {
         this.homepageViewId = homepageViewId;
+    }
+
+    @OneToOne
+    public PersonRole getPersonRole() {
+        return personRole;
+    }
+
+    public void setPersonRole(PersonRole personRole) {
+        this.personRole = personRole;
     }
 
     @Override
