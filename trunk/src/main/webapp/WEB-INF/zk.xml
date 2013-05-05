@@ -13,15 +13,15 @@
 
     <!--<zscript language="Java"/>-->
 
-    <language-config>
+    <!--<language-config>
 		<addon-uri>/WEB-INF/zkoss/zk-addon.xml</addon-uri>
 	</language-config>
-
-    <error-page>
+-->
+   <!-- <error-page>
 		 <exception-type>java.lang.Throwable</exception-type>
 		 <location>/error.zul</location>
 	</error-page>
-
+-->
 
     <session-config>
 		<timer-keep-alive>true</timer-keep-alive>
@@ -33,5 +33,10 @@
 		<timeout-uri>/login.zul</timeout-uri>
         <session-timeout>20</session-timeout>
 	</session-config>
+
+<!--    <library-property>
+        <name>org.zkoss.theme.preferred</name>
+        <value>breeze</value>
+    </library-property>-->
 
 </zk>

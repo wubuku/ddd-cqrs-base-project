@@ -4,15 +4,24 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="finderComponentScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer" depends-on="sqlSessionFactory">
+    <bean id="finderComponentScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          depends-on="sqlSessionFactory">
         <property name="basePackage" value="com.simplepersoncrud.presentation,com.librarymanagement.presentation"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
-    <beans profile="standalone,cloud">
-        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-            <property name="dataSource" ref="dataSourceRef"/>
-            <property name="typeHandlersPackage" value="org.nthdimenzion.ddd.domain.sharedkernel"/>
-        </bean>
-    </beans>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceRef"/>
+        <property name="typeHandlersPackage" value="org.nthdimenzion.ddd.domain.sharedkernel"/>
+        <property name="plugins">
+            <array>
+                <ref bean="myBatisQueryPlugin"/>
+                <!--<ref bean="tenantQueryFilterInterceptor"/>-->
+            </array>
+        </property>
+    </bean>
+
+    <bean id="myBatisQueryPlugin" class="org.nthdimenzion.presentation.infrastructure.MyBatisQueryResultColumnLabelsTestPlugin"/>
+    <bean id="tenantQueryFilterInterceptor"
+          class="org.nthdimenzion.presentation.infrastructure.TenantFilterInterceptor"/>
 </beans>

@@ -1,5 +1,7 @@
 package org.nthdimenzion.cqrs.command;
 
+import com.google.common.base.Preconditions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.*;
 import org.nthdimenzion.object.utils.UtilValidator;
@@ -9,8 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Qualifier("simpleCommandBus")
@@ -29,6 +36,12 @@ public class SimpleCommandBus implements ICommandBus {
 
     @Autowired
     private List<ICommandInterceptor> commandInterceptors;
+
+    @Autowired
+    private Validator validator;
+
+    SimpleCommandBus(){
+    }
 
     @Override
     public Object send(ICommand command) {
@@ -95,6 +108,13 @@ public class SimpleCommandBus implements ICommandBus {
                 exceptionEventBus.raise(new OperationFailed(errorDetails));
                 return true;
             }
+        }else if(throwable instanceof ConstraintViolationException){
+            String message = throwable.getMessage().replace("key"," field ");
+            ErrorDetails errorDetails = new ErrorDetails.Builder("000",message).exception(throwable)
+                    .isShowErrorInView(true).build();
+            exceptionEventBus.raise(new OperationFailed(errorDetails));
+            return true;
+
         }
         return false;
     }
@@ -108,6 +128,13 @@ public class SimpleCommandBus implements ICommandBus {
 
     private boolean validate(ICommand command) {
         boolean isValid = true;
+        Set<ConstraintViolation<ICommand>> constraintViolations = validator.validate(command);
+        if(UtilValidator.isNotEmpty(constraintViolations)){
+            commandValidationFailed = new CommandValidationFailed(constraintViolations);
+            exceptionEventBus.raise(commandValidationFailed);
+            isValid = false;
+            return isValid;
+        }
         try {
             command.validate();
         } catch (Exception exception) {

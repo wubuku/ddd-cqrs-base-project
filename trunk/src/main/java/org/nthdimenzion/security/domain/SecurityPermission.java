@@ -8,10 +8,13 @@ import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @ValueObject
 @Entity
 @Immutable
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"permissionId"})})
 class SecurityPermission extends IdGeneratingArcheType {
 
     private String permissionId;

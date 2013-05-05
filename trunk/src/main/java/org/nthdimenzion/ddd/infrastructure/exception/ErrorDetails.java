@@ -97,6 +97,13 @@ public class ErrorDetails {
             this.errorCode = errorCode;
         }
 
+
+        public Builder(String errorCode,String errorMessage) {
+            this.errorCode = errorCode;
+            this.errorMessage = errorMessage;
+        }
+
+
         public Builder exception(Throwable exception) {
             this.exception = exception;
             return this;
@@ -113,6 +120,9 @@ public class ErrorDetails {
         }
 
         public ErrorDetails build(){
+            if(UtilValidator.isNotEmpty(errorMessage)){
+                return new ErrorDetails(this);
+            }
             if(UtilValidator.isEmpty(args)){
                 this.errorMessage = errorMessageLocator.getFormatterErrorMessageFor(errorCode);
             }
