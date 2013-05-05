@@ -34,7 +34,7 @@ public final class PresentationDecoratedExceptionHandler extends AbstractEventLi
     public void failedOperationHandler(OperationFailed operationFailed) {
         logger.error("Bubbled up exception " + operationFailed.errorDetails.getException());
         if (operationFailed.errorDetails.getShowErrorInView()) {
-            displayMessages.displayError(operationFailed.errorDetails.toString());
+            displayMessages.displayError(operationFailed.errorDetails.getErrorMessage());
             isExceptionHandled = true;
         }
     }

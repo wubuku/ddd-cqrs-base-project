@@ -19,7 +19,8 @@ subpagetitle.setValue("Double click on the book to select");
         <vlayout>
             <panel title="Double click on the book you want to edit">
                 <panelchildren>
-                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10" tooltiptext="Double click on the book you want to edit">
+                    <listbox  id="libraryBooks" model="@{bookListComposer.bookList}" mold="paging" pageSize="10"
+                              tooltiptext="Double click on the book you want to edit" checkmark="true" multiple="false">
                         <listhead>
                             <!--<listheader>ID</listheader>-->
                             <listheader>Name</listheader>

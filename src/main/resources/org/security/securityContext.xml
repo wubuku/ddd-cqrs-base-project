@@ -12,7 +12,8 @@
 
     <security:http auto-config="true">
         <security:intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/*.zul" access="IS_AUTHENTICATED_REMEMBERED" />
+        <security:intercept-url pattern="/**/*.zul" access="IS_AUTHENTICATED_REMEMBERED
+        " />
         <security:intercept-url pattern="/zk/*" access="IS_AUTHENTICATED_REMEMBERED" />
         <security:form-login login-page="/login.zul" always-use-default-target="true"
                              default-target-url="/com/personsample/personPanel.zul" authentication-failure-url="/login.zul?login_error=1" authentication-success-handler-ref="authenticationSuccessHandler"/>

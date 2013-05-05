@@ -4,17 +4,13 @@ import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 import org.joda.time.DateTime;
 import org.nthdimenzion.ddd.domain.LifeCycle;
-import org.nthdimenzion.security.domain.SystemUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.nthdimenzion.ddd.infrastructure.LoggedInUserHolder;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 public class AutoColumnsPopulator extends EmptyInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Autowired
-    private SystemUser systemUser;
 
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] currentState, String[] propertyNames, Type[] types) {
@@ -44,7 +40,7 @@ public class AutoColumnsPopulator extends EmptyInterceptor implements Serializab
     }
 
     private String getUserName() {
-        return org.nthdimenzion.object.utils.StringUtils.nullSafeCopy(systemUser.getUsername());
+        return LoggedInUserHolder.getUserName();
     }
 
     @Override

@@ -17,6 +17,12 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.Set;
+
 @Composer
 public abstract class AbstractZkComposer extends GenericForwardComposer {
 
@@ -38,6 +44,9 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
     @Qualifier("exceptionEventBus")
     protected IEventBus exceptionEventBus;
 
+    @Autowired
+    private Validator validator;
+
     private final ModelMapper modelMapper = new ModelMapper();
 
     protected AbstractZkComposer() {
@@ -45,6 +54,10 @@ public abstract class AbstractZkComposer extends GenericForwardComposer {
         modelMapper.getConfiguration().enableFieldMatching(true)
 
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+    }
+
+    protected final Set<ConstraintViolation<ICommand>> validate(ICommand command){
+        return validator.validate(command);
     }
 
     protected final Object sendCommand(ICommand command) {

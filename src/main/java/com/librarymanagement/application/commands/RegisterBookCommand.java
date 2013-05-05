@@ -1,13 +1,17 @@
 package com.librarymanagement.application.commands;
 
 import com.google.common.base.Preconditions;
+import com.librarymanagement.domain.CustomEmail;
 import org.joda.money.Money;
 import org.nthdimenzion.cqrs.command.ICommand;
 import org.nthdimenzion.cqrs.command.annotations.Command;
 
+import javax.validation.constraints.NotNull;
+
 @Command
 public class RegisterBookCommand implements ICommand{
 
+    @CustomEmail
     public String name;
     public String isbn;
     public Integer copies;

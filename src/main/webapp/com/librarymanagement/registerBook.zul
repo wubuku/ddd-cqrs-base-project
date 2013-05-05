@@ -1,57 +1,64 @@
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/org/layout/layout.zul"?>
 <zk xmlns="http://www.zkoss.org/2005/zul"
-xmlns:h="http://www.w3.org/1999/xhtml"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./registerBook"?>
-<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-<zscript><![CDATA[
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" root="./registerBook"?>
+    <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+    <zscript><![CDATA[
 pagetitle.setValue("Register a Book");
 subpagetitle.setValue("Enter/Edit details of the Book you wish to Register into the Library");
 ]]></zscript>
-    <window id="registerBook" apply="${registerBookComposer}" title="Register Book" border="normal" width="100%" self="@{define(content)}" height="100%">
-     <panel  title="Quick view to register Book" closable="true" collapsible="true">
-                <panelchildren>
-                <div align="center" >
-     <hlayout spacing="20px" sclass="form" >
-                 <vlayout spacing="10px">
-                      <hlayout spacing="6px">
-            <label id = "bookId" value="@{bookDto.id}" sclass="name" visible="false"/>
-       </hlayout>
-        <hlayout spacing="6px">
-            <label id = "lblBookName" sclass="name" value="Name" />
-            <label zclass="labelReq" value="*"/>
-            <textbox id = "txtBookName" value="@{bookDto.name}" constraint="no empty" cols="40"/>
-        </hlayout>
-          <hlayout spacing="6px">
-            <label id = "lblIsbn" value="ISBN" sclass="name"/>
-            <label zclass="labelReq"  value="*"/>
-            <textbox id = "txtIsbn" value="@{bookDto.isbn}" cols="40"/>
-        </hlayout>
-          <hlayout spacing="6px">
-            <label id = "lblAuthors" sclass="name" value="Authors"/>
-            <textbox id = "txtAuthors" value="@{bookDto.authors}" rows="4" cols="40"/>
-        </hlayout>
-       <!-- <hlayout>
-            <label id = "lblCopies" value="Copies"/>
-            <label zclass="labelReq" value="*"/>
-            <spinner id="copies" value="@{bookDto.copies}" constraint="no negative" />
-        </hlayout>-->
-        <hlayout spacing="6px">
-            <button id = "purchaseBookBtn" label="Register Book" onClick="registerBookComposer.registerBook()" visible="@{registerBookComposer.registerBookView}"/>
-            <button id = "updateBookBtn" label="Done Editing" onClick="registerBookComposer.updateBook()" visible="@{registerBookComposer.updateView}"/>
-        </hlayout>
-     </vlayout>
-     </hlayout>
-     </div>
-     </panelchildren>
-     </panel>
+    <window id="registerBook" apply="${registerBookComposer}" title="Register Book" border="normal" width="100%"
+            self="@{define(content)}" height="100%">
+        <panel title="Quick view to register Book" closable="true" collapsible="true">
+            <panelchildren>
+                <div align="center">
+                    <hlayout spacing="20px" sclass="form">
+                        <vlayout spacing="10px">
+                            <hlayout spacing="6px">
+                                <label id="bookId" value="@{bookDto.id}" sclass="name" visible="false"/>
+                            </hlayout>
+                            <hlayout spacing="6px">
+                                <label id="lblBookName" sclass="name" value="Name"/>
+                                <label zclass="labelReq" value="*"/>
+                                <textbox id="txtBookName" value="@{bookDto.name}" constraint="no empty" cols="40"/>
+                            </hlayout>
+                            <hlayout spacing="6px">
+                                <label id="lblIsbn" value="ISBN" sclass="name"/>
+                                <label zclass="labelReq" value="*"/>
+                                <textbox id="txtIsbn" value="@{bookDto.isbn}" cols="40"/>
+                            </hlayout>
+                            <hlayout spacing="6px">
+                                <label id="lblAuthors" sclass="name" value="Authors"/>
+                                <textbox id="txtAuthors" value="@{bookDto.authors}" rows="4" cols="40"/>
+                            </hlayout>
+                            <!-- <hlayout>
+                                 <label id = "lblCopies" value="Copies"/>
+                                 <label zclass="labelReq" value="*"/>
+                                 <spinner id="copies" value="@{bookDto.copies}" constraint="no negative" />
+                             </hlayout>-->
+                            <hlayout spacing="6px">
+                                <button id="purchaseBookBtn" label="Register Book"
+                                        onClick="registerBookComposer.registerBook()"
+                                        visible="@{registerBookComposer.registerBookView}"/>
+                                <button id="updateBookBtn" label="Done Editing"
+                                        onClick="registerBookComposer.updateBook()"
+                                        visible="@{registerBookComposer.updateView}"/>
+                            </hlayout>
+                        </vlayout>
+                    </hlayout>
+                </div>
+            </panelchildren>
+        </panel>
     </window>
-         <vbox self="@{define(left)}">
-            <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
-            <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
-            <a id="transferBook" label="Lending or Borrowing of Books" onClick='navigation.redirect("findMemberForTransfer")'/>
-            <a id="bookTransactions" label="Buy or Sell Copies of Registered Books" onClick='navigation.redirect("findBookForTransaction")'/>
-        </vbox>
+    <vbox self="@{define(left)}">
+        <a id="bookHome" label="Book Home" onClick='navigation.redirect("bookPanel")'/>
+        <a id="bookList" label="Goto Book List" onClick='navigation.redirect("bookList")'/>
+        <a id="transferBook" label="Lending or Borrowing of Books"
+           onClick='navigation.redirect("findMemberForTransfer")'/>
+        <a id="bookTransactions" label="Buy or Sell Copies of Registered Books"
+           onClick='navigation.redirect("findBookForTransaction")'/>
+    </vbox>
 
 </zk>

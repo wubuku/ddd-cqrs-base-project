@@ -2,6 +2,7 @@
 package com.librarymanagement.presentation.queries;
 
 import com.librarymanagement.presentation.dto.MemberDto;
+import org.apache.ibatis.annotations.Param;
 import org.nthdimenzion.cqrs.query.annotations.Finder;
 
 import java.util.Date;
@@ -10,6 +11,10 @@ import java.util.Map;
 
 @Finder
 public interface ILibraryFinder {
+
+    String FIND_ALL_BOOKS="findAllBooks";
+    String UPCOMING_BIRTHDAYS="testBirthDays";
+    String UPCOMING_BIRTHDAYS_WITH_OBJECT_PARAM="upcomingBirthDaysWithObjectParam";
 
     List<Map<String,?>> findAllBooks();
 

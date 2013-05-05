@@ -3,6 +3,7 @@ package org.nthdimenzion.ddd.domain.service;
 import com.google.common.base.Preconditions;
 import org.nthdimenzion.crud.ICrud;
 import org.nthdimenzion.ddd.domain.PersonRole;
+import org.nthdimenzion.ddd.infrastructure.LoggedInUserHolder;
 import org.nthdimenzion.security.application.services.UserService;
 import org.nthdimenzion.security.domain.IUserLoginRepository;
 import org.nthdimenzion.security.domain.SystemUser;
@@ -23,7 +24,6 @@ public class RoleService {
     @Autowired
     private ICrud crudDao;
 
-    @Autowired
     private SystemUser systemUser;
 
     @Autowired
@@ -36,10 +36,10 @@ public class RoleService {
      * @return
      */
     public <T> T getRolePlayedByLoggedInUser(Class<T> clazz){
-        UserLogin userLogin = userLoginRepository.findUserLoginWithUserName(systemUser.getUsername());
+        UserLogin userLogin = userLoginRepository.findUserLoginWithUserName(LoggedInUserHolder.getUserName());
         PersonRole personRole = userLogin.getPersonRole();
         Preconditions.checkNotNull(personRole);
-        return crudDao.find(clazz,personRole.getId());
+        return (T)crudDao.find(clazz,personRole.getId());
     }
 
 }
