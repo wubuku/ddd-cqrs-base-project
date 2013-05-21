@@ -21,13 +21,13 @@ public class TestUrlBasedTenantIdExtractor {
     @Test
     public void givenUrlHost_WhenUrlStartWithWWWPrefix_ExtractTenantId(){
         Function<String,String> urlBasedExtractor = new UrlBasedTenantIdExtractor();
-        assertThat("test2",equalTo(urlBasedExtractor.apply("www.test2.localhost:8080")));
+        assertThat(urlBasedExtractor.apply("www.test2.localhost:8080"),equalTo("test2"));
     }
 
     @Test
     public void givenUrlHost_WhenUrlDoesNotStartWithWWWPrefix_ExtractTenantId(){
         Function<String,String> urlBasedExtractor = new UrlBasedTenantIdExtractor();
-        assertThat("test2",is(equalTo(urlBasedExtractor.apply("test2.localhost:8080"))));
+        assertThat(urlBasedExtractor.apply("test2.localhost:8080"),is(equalTo("test2")));
     }
 
 }
