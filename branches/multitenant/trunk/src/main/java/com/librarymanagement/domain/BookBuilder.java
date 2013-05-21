@@ -12,7 +12,7 @@ public class BookBuilder extends AbstractDomainFactory{
 
     public BookBuilder createBook(String name, String isbn, Money cost) {
         BookId bookId = new BookId(idGenerator.nextId());
-        book = new Book(name, isbn, bookId, cost);
+        book = new Book(null, isbn, bookId, cost);
         return this;
     }
 
@@ -28,7 +28,7 @@ public class BookBuilder extends AbstractDomainFactory{
     }
 
     public Book build() {
-        validate();
+        //validate();
         injectDependencies();
         return book;
     }

@@ -1,5 +1,6 @@
 package org.nthdimenzion.presentation.infrastructure.multitenant;
 
+import com.google.common.base.Function;
 import org.nthdimenzion.ddd.infrastructure.multitenant.TenantIdHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,12 @@ public final class TenantIdFilter implements Filter {
 
     private FilterConfig filterConfig;
 
+    private Function<String,String> tenantIdExtractor;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
+        tenantIdExtractor = new UrlBasedTenantIdExtractor();
     }
 
     @Override
@@ -45,7 +48,8 @@ public final class TenantIdFilter implements Filter {
         // Resolve Tenant ID
         String tenantId = null;
         if (httpRequest.getRequestURI().endsWith(SPRING_SECURITY_CHECK_MAPPING)) {
-            tenantId = request.getParameter(TENANT_HTTP_KEY);
+            tenantId = extractTenantId(httpRequest);
+            System.out.println(tenantId);
             httpRequest.getSession().setAttribute(TENANT_HTTP_KEY, tenantId);
         } else {
             tenantId = (String) httpRequest.getSession().getAttribute(TENANT_HTTP_KEY);
@@ -65,4 +69,23 @@ public final class TenantIdFilter implements Filter {
     public void destroy() {
         filterConfig = null;
     }
+
+
+
+    public void setTenantIdExtractor(Function<String, String> tenantIdExtractor) {
+        this.tenantIdExtractor = tenantIdExtractor;
+    }
+
+    protected String extractTenantId(HttpServletRequest request){
+        if(tenantIdExtractor == null){
+            return  request.getParameter(TENANT_HTTP_KEY);
+        }
+        else{
+
+            return tenantIdExtractor.apply(request.getHeader("Host"));
+        }
+
+    }
 }
+
+

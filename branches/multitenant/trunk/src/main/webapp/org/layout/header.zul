@@ -1,29 +1,41 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:n="http://www.zkoss.org/2005/zk/native"
-xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-<zscript><![CDATA[
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:n="http://www.zkoss.org/2005/zk/native"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <zscript><![CDATA[
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.nthdimenzion.security.domain.SystemUser;
 
+import org.springframework.context.support.*;
+import org.springframework.web.context.support.*;
+import javax.servlet.*;
+
+import org.nthdimenzion.ddd.infrastructure.LoggedInUserHolder;
+
 //UserDetails userDetails = SpringUtil.getBean("systemUser",UserDetails.class);
 
 UserDetails userDetails = (UserDetails)Sessions.getCurrent().getAttribute("loggedInUser");
+
+
+
 ]]></zscript>
-<div sclass="top">
-   <n:div class="logoCont">
-			<!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
-	</n:div>
-	<div sclass="loggedIn">
-	    <a href="/" zclass="signout" label="Log Off">
-	     <attribute name="onClick">
-             Sessions.getCurrent().invalidate();
-         </attribute>
-	    </a>
-	    <h:br></h:br>
-        <label value="Logged In "/>
-        <label value="${userDetails.username}"/>
-	</div>
-</div>
+    <div sclass="top" apply="org.zkoss.bind.BindComposer"
+         viewModel="@id('vm') @init('org.nthdimenzion.presentation.util.HeaderViewModel')">
+        <button label="Reload Spring" />
+        <n:div class="logoCont">
+            <!--<n:a class="logo" title="DDD/CQRS Base Project"></n:a>-->
+        </n:div>
+        <div sclass="loggedIn">
+            <a href="/" zclass="signout" label="Log Off">
+                <attribute name="onClick">
+                    Sessions.getCurrent().invalidate();
+                    LoggedInUserHolder.clearLoggedInUser();
+                </attribute>
+            </a>
+            <h:br></h:br>
+            <label value="Logged In "/>
+            <label value="${userDetails.username}"/>
+        </div>
+    </div>
 </zk>

@@ -2,7 +2,13 @@ package com.librarymanagement.presentation;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.librarymanagement.presentation.queries.DateOfBirthCriteria;
 import com.librarymanagement.presentation.queries.ILibraryFinder;
+import org.apache.ibatis.session.RowBounds;
+import org.joda.time.DateTime;
+import org.nthdimenzion.cqrs.query.IPage;
+import org.nthdimenzion.cqrs.query.IPageFinder;
+import org.nthdimenzion.cqrs.query.PagingUtil;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +36,12 @@ public class BookListComposer extends AbstractZkComposer{
         getBookList();
     }
 
+    @Autowired
+    private IPageFinder pageFinder;
+
     public List<Map<String, ?>> getBookList() {
-        bookList = libraryFinder.findAllBooks();
+        IPage pagedResult = pageFinder.findAll(ILibraryFinder.FIND_ALL_BOOKS, new RowBounds(0,10));
+        bookList = pagedResult.getContent();
         return bookList;
     }
 

@@ -1,21 +1,19 @@
 <configuration scan="true" scanPeriod="10 seconds">
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <!-- encoders are assigned the type
-         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-    </encoder>
-  </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-  <logger name="com.simplepersoncrud" level="DEBUG" />
-  <logger name="org.nthdimenzion" level="DEBUG" />
-   <logger name="java.sql" level="DEBUG" />
-  <logger name="org.apache.ibatis" level="DEBUG" />
+    <logger name="com.simplepersoncrud" level="DEBUG" />
+    <logger name="org.nthdimenzion" level="DEBUG" />
+    <logger name="org.springframework.jdbc" level="DEBUG" />
+    <logger name="org.apache.ibatis" level="DEBUG" />
 
-
-
-  <root level="WARN">
-    <appender-ref ref="STDOUT" />
-  </root>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
 </configuration>

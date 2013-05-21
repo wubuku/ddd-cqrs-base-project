@@ -51,14 +51,15 @@
     <bean class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" id="sessionFactory"
           parent="sessionFactoryTemplate">
         <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
-                <prop key="bytecode.provider">cglib</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.hbm2ddl.import_files">common.sql,librarymanagement.sql</prop>
-            </props>
+            <map>
+                <entry key="hibernate.dialect" value="${hibernate.dialect}"></entry>
+                <entry key="hibernate.show_sql" value="${hibernate.show_sql}"></entry>
+                <entry key="hibernate.connection.autocommit" value="${hibernate.connection.autocommit}"></entry>
+                <entry key="bytecode.provider" value="cglib"></entry>
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"></entry>
+                <entry key="hibernate.hbm2ddl.import_files" value="common.sql,librarymanagement.sql"></entry>
+                <entry key="javax.persistence.validation.factory" value-ref="validator"></entry>
+            </map>
         </property>
     </bean>
 

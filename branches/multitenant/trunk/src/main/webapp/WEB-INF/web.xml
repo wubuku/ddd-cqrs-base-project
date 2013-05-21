@@ -123,7 +123,7 @@
         <welcome-file>/login.zul</welcome-file>
     </welcome-file-list>
 
-    <error-page>
+   <!-- <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/error.zul</location>
     </error-page>
@@ -131,7 +131,7 @@
     <error-page>
         <error-code>500</error-code>
         <location>/error.zul</location>
-    </error-page>
+    </error-page>-->
 
 
 </web-app>

@@ -5,13 +5,12 @@ import org.nthdimenzion.ddd.domain.BaseAggregateRoot;
 import org.nthdimenzion.ddd.domain.annotations.AggregateRoot;
 import org.nthdimenzion.object.utils.UtilValidator;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @AggregateRoot
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class SecurityGroup extends BaseAggregateRoot {
 
     private Set<SecurityPermission> securityPermissions = Sets.newHashSet();
