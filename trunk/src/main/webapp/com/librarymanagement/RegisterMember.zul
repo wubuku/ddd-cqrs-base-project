@@ -17,11 +17,11 @@ subpagetitle.setValue("You can Register a member here");
             <!--<label id = "lblPersonId" value="Person Id" visible="@{personRegistrationComposer.isUpdateView}"/-->
             <label id = "personId" value="@{dto.id}" visible="false"/>
           <hlayout spacing="6px">
-           <label id = "lblMemberId" sclass="name" value="Member Id" mold="required"/>
+           <label id = "lblMemberId" sclass="name" value="Member Id" />
            <textbox id = "txtMemberId" value="@{member.memberId,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"  maxlength="10"/>
          </hlayout>
          <hlayout spacing="6px">
-            <label id = "lblMemberFirstName" sclass="name" value="First Name" mold="required"/>
+            <label id = "lblMemberFirstName" sclass="name" value="First Name" />
             <textbox id = "txtMemberFirstName" value="@{member.firstName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty"  maxlength="40"/>
         </hlayout>
           <hlayout spacing="6px">
@@ -29,11 +29,11 @@ subpagetitle.setValue("You can Register a member here");
               <textbox id = "txtMemberMiddleName" value="@{member.middleName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  maxlength="40"/>
         </hlayout>
           <hlayout spacing="6px">
-            <label id = "lblMemberLastName" sclass="name" value="Last Name" mold="required"/>
+            <label id = "lblMemberLastName" sclass="name" value="Last Name" />
             <textbox id = "txtMemberLastName" value="@{member.lastName,save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}"  constraint="no empty"  maxlength="40"/>
         </hlayout>
          <hlayout spacing="6px">
-            <label id = "lblDateOfBirth" sclass="name" value="Date Of Birth" mold="required"/>
+            <label id = "lblDateOfBirth" sclass="name" value="Date Of Birth" />
             <datebox id="dateOfBirth" value="@{member.dateOfBirth,converter='org.nthdimenzion.presentation.infrastructure.JodaTimeZkConverter',save-when='registerMemberBtn.onClick,updaterMemberBtn.onClick'}" constraint="no empty,no future" />
         </hlayout>
          <hlayout spacing="6px">

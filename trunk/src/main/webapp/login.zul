@@ -38,10 +38,10 @@ xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/
                   </n:input>
                   <label value="Password" style="margin:10px 10px 10px 0px" />
                   <n:input type="password" name="j_password" width="200px" />
-                  <div width="100%" if="${isMultiTenant}">
+                  <!--<div width="100%" if="${isMultiTenant}">
                     <label value="Tenant ID" />
                      <n:input name="tenantId" width="200px" id="tenantId" value="001" />
-                  </div>
+                  </div>-->
                   <div>
                      <n:input class="signIn" type="submit" value="Login" />
                   </div>

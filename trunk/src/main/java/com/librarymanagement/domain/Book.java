@@ -18,6 +18,7 @@ import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @AggregateRoot
@@ -25,6 +26,7 @@ import java.util.List;
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"ISBN"})})
 public class Book extends BaseAggregateRoot implements INamed{
+    @CustomEmail
     private String name;
     private String isbn;
     private Integer availableCopies;

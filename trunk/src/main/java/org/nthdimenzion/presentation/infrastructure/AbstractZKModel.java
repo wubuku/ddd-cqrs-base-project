@@ -9,6 +9,8 @@ import org.nthdimenzion.crud.ICrud;
 import org.nthdimenzion.ddd.infrastructure.IEventBus;
 import org.nthdimenzion.ddd.infrastructure.exception.OperationFailed;
 import org.nthdimenzion.object.utils.UtilMisc;
+import org.nthdimenzion.object.utils.UtilValidator;
+import org.nthdimenzion.presentation.exception.CommandConstraintException;
 import org.nthdimenzion.security.domain.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +20,13 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zkplus.databind.TypeConverter;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AbstractZKModel {
 
@@ -54,11 +61,19 @@ public class AbstractZKModel {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
+    @WireVariable
+    protected Validator validator;
+
     protected AbstractZKModel() {
         SystemUser systemUser = (SystemUser) Executions.getCurrent().getSession().getAttribute("loggedInUser");
         this.loggedInUser = systemUser;
         modelMapper.getConfiguration().enableFieldMatching(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+    }
+
+
+    protected final Set<ConstraintViolation<ICommand>> validate(ICommand command){
+        return validator.validate(command);
     }
 
     protected final Object sendCommand(ICommand command) {

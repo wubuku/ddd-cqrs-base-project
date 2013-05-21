@@ -14,9 +14,6 @@ public class UserService implements UserDetailsService{
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private SystemUser systemUser;
-
-    @Autowired
     public UserService(UserDetailsService userValidationService) {
     this.userDetailsService = userValidationService;
     }
@@ -24,7 +21,6 @@ public class UserService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        systemUser.uses(userDetailsService.loadUserByUsername(username));
         return new SystemUser(userDetails);
     }
 }

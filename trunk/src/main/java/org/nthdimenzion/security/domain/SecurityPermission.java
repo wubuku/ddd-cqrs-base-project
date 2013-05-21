@@ -1,16 +1,21 @@
 package org.nthdimenzion.security.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.annotations.Immutable;
 import org.nthdimenzion.ddd.domain.IdGeneratingArcheType;
 import org.nthdimenzion.ddd.domain.annotations.ValueObject;
 import org.nthdimenzion.object.utils.EqualsFacilitator;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @ValueObject
 @Entity
-public class SecurityPermission extends IdGeneratingArcheType {
+@Immutable
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"permissionId"})})
+class SecurityPermission extends IdGeneratingArcheType {
 
     private String permissionId;
     private String description;
