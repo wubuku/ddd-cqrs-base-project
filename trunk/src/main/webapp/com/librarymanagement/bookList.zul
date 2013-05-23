@@ -59,6 +59,7 @@ subpagetitle.setValue("Double click on the book to select");
                 </panelchildren>
             </panel>
         </vlayout>
+        <button label="Secret" onClick='bookListComposer.secret()'/>
     </window>
 
     <vbox self="@{define(left)}">

@@ -33,7 +33,7 @@ String findMostActiveBook = libraryFinder.findMostActiveBook();
                 <hlayout spacing="20px" sclass="form" >
                  <vlayout spacing="10px">
                       <hlayout spacing="6px">
-                            <a id="bookList" label="Goto Book List"  onClick='navigation.redirect("bookList")'/>
+                            <a id="bookList" label="Goto Book List"  onClick='navigation.redirect("library/bookList")'/>
                              <image src="/org/images/bookLists.png" sclass="autoSize" />
                             <separator></separator>
                              <separator></separator>
