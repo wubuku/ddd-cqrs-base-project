@@ -12,14 +12,17 @@ import org.nthdimenzion.cqrs.query.PagingUtil;
 import org.nthdimenzion.presentation.annotations.Composer;
 import org.nthdimenzion.presentation.infrastructure.AbstractZkComposer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @Composer
 public class BookListComposer extends AbstractZkComposer{
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ILibraryFinder libraryFinder;
 
@@ -48,4 +51,12 @@ public class BookListComposer extends AbstractZkComposer{
     public void selectBook(Map<String,?> book,String viewId){
         navigation.redirect(viewId, ImmutableMap.of("bookId",String.valueOf(book.get("id"))));
     }
+
+    @Command
+    public void secret(){
+        System.out.println("Hello Secret");
+        navigation.redirect("library/membersHoldingBook", ImmutableMap.of("bookId","1"));
+        //navigation.redirect("bookList",ImmutableMap.of("Hello","1"));
+    }
+
 }

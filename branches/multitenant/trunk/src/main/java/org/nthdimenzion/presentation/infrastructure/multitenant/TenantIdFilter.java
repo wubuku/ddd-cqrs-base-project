@@ -1,6 +1,7 @@
 package org.nthdimenzion.presentation.infrastructure.multitenant;
 
 import com.google.common.base.Function;
+import org.apache.commons.lang.ObjectUtils;
 import org.nthdimenzion.ddd.infrastructure.multitenant.TenantIdHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +83,7 @@ public final class TenantIdFilter implements Filter {
         }
         else{
 
-            return tenantIdExtractor.apply(request.getHeader("Host"));
+            return (String)ObjectUtils.defaultIfNull(tenantIdExtractor.apply(request.getHeader("Host")),request.getParameter(TENANT_HTTP_KEY));
         }
 
     }

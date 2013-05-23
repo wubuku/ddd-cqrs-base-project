@@ -23,7 +23,7 @@ public class ResourceBundleViewResolver extends AbstractCachingViewResolver {
 
 	@Override
 	protected String resolveViewName(String viewName) {
-	return properties.getProperty(viewName.trim(), viewName.trim() + ".zul").trim();
+	return properties.getProperty(viewName.trim(),"/".concat(viewName)).trim();
 	}
 
 	@Override

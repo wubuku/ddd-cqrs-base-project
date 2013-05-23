@@ -108,8 +108,7 @@
     <select id="findMembersHoldingBook" resultType="com.librarymanagement.presentation.dto.MemberDto">
     SELECT m.member_id as id ,p.first_name as firstName ,p.middle_name as middleName ,p.last_name as lastName
     FROM MEMBER m,PERSON p
-    WHERE m.id IN (SELECT MEMBER FROM BOOK_LENDING WHERE book = #{bookId} AND THRU_DATE IS NULL)
-    AND m.person=p.id;
+    WHERE m.member_id IN (SELECT MEMBER FROM BOOK_LENDING WHERE book = #{bookId} AND THRU_DATE IS NULL)
     </select>
 
 </mapper>
